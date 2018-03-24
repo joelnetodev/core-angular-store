@@ -7,7 +7,7 @@ import { AlertService, Alert, AlertType } from '../../services/base/alert.servic
     templateUrl: 'alert.component.html'
 })
 
-export class AlertComponent
+export class AlertComponent implements OnInit
 {
     alerts: Alert[] = [];
 

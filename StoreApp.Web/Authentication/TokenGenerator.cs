@@ -8,11 +8,13 @@ namespace StoreApp.Web.Authentication
 {
     public static class TokenGenerator
     {
-        internal static string Generate(string username)
+        internal static string Generate(string username, int id)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.UniqueName, username)
+                new Claim(JwtRegisteredClaimNames.UniqueName, username),
+                new Claim(JwtRegisteredClaimNames.NameId, id.ToString()),
+                new Claim("roles", username.Equals("Admin") ? "Admin" : "Ordinary")
             };
 
             var creds = new SigningCredentials(Config.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256);

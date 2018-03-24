@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Web.Models;
@@ -27,6 +28,15 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
+        [HttpGet("GetByName/{name}")]
+        public IActionResult GetByName(string name)
+        {
+            var list = CreateProducts(4);
+
+            var result = list.FirstOrDefault(x => x.Name.ToLower().Contains(name.ToLower()));
+
+            return Ok(result);
+        }
 
         #region helpers
         private IList<ProcductModel> CreateProducts(int qtd)

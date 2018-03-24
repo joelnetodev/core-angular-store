@@ -14,7 +14,7 @@ namespace StoreApp.Web.Controllers
     {
         public IActionResult Get()
         {
-            return Ok("Everything Ok!");
+            return Ok(new { Status = "Ok" });
         }
     }
 }

@@ -11,7 +11,9 @@
 
 <br />
 <br />
-Product:
+Product
+<br />
+Id: {{id}}
 <br />
 Name: {{product.name}}
 <br />
@@ -32,3 +34,5 @@ Price: {{product.price}}
 
 <br />
 <br />
+
+<comp-filled [url]="'products/getbyname'" [propertyName]="'name'" (onReturnObject)="onReturnObject($event)"></comp-filled>

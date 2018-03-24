@@ -22,7 +22,7 @@ namespace StoreApp.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     var req = Request;
-                    string token = TokenGenerator.Generate(loginModel.UserName);
+                    string token = TokenGenerator.Generate(loginModel.UserName, 1);
                     return Ok(CreateLogin(1, loginModel.UserName, token));
                 }
                 else

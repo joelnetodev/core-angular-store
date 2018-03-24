@@ -34,5 +34,4 @@ export class ProductService
 
         this.baseService.createAlertSuccess('Salvo com sucesso');
     }
-    
 }

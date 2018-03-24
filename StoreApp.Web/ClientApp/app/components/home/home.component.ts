@@ -7,21 +7,14 @@ import { Product } from '../../entities/product';
     selector: 'comp-home',
     templateUrl: './home.component.html'
 })
-
-
-/*
-Components are like controllers, they are transient and works
-like ViewModels to the templates (MVVM).
-
-The methods that call  also should be async and waits the return of the service
-    or implements 'then' funcion to perform the answer of the service
-*/
 export class HomeComponent implements OnInit {
 
     constructor(private prodService: ProductService) { }
 
     ngOnInit() {
     }
+
+    returnedId: number = 0;
 
     id: number = 0;
 
@@ -43,5 +36,10 @@ export class HomeComponent implements OnInit {
     {
         let prods = await this.prodService.getProducts();
         this.products = prods;
+    }
+
+    onReturnObject(obj: Object): void
+    {
+        this.product = obj as Product;
     }
 }
