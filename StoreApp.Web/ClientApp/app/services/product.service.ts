@@ -19,23 +19,19 @@ export class ProductService
     async getProduct(id: number)
     {
         let response = await this.baseService.httpGet('products/' + id);
-
         return response.valueOf() as Product;
     }
 
     async getProducts()
     {
         let response = await this.baseService.httpGet('products');
-
-        console.log(response);
-        console.log(response.valueOf());
-
         return response.valueOf() as Product[];
     }
 
     async saveProduct(product: Product)
     {
         let response = await this.baseService.httpPost('products', product);
+
         this.baseService.createAlertSuccess('Salvo com sucesso');
     }
     

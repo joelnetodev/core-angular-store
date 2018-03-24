@@ -15,6 +15,8 @@ export class AlertComponent
 
     ngOnInit()
     {
+        //subscribe the alert array
+        //Put a callback function that is executed everytime that alert array are changed
         this.alertService.getAlert().subscribe((alert: Alert) =>
         {
             if (!alert)
