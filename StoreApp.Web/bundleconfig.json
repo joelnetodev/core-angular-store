@@ -1,0 +1,17 @@
+﻿[
+  {
+    "inputFiles": [ "assets/css/bootstrap.3.3.7.css" ],
+    "outputFileName": "ClientApp/assets/css/bootstrap.3.3.7.min.css",
+    "minify": { "enabled": true }
+  },
+  {
+    "inputFiles": [ "assets/js/jquery.2.1.3.js" ],
+    "outputFileName": "ClientApp/assets/js/jquery.2.1.3.min.js",
+    "minify": { "enabled": true }
+  },
+  {
+    "inputFiles": [ "assets/js/bootstrap.3.3.7.js" ],
+    "outputFileName": "ClientApp/assets/js/bootstrap.3.3.7.min.js",
+    "minify": { "enabled": true }
+  }
+]

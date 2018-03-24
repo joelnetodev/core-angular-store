@@ -1,0 +1,34 @@
+<h2>Home</h2>
+
+<br />
+
+<input type="text" [(ngModel)]="id" />
+
+<br />
+<br />
+
+<button (click)="getOne()">Get One (Anonymous)</button>
+
+<br />
+<br />
+Product:
+<br />
+Name: {{product.name}}
+<br />
+Price: {{product.price}}
+
+<br />
+<br />
+
+
+
+<button (click)="postOne()">Post One (Authorized)</button>
+
+<br />
+<br />
+
+
+<button (click)="getAll()">Get All (Authorized with Roles)</button>
+
+<br />
+<br />
