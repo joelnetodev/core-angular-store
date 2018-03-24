@@ -21,6 +21,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavTopComponent } from './components/navtop/navtop.component';
 import { PermissionComponent } from './components/permission/permission.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 import { AppInterceptor } from './app.interceptor';
 
@@ -34,7 +35,8 @@ import { AppInterceptor } from './app.interceptor';
         HomeComponent,
         LoginComponent,
         NavTopComponent,
-        PermissionComponent
+        PermissionComponent,
+        AlertComponent
     ],
 
     //IMPORTS are used to reference other Modules to use their scopes, like Http, Route, etc.

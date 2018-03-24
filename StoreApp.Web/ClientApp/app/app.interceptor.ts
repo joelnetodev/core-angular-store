@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch'
-
-import { BaseService } from './services/base/base.service';
-import { User } from './models/user';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private baseService: BaseService) { }
+    constructor(private router: Router) { }
 
     //intercept is a overrided method to intercept requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -27,17 +25,15 @@ export class AppInterceptor implements HttpInterceptor {
 
                 if (response instanceof HttpErrorResponse)
                 {
-                    console.log('intercept enter in error');
-                    if (response.status == 401)
-                        this.router.navigate(['/login']);
-                    else if (response.status == 403) {
-                        console.log('intercept is 403');
-                        this.router.navigate(['/permission']);
-                    }
-                    else {
-                        return Observable.throw(response);
+                    switch (response.status) {
+
+                        case 401: this.router.navigate(['/login']); break;
+                        case 403: this.router.navigate(['/permission']); break;
+                        default: break;
                     }
                 }
+
+                return Observable.throw(response);
 
             });
     }

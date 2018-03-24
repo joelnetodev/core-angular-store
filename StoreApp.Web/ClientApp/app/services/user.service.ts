@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BaseService } from './base/base.service';
-import { User } from '../models/user';
+import { User } from '../entities/user';
 
 @Injectable()
 export class UserService {

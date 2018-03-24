@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BaseService } from './base/base.service';
-import { Product } from '../models/product';
+import { Product } from '../entities/product';
 
 /*Every service are singleton and needs Injecable
 
@@ -36,6 +36,7 @@ export class ProductService
     async saveProduct(product: Product)
     {
         let response = await this.baseService.httpPost('products', product);
+        this.baseService.createAlertSuccess('Salvo com sucesso');
     }
     
 }

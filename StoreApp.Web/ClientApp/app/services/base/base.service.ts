@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { AlertService, AlertType } from './alert.service';
 
-import { User } from '../../models/user';
+import { User } from '../../entities/user';
 
 @Injectable()
 export class BaseService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private alertService: AlertService) { }
 
     private keyUser: string = 'currentUser';
     private urlApi: string = 'http://localhost:50001/api/';
@@ -62,4 +63,7 @@ export class BaseService {
         return headers;
     }
 
+    public createAlertSuccess(message: string) {
+        this.alertService.createAlert(AlertType.Success, message);
+    }
 }

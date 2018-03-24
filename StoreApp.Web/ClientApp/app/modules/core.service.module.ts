@@ -1,6 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { BaseService } from '../services/base/base.service';
+import { AlertService } from '../services/base/alert.service';
 import { UserService } from '../services/user.service';
 import { ProductService } from '../services/product.service';
 
@@ -9,6 +10,7 @@ import { ProductService } from '../services/product.service';
 
     providers:
     [
+        AlertService,
         BaseService,
         UserService,
         ProductService
