@@ -1,0 +1,11 @@
+Search
+
+<div class="autocomplete" style="width:300px;">
+    <input type="text" [(ngModel)]="textToSearch" (keyup)="onTextChange()">
+    <div class="autocomplete-items">
+        <div *ngFor="let i of itemsToShow;" (click)="onSelectItem(i)">
+            {{i.name}}
+        </div>
+    </div>
+</div>
+

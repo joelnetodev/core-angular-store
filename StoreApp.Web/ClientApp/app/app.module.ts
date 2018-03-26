@@ -22,7 +22,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavTopComponent } from './components/navtop/navtop.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { AlertComponent } from './components/alert/alert.component';
-import { FilledComponent } from './components/filled/filled.component';
+import { AutoCompleteComponent } from './components/autocomplete/autocomplete.component';
 
 import { AppInterceptor } from './app.interceptor';
 
@@ -38,7 +38,7 @@ import { AppInterceptor } from './app.interceptor';
         NavTopComponent,
         PermissionComponent,
         AlertComponent,
-        FilledComponent
+        AutoCompleteComponent
     ],
 
     //IMPORTS are used to reference other Modules to use their scopes, like Http, Route, etc.

@@ -13,7 +13,7 @@
 <br />
 Product
 <br />
-Id: {{id}}
+Id: {{product.id}}
 <br />
 Name: {{product.name}}
 <br />
@@ -35,4 +35,4 @@ Price: {{product.price}}
 <br />
 <br />
 
-<comp-filled [url]="'products/getbyname'" [propertyName]="'name'" (onReturnObject)="onReturnObject($event)"></comp-filled>
+<comp-autocomplete [url]="'products/FindByName'" [displayPropertyName]="'name'" [valuePropertyName]="'id'" (onReturnObject)="onReturnObject($event)"></comp-autocomplete>

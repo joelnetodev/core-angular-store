@@ -28,12 +28,12 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("GetByName/{name}")]
-        public IActionResult GetByName(string name)
+        [HttpGet("FindByName/{name}")]
+        public IActionResult FindByName(string name)
         {
             var list = CreateProducts(4);
 
-            var result = list.FirstOrDefault(x => x.Name.ToLower().Contains(name.ToLower()));
+            var result = list.Where(x => x.Name.ToLower().Contains(name.ToLower())).OrderBy(x => x.Name).Take(10).ToList();
 
             return Ok(result);
         }
