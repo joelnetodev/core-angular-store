@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductService } from '../../services/product.service';
+import { BaseService } from '../../services/base/base.service';
 import { Product } from '../../entities/product';
 
 @Component({
@@ -9,7 +9,7 @@ import { Product } from '../../entities/product';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private prodService: ProductService) { }
+    constructor(private baseService: BaseService) { }
 
     ngOnInit() {
     }
@@ -21,22 +21,25 @@ export class HomeComponent implements OnInit {
     product: Product = new Product();
     products: Product[] = new Array<Product>();   
 
-    getOne()
+    async getOne()
     {
-        this.prodService.getProduct(this.id)
-            .then(x => this.product = x);
+        let response = await this.baseService.httpGet('products/' + this.id);
+        this.product = response.valueOf() as Product;
     }
 
     async postOne()
     {
-        this.prodService.saveProduct(this.product);
+        let response = await this.baseService.httpPost('products', this.product);
+
+        this.baseService.createAlertSuccess('Salvo com sucesso');
     }
 
     async getAll()
     {
-        let prods = await this.prodService.getProducts();
-        this.products = prods;
+        let response = await this.baseService.httpGet('products');
+        this.products = response.valueOf() as Product[];
     }
+
 
     onReturnObject(obj: Object): void
     {

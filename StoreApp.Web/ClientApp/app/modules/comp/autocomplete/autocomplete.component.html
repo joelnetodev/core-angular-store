@@ -3,8 +3,8 @@ Search
 <div class="autocomplete" style="width:300px;">
     <input type="text" [(ngModel)]="textToSearch" (keyup)="onTextChange()">
     <div class="autocomplete-items">
-        <div *ngFor="let i of itemsToShow;" (click)="onSelectItem(i)">
-            {{i.name}}
+        <div *ngFor="let item of itemsFromUrl;" (click)="onSelectItem(item)">
+            {{item[displayPropertyName]}}
         </div>
     </div>
 </div>

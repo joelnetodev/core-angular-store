@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AlertService, Alert, AlertType } from '../../services/base/alert.service';
+import { AlertService, Alert, AlertType } from '../../../services/base/alert.service';
 
 @Component({
     selector: 'comp-alert',
     templateUrl: 'alert.component.html'
 })
-
 export class AlertComponent implements OnInit
 {
     alerts: Alert[] = [];

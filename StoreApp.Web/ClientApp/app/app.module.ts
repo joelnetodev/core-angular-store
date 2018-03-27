@@ -10,19 +10,18 @@ If you want to separate and organize the app, Module should be used to group.
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CoreServiceModule } from './modules/core.service.module';
-import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
 import { routing } from './app.routing';
+
+import { CompModule } from './modules/comp/comp.module';
+import { ServiceModule } from './modules/service/service.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavTopComponent } from './components/navtop/navtop.component';
 import { PermissionComponent } from './components/permission/permission.component';
-import { AlertComponent } from './components/alert/alert.component';
-import { AutoCompleteComponent } from './components/autocomplete/autocomplete.component';
 
 import { AppInterceptor } from './app.interceptor';
 
@@ -36,19 +35,18 @@ import { AppInterceptor } from './app.interceptor';
         HomeComponent,
         LoginComponent,
         NavTopComponent,
-        PermissionComponent,
-        AlertComponent,
-        AutoCompleteComponent
+        PermissionComponent
     ],
 
     //IMPORTS are used to reference other Modules to use their scopes, like Http, Route, etc.
     //Only MainModule should import BrowserModule, others created for the App should use CommonModule 
     imports: [
         BrowserModule,
-        FormsModule,
         HttpClientModule,
         routing,
-        CoreServiceModule
+        ServiceModule,
+        SharedModule,
+        CompModule
     ],
 
     //PROVIDERS public scope and sould be used for SERVICES or something that will handle data
