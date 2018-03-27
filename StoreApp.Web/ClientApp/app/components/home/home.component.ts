@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     {
         let response = await this.baseService.httpPost('products', this.product);
 
-        this.baseService.createAlertSuccess('Salvo com sucesso');
+        this.baseService.createAlertSuccess('Product saved');
     }
 
     async getAll()

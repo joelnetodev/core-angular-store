@@ -31,8 +31,14 @@ Price: {{product.price}}
 
 
 <button (click)="getAll()">Get All (Authorized with Roles)</button>
-
 <br />
+
+<ul>
+    <li *ngFor="let p of products;">
+        {{p.id}} - {{p.name}} - {{p.price}}
+    </li>
+</ul>
+
 <br />
 
 <comp-autocomplete [url]="'products/findbyname'" [displayPropertyName]="'name'" (onReturnObject)="onReturnProduct($event)"></comp-autocomplete>
