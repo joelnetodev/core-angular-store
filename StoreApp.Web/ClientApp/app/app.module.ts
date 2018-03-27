@@ -13,9 +13,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
 
-import { CompModule } from './modules/comp/comp.module';
-import { ServiceModule } from './modules/service/service.module';
-import { SharedModule } from './modules/shared/shared.module';
+import { CoreServiceModule } from './modules/service/core.service.module';
+import { CoreSharedModule } from './modules/shared/core.shared.module';
+import { CoreCompModule } from './modules/comp/core.comp.module';
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -44,9 +44,9 @@ import { AppInterceptor } from './app.interceptor';
         BrowserModule,
         HttpClientModule,
         routing,
-        ServiceModule,
-        SharedModule,
-        CompModule
+        CoreServiceModule,
+        CoreSharedModule,
+        CoreCompModule
     ],
 
     //PROVIDERS public scope and sould be used for SERVICES or something that will handle data

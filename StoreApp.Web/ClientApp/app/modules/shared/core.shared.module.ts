@@ -12,4 +12,4 @@ import { CommonModule } from '@angular/common';
     //EXPORTS allows the private objects to be seen by others modules
     exports: [CommonModule, FormsModule]
 })
-export class SharedModule { }
+export class CoreSharedModule { }

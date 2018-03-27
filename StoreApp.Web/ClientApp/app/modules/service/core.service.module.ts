@@ -13,10 +13,10 @@ import { UserService } from '../../services/user.service';
         UserService
     ],
 })
-export class ServiceModule {
-    constructor( @Optional() @SkipSelf() core: ServiceModule) {
+export class CoreServiceModule {
+    constructor( @Optional() @SkipSelf() core: CoreServiceModule) {
         if (core) {
-            throw new Error("ServiceModule can not be instantiated by injection");
+            throw new Error("CoreServiceModule can not be instantiated by injection");
         }
     }
 }

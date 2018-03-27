@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     }
 
 
-    onReturnObject(obj: Object): void
+    onReturnProduct(obj: Object): void
     {
         this.product = obj as Product;
     }

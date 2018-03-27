@@ -19,7 +19,6 @@ export class AutoCompleteComponent implements OnInit {
     onReturnObject = new EventEmitter<Object>();
 
     textToSearch: string = "";
-
     itemsFromUrl: Object[];
 
     constructor(private baseServ: BaseService) { }
@@ -34,7 +33,6 @@ export class AutoCompleteComponent implements OnInit {
             return;
 
         this.itemsFromUrl = await this.baseServ.httpGet(this.url + "/" + this.textToSearch) as Object[];
-
     }
 
     onSelectItem(itemSelected: Object) {
