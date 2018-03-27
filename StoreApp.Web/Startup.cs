@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StoreApp.Web.Authentication;
 using Microsoft.IdentityModel.Tokens;
+using StoreApp.Util.Exceptions;
 
 namespace StoreApp.Web
 {
@@ -62,6 +63,8 @@ namespace StoreApp.Web
             //e default files para procurar default/index.html
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvc(routes =>
             {

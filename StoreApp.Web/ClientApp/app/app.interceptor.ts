@@ -3,12 +3,14 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/catch';
+
+import { BaseService } from './services/base/base.service';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private baseService: BaseService) { }
 
     //intercept is a overrided method to intercept requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,7 +31,11 @@ export class AppInterceptor implements HttpInterceptor {
 
                         case 401: this.router.navigate(['/login']); break;
                         case 403: this.router.navigate(['/permission']); break;
-                        default: break;
+                        case 999: this.baseService.createAlertInfo(response.error); break;
+                        default:
+                            console.log(response);
+                            this.baseService.createErrorInfo('Something got wrong. Take a look at console info.');
+                            break;
                     }
                 }
 

@@ -66,4 +66,13 @@ export class BaseService {
     public createAlertSuccess(message: string) {
         this.alertService.createAlert(AlertType.Success, message);
     }
+
+    public createAlertInfo(message: string) {
+        this.alertService.createAlert(AlertType.Info, message);
+    }
+
+    public createErrorInfo(message: string) {
+        this.alertService.createAlert(AlertType.Error, message);
+    }
+    
 }

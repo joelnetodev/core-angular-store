@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StoreApp.Util.Exceptions;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
@@ -25,6 +26,11 @@ namespace StoreApp.Web.Controllers
         [HttpPost, Authorize]
         public IActionResult Post([FromBody]ProcductModel productModel)
         {
+            if(!ModelState.IsValid || string.IsNullOrEmpty(productModel.Name) || productModel.Price == 0)
+            {
+                throw new MessageException("Product has missing fields");
+            }
+
             return Ok();
         }
 
