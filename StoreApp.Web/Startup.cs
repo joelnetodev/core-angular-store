@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using StoreApp.Web.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using StoreApp.Util.Exceptions;
+using StoreApp.Util.Authentication;
 
 namespace StoreApp.Web
 {
@@ -31,19 +30,19 @@ namespace StoreApp.Web
         {
             //Adiciona JWT como autenticação base
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                        .AddJwtBearer(options => {
-                        options.TokenValidationParameters = new TokenValidationParameters
+                        .AddJwtBearer(options =>
                         {
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidIssuer = TokenGenerator.Config.Issuer,
-                            ValidAudience = TokenGenerator.Config.Audience,
-                            IssuerSigningKey = TokenGenerator.Config.SymmetricSecurityKey
-                        };
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuer = true,
+                                ValidateAudience = true,
+                                ValidateLifetime = true,
+                                ValidateIssuerSigningKey = true,
+                                ValidIssuer = TokenGenerator.Config.Issuer,
+                                ValidAudience = TokenGenerator.Config.Audience,
+                                IssuerSigningKey = TokenGenerator.Config.SymmetricSecurityKey
+                            };
                         });
-
 
             services.AddMvc();
         }

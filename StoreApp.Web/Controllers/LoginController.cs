@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StoreApp.Web.Authentication;
+using StoreApp.Util.Authentication;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers

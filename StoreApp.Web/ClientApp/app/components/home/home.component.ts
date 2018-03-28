@@ -29,14 +29,14 @@ export class HomeComponent implements OnInit {
 
     async postOne()
     {
-        let response = await this.baseService.httpPost('products', this.product);
+        let response = await this.baseService.httpPost('products/', this.product);
 
         this.baseService.createAlertSuccess('Product saved');
     }
 
     async getAll()
     {
-        let response = await this.baseService.httpGet('products');
+        let response = await this.baseService.httpGet('products/');
         this.products = response.valueOf() as Product[];
     }
 

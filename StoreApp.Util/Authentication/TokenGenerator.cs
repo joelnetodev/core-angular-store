@@ -4,11 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace StoreApp.Web.Authentication
+namespace StoreApp.Util.Authentication
 {
     public static class TokenGenerator
     {
-        internal static string Generate(string username, int id)
+        public static string Generate(string username, int id)
         {
             var claims = new[]
             {
@@ -30,18 +30,16 @@ namespace StoreApp.Web.Authentication
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
-
-        internal static class Config
+        public static class Config
         {
-            internal const int TokenLifetimeInMinutes = 30;
+            public const int TokenLifetimeInMinutes = 30;
 
-            internal const string Issuer = "joelnetodev";
-            internal const string Audience = "StoreAapp";
+            public const string Issuer = "joelnetodev";
+            public const string Audience = "StoreAapp";
 
-            internal static byte[] KeyInBytes = Encoding.UTF8.GetBytes("RPYPKKC86XPMFB4GXGQW4H7RR");
+            private static byte[] KeyInBytes = Encoding.UTF8.GetBytes("RPYPKKC86XPMFB4GXGQW4H7RR");
 
-            internal static SymmetricSecurityKey SymmetricSecurityKey = new SymmetricSecurityKey(KeyInBytes);
+            public static SymmetricSecurityKey SymmetricSecurityKey = new SymmetricSecurityKey(KeyInBytes);
         }
     }
 }

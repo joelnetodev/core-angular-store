@@ -17,6 +17,7 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateProducts(3));
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public IActionResult Get(int Id)
         {

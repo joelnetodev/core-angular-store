@@ -25,7 +25,7 @@ export class NavTopComponent implements OnInit {
         return false;
     }
 
-    logout() {
+    onLogout() {
         this.baseService.removeUser();
         this.router.navigate(['/login']);
     }
