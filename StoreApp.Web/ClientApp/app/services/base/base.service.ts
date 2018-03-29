@@ -8,10 +8,16 @@ import { User } from '../../entities/user';
 
 @Injectable()
 export class BaseService {
-    constructor(private http: HttpClient, private alertService: AlertService) { }
 
     private keyUser: string = 'currentUser';
-    private urlApi: string = 'http://localhost:50001/api/';
+    private urlApi: string = '';
+
+    constructor(private http: HttpClient, private alertService: AlertService)
+    {
+        this.urlApi = location.protocol + '//' + location.host + '/api/'
+    }
+
+    
 
     public storeUser(user: User) {
         localStorage.setItem(this.keyUser, JSON.stringify(user));
