@@ -14,7 +14,9 @@ export class BaseService {
 
     constructor(private http: HttpClient, private alertService: AlertService)
     {
-        this.urlApi = location.protocol + '//' + location.hostname + '/api/'
+        //the orign is the first part, the domain: http://www.domain.com
+        //and the path is / or /path/ that has been given by the server to your app 
+        this.urlApi = location.origin + location.pathname + 'api/'
     }
 
     
