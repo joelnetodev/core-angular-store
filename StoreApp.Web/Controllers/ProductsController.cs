@@ -11,7 +11,8 @@ namespace StoreApp.Web.Controllers
     public class ProductsController
         : Controller
     {
-        [HttpGet, Authorize]
+        [Authorize]
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok(CreateProducts(3));
@@ -24,7 +25,8 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateProduct(Id, "Product " + Id, ("1." + Id.ToString())));
         }
 
-        [HttpPost, Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
         public IActionResult Post([FromBody]ProcductModel productModel)
         {
             if(!ModelState.IsValid || string.IsNullOrEmpty(productModel.Name) || productModel.Price == 0)

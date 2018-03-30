@@ -12,12 +12,12 @@ export class NavTopComponent implements OnInit {
 
     ngOnInit() { }
 
-    login: string;
+    userName: string;
 
     isLogged(): boolean {
         if (this.baseService.isUserStored())
         {
-            this.login = this.baseService.getUser().userName;
+            this.userName = this.baseService.getUser().userName;
 
             return true;
         }
