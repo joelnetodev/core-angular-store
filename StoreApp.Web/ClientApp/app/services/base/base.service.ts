@@ -19,8 +19,6 @@ export class BaseService {
         this.urlApi = location.origin + location.pathname + 'api/'
     }
 
-    
-
     public storeUser(user: User) {
         localStorage.setItem(this.keyUser, JSON.stringify(user));
     }
@@ -44,6 +42,8 @@ export class BaseService {
 
         return null;
     }
+
+
 
     public httpPost(pathUrl: string, body?: any)
     {
@@ -71,6 +71,8 @@ export class BaseService {
         return headers;
     }
 
+
+
     public createAlertSuccess(message: string) {
         this.alertService.createAlert(AlertType.Success, message);
     }
@@ -84,7 +86,7 @@ export class BaseService {
     }
 
     public createAlertWarning(message: string) {
-        this.alertService.createAlert(AlertType.Error, message);
+        this.alertService.createAlert(AlertType.Warning, message);
     }
   
 }
