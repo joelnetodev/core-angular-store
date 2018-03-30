@@ -10,6 +10,8 @@ namespace StoreApp.Util.Authentication
     {
         public static string Generate(string username, int id)
         {
+            //Uniq name and name ID to identify the user
+            //also, roles claim to use with permission attribute on controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, username),
