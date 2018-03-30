@@ -33,10 +33,11 @@ export class AppInterceptor implements HttpInterceptor {
 
                         case 401: this.router.navigate(['/login']); break;
                         case 403: this.router.navigate(['/permission']); break;
-                        case 999: this.baseService.createAlertInfo(response.error); break;
+                        case 998: this.baseService.createAlertInfo(response.error); break;
+                        case 999: this.baseService.createAlertWarning(response.error); break;
                         default:
                             console.log(response);
-                            this.baseService.createErrorInfo('Something got wrong. Take a look at console info.');
+                            this.baseService.createAlertError('Something got wrong. Take a look at console info.');
                             break;
                     }
                 }

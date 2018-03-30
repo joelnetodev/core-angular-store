@@ -2,9 +2,17 @@
 
 namespace StoreApp.Util.Exceptions
 {
-    public class MessageException : Exception
+    public class MessageInfoException : Exception
     {
-        public MessageException(string message) : base(message)
+        public MessageInfoException(string message) : base(message)
+        {
+
+        }
+    }
+
+    public class MessageWarningException : Exception
+    {
+        public MessageWarningException(string message) : base(message)
         {
 
         }

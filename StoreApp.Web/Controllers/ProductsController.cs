@@ -11,7 +11,7 @@ namespace StoreApp.Web.Controllers
     public class ProductsController
         : Controller
     {
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet, Authorize]
         public IActionResult Get()
         {
             return Ok(CreateProducts(3));
@@ -24,17 +24,18 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateProduct(Id, "Product " + Id, ("1." + Id.ToString())));
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody]ProcductModel productModel)
         {
             if(!ModelState.IsValid || string.IsNullOrEmpty(productModel.Name) || productModel.Price == 0)
             {
-                throw new MessageException("Product has missing fields");
+                throw new MessageWarningException("Product has missing fields");
             }
 
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpGet("FindByName/{name}")]
         public IActionResult FindByName(string name)
         {

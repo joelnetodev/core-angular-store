@@ -30,7 +30,7 @@ namespace StoreApp.Util.Exceptions
             {
                 //999 Code was creted to angular projects intecept and perform the error response.
                 //Take a look at angular app.intecept module
-                context.Response.StatusCode = (ex is MessageException) ? 999 : (int)HttpStatusCode.BadRequest;              
+                context.Response.StatusCode = (ex is MessageInfoException) ? 998 : (ex is MessageWarningException) ? 999 : (int)HttpStatusCode.BadRequest;              
                 context.Response.ContentType = "text/plain";
                 
                 await context.Response.WriteAsync(ex.Message);
