@@ -63,6 +63,7 @@ namespace StoreApp.Web
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            //Use ExceptionMiddleware to intercpect exceptions
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvc(routes =>

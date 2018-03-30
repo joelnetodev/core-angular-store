@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace StoreApp.Util.Exceptions
 {
+    /*The exception middlewere is used to intercept exceptions.
+     It has a constructor that will receive the request and
+     an ascyn method that will be invoked when exceptions occurs.
+     */
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
@@ -24,6 +28,8 @@ namespace StoreApp.Util.Exceptions
             }
             catch (Exception ex)
             {
+                //999 Code was creted to angular projects intecept and perform the error response.
+                //Take a look at angular app.intecept module
                 context.Response.StatusCode = (ex is MessageException) ? 999 : (int)HttpStatusCode.BadRequest;              
                 context.Response.ContentType = "text/plain";
                 

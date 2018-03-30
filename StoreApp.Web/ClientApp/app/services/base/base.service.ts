@@ -14,7 +14,7 @@ export class BaseService {
 
     constructor(private http: HttpClient, private alertService: AlertService)
     {
-        this.urlApi = location.protocol + '//' + location.host + '/api/'
+        this.urlApi = location.protocol + '//' + location.hostname + '/api/'
     }
 
     
