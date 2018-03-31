@@ -33,7 +33,8 @@ audio, canvas, progress, video {
 }
 
 a {
-    background-color: transparent
+    background-color: transparent;
+    cursor: pointer;
 }
 
     a:active, a:hover {
