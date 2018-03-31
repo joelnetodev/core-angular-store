@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StoreApp.Util.Exceptions;
 using StoreApp.Util.Authentication;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace StoreApp.Web
 {
@@ -54,6 +55,14 @@ namespace StoreApp.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //On linux, a request (sent to apache or nginx, etc) will be redirected to 
+            //an AspNet core app ran by a kestrel service.
+            //This line is to keep headers integrity after those actions
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             //habilitar suporte a autenticação
             app.UseAuthentication();
