@@ -1,6 +1,9 @@
 
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { BaseService } from '../../../services/base/base.service';
+import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -18,27 +21,35 @@ export class AutoCompleteComponent implements OnInit {
     @Output()
     onReturnObject = new EventEmitter<Object>();
 
-    textToSearch: string = "";
-    itemsFromUrl: Object[];
+    textToSearch = new FormControl();
 
-    constructor(private baseServ: BaseService) { }
+    resultsFromUrl = this.observableResults();
 
-    ngOnInit() { }
+    constructor(private baseServ: BaseService)
+    {    }
 
-    async onTextChange() {
-
-        this.itemsFromUrl = [];
-
-        if (this.textToSearch.length < 2)
-            return;
-
-        this.itemsFromUrl = await this.baseServ.httpGet(this.url + "/" + this.textToSearch) as Object[];
+    ngOnInit() {
     }
 
-    onSelectItem(itemSelected: Object) {
-        this.textToSearch = itemSelected[this.displayPropertyName];
+    onSelectItem(itemSelected: Object)
+    {
+        this.resultsFromUrl = Observable.of([]);
+
+        this.textToSearch.setValue(itemSelected[this.displayPropertyName]);
         this.onReturnObject.emit(itemSelected);
-        this.itemsFromUrl = [];
+
+        this.resultsFromUrl = this.observableResults();
+    }
+
+    observableResults()
+    {
+        return Observable.of([])
+            .merge(this.textToSearch.valueChanges)
+            .filter((txt) => { return txt.length > 2 })
+            .debounceTime(1000)
+            .map((txt) => { return this.url + "/" + txt; })
+            .switchMap((path) => { return this.baseServ.httpGet(path); })
+            .map((data) => { return data as Object[]; })
+            .retry(2);
     }
 }
-

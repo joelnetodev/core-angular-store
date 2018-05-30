@@ -1,7 +1,7 @@
 <div class="autocomplete">
-    <input type="text" class="form-control" [(ngModel)]="textToSearch" (keyup)="onTextChange()">
+    <input type="text" class="form-control" [formControl]="textToSearch" >
     <div class="autocomplete-items">
-        <div *ngFor="let item of itemsFromUrl;" (click)="onSelectItem(item)">
+        <div *ngFor="let item of resultsFromUrl | async" (click)="onSelectItem(item)">
             {{item[displayPropertyName]}}
         </div>
     </div>

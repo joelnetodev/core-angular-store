@@ -1,5 +1,5 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 //A module to keep the global shared modules like Forms, Comon, and other that need to be
@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule,
     ],
     //EXPORTS allows the private objects to be seen by others modules
-    exports: [CommonModule, FormsModule]
+    exports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class CoreSharedModule { }
