@@ -19,7 +19,8 @@ import { CoreCompModule } from './modules/comp/core.comp.module';
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
-import { RowComponent } from './components/row/row.component';
+import { ProductsComponent } from './components/products/products.component';
+import { RowComponent } from './components/products/row/row.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavTopComponent } from './components/navtop/navtop.component';
 import { PermissionComponent } from './components/permission/permission.component';
@@ -34,6 +35,7 @@ import { AppInterceptor } from './app.interceptor';
     declarations: [
         AppComponent,
         HomeComponent,
+        ProductsComponent,
         RowComponent,
         LoginComponent,
         NavTopComponent,

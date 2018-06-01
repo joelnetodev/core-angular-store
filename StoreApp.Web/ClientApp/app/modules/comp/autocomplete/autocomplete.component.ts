@@ -13,11 +13,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AutoCompleteComponent implements OnInit {
 
+    //Input decorator means that a value will be expected through directive with [] in the component tag
     @Input()
-    url: string = "";
+    url: string;
     @Input()
-    displayPropertyName: string = "";
+    displayPropertyName;
 
+    //Output decorator means that a value will be returned through directive with () in the component tag
     @Output()
     onReturnObject = new EventEmitter<Object>();
 
@@ -46,7 +48,7 @@ export class AutoCompleteComponent implements OnInit {
         return Observable.of([])
             .merge(this.textToSearch.valueChanges)
             .filter((txt) => { return txt.length > 2 })
-            .debounceTime(1000)
+            .debounceTime(700)
             .map((txt) => { return this.url + "/" + txt; })
             .switchMap((path) => { return this.baseServ.httpGet(path); })
             .map((data) => { return data as Object[]; })

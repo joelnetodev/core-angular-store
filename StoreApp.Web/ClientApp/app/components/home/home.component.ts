@@ -23,20 +23,20 @@ export class HomeComponent implements OnInit {
 
     async getOne()
     {
-        let response = await this.baseService.httpGet('products/' + this.id);
+        let response = await this.baseService.httpGet('products/' + this.id).toPromise();
         this.product = response.valueOf() as Product;
     }
 
     async postOne()
     {
-        let response = await this.baseService.httpPost('products/', this.product);
+        let response = await this.baseService.httpPost('products/', this.product).toPromise();
 
         this.baseService.createAlertSuccess('Product saved');
     }
 
     async getAll()
     {
-        let response = await this.baseService.httpGet('products/');
+        let response = await this.baseService.httpGet('products/').toPromise();
         this.products = response.valueOf() as Product[];
     }
 

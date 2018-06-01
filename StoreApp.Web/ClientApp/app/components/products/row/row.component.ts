@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { BaseService } from '../../services/base/base.service';
-import { Product, Item } from '../../entities/product';
+import { BaseService } from '../../../services/base/base.service';
+import { Product, Item } from '../../../entities/product';
 
 @Component({
     selector: 'comp-row',
@@ -9,16 +9,12 @@ import { Product, Item } from '../../entities/product';
 })
 export class RowComponent implements OnInit {
 
+    @Input()
     products: Product[];
 
     constructor(private baseService: BaseService) { }
 
     ngOnInit() {
-        this.getProductsRow();
-    }
-
-    async getProductsRow() {
-        this.products = await this.baseService.httpGet('products/row') as Product[];
     }
 
     addItem(product: Product) {

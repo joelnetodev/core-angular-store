@@ -11,7 +11,7 @@ export class UserService {
     {
         var login = { UserName: username, Password: password };
 
-        let response = await this.baseService.httpPost('login', login);
+        let response = await this.baseService.httpPost('login', login).toPromise();
 
         let user = response.valueOf() as User;
 

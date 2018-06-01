@@ -39,6 +39,7 @@ Price: {{product.price}}
 
 <br />
 
+<!--[] to put value inside the component and () to get the returned value from the component -->
 <comp-autocomplete [url]="'products/findbyname'" [displayPropertyName]="'name'" (onReturnObject)="onReturnProduct($event)"></comp-autocomplete>
 <br />
 Miss

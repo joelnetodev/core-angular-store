@@ -49,14 +49,14 @@ export class BaseService {
     {
         let url = this.urlApi + pathUrl;
 
-        return this.http.post(url, body, { headers: this.createHeader() }).toPromise()
+        return this.http.post(url, body, { headers: this.createHeader() })
     }
 
     public httpGet(pathUrl: string, httpParams?: HttpParams) {
 
         let url = this.urlApi + pathUrl;
 
-        return this.http.get(url, { headers: this.createHeader(), params: httpParams }).toPromise()
+        return this.http.get(url, { headers: this.createHeader(), params: httpParams })
     }
 
     private createHeader(): HttpHeaders
