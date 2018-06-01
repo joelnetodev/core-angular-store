@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseService } from '../../services/base/base.service';
+import { CoreBaseService } from '../../../services/0-core/core.base.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NavTopComponent implements OnInit {
 
-    constructor(private baseService: BaseService, private router: Router) { }
+    constructor(private baseService: CoreBaseService, private router: Router) { }
 
     ngOnInit() { }
 

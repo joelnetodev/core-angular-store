@@ -1,6 +1,6 @@
 
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { BaseService } from '../../../services/base/base.service';
+import { CoreBaseService } from '../../../services/0-core/core.base.service';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -27,7 +27,7 @@ export class AutoCompleteComponent implements OnInit {
 
     resultsFromUrl = this.observableResults();
 
-    constructor(private baseServ: BaseService)
+    constructor(private baseServ: CoreBaseService)
     {    }
 
     ngOnInit() {

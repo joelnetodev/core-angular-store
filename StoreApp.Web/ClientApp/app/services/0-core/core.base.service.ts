@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { AlertService, AlertType } from './alert.service';
+import { CoreAlertService, AlertType } from './core.alert.service';
 
 import { User } from '../../entities/user';
 
 @Injectable()
-export class BaseService {
+export class CoreBaseService {
 
     private keyUser: string = 'currentUser';
     private urlApi: string = '';
 
-    constructor(private http: HttpClient, private alertService: AlertService)
+    constructor(private http: HttpClient, private alertService: CoreAlertService)
     {
         //the orign is the first part, the domain: http://www.domain.com
         //and the path is / or /path/ that has been given by the server to your app 

@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
-export class AlertService
+export class CoreAlertService
 {
     private subject = new Subject<Alert>();
     private keepAfterRouteChange = false;

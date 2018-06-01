@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { BaseService } from '../../services/base/base.service';
-import { Product } from '../../entities/product';
+import { CoreBaseService } from '../../../services/0-core/core.base.service';
+import { Product } from '../../../entities/product';
 
 @Component({
     selector: 'comp-home',
@@ -9,7 +9,7 @@ import { Product } from '../../entities/product';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private baseService: BaseService) { }
+    constructor(private baseService: CoreBaseService) { }
 
     ngOnInit() {
     }

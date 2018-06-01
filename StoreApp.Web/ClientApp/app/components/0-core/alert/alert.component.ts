@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AlertService, Alert, AlertType } from '../../../services/base/alert.service';
+import { CoreAlertService, Alert, AlertType } from '../../../services/0-core/core.alert.service';
 
 @Component({
     selector: 'comp-alert',
@@ -10,7 +10,7 @@ export class AlertComponent implements OnInit
 {
     alerts: Alert[] = [];
 
-    constructor(private alertService: AlertService) { }
+    constructor(private alertService: CoreAlertService) { }
 
     ngOnInit()
     {

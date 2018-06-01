@@ -1,16 +1,15 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { BaseService } from '../../services/base/base.service';
-import { AlertService } from '../../services/base/alert.service';
-import { UserService } from '../../services/user.service';
+import { CoreBaseService } from '../../services/0-core/core.base.service';
+import { CoreAlertService } from '../../services/0-core/core.alert.service';
+
 
 //A module to keep the global services to not mess the AppModule organization
 @NgModule({
     providers:
     [
-        AlertService,
-        BaseService,
-        UserService
+        CoreAlertService,
+        CoreBaseService
     ],
 })
 export class CoreServiceModule {

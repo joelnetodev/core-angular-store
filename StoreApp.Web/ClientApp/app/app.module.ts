@@ -13,17 +13,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
 
-import { CoreServiceModule } from './modules/service/core.service.module';
-import { CoreSharedModule } from './modules/shared/core.shared.module';
-import { CoreCompModule } from './modules/comp/core.comp.module';
+import { CoreServiceModule } from './modules/0-core/core.service.module';
+import { CoreSharedModule } from './modules/0-core/core.shared.module';
+import { CoreCompModule } from './modules/0-core/core.comp.module';
 
-import { AppComponent } from './components/app/app.component';
-import { HomeComponent } from './components/home/home.component';
-import { ProductsComponent } from './components/products/products.component';
-import { RowComponent } from './components/products/row/row.component';
-import { LoginComponent } from './components/login/login.component';
-import { NavTopComponent } from './components/navtop/navtop.component';
-import { PermissionComponent } from './components/permission/permission.component';
+import { AppComponent } from './components/0-core/app/app.component';
+import { HomeComponent } from './components/project/home/home.component';
+import { ProductsComponent } from './components/project/products/products.component';
+import { RowComponent } from './components/project/products/row/row.component';
+import { LoginComponent } from './components/project/login/login.component';
+import { NavTopComponent } from './components/0-core/navtop/navtop.component';
+import { PermissionComponent } from './components/0-core/permission/permission.component';
 
 import { AppInterceptor } from './app.interceptor';
 

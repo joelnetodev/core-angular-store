@@ -5,12 +5,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
-import { BaseService } from './services/base/base.service';
+import { CoreBaseService } from './services/0-core/core.base.service';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private baseService: BaseService) { }
+    constructor(private router: Router, private baseService: CoreBaseService) { }
 
     //intercept is a overrided method to intercept requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -47,7 +47,7 @@ export class AppInterceptor implements HttpInterceptor {
             });
     }
 
-    /*Seems to be more apropriated to let BaseService responsible for httpRequests
+    /*Seems to be more apropriated to let CoreBaseService responsible for httpRequests
 
     private adjustRequest(request: HttpRequest<any>): HttpRequest<any> {
         //the request will have the url changed

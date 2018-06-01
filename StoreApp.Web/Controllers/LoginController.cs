@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Util.Authentication;
+using StoreApp.Util.Exceptions;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
-{ 
+{
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
@@ -17,21 +18,18 @@ namespace StoreApp.Web.Controllers
         public IActionResult Access([FromBody]LoginModel loginModel)
         {
             //verifica se usuário existe, se sim gera o token
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (string.IsNullOrEmpty(loginModel.UserName) || string.IsNullOrEmpty(loginModel.Password))
                 {
-                    var req = Request;
-                    string token = TokenGenerator.Generate(loginModel.UserName, 1);
-                    return Ok(CreateLogin(1, loginModel.UserName, token));
+                    throw new MessageWarningException("Username or password incorrect.");
                 }
-                else
-                    return BadRequest("Modelo não é válido");
+
+                string token = TokenGenerator.Generate(loginModel.UserName, 1);
+                return Ok(CreateLogin(1, loginModel.UserName, token));
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            else
+                throw new MessageWarningException("Model is not valid.");
         }
 
         private UserModel CreateLogin(int id, string userName, string token)

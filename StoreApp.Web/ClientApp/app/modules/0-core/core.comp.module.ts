@@ -1,8 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CoreSharedModule } from '../shared/core.shared.module';
 
-import { AutoCompleteComponent } from './autocomplete/autocomplete.component';
-import { AlertComponent } from './alert/alert.component';
+import { AutoCompleteComponent } from '../../components/0-core/autocomplete/autocomplete.component';
+import { AlertComponent } from '../../components/0-core/alert/alert.component';
+import { CoreSharedModule } from './core.shared.module';
+
 
 @NgModule({
     imports: [
