@@ -17,15 +17,16 @@ import { CoreServiceModule } from './modules/0-core/core.service.module';
 import { CoreSharedModule } from './modules/0-core/core.shared.module';
 import { CoreCompModule } from './modules/0-core/core.comp.module';
 
-import { AppComponent } from './components/0-core/app/app.component';
+import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/project/home/home.component';
 import { ProductsComponent } from './components/project/products/products.component';
 import { RowComponent } from './components/project/products/row/row.component';
 import { LoginComponent } from './components/project/login/login.component';
-import { NavTopComponent } from './components/0-core/navtop/navtop.component';
-import { PermissionComponent } from './components/0-core/permission/permission.component';
+import { NavTopComponent } from './components/project/navtop/navtop.component';
+import { PermissionComponent } from './components/project/permission/permission.component';
 
 import { AppInterceptor } from './app.interceptor';
+
 
 //NgModule to identify this class as a Module
 //The MainModule are global, so global services should be declared here to others Modules could use.
