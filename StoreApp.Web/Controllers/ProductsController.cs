@@ -48,6 +48,25 @@ namespace StoreApp.Web.Controllers
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpGet("Row")]
+        public IActionResult Row()
+        {
+            var products = CreateProducts(3);
+
+            int id = 1;
+            foreach (var itemProduct in products)
+            {
+                for (int i = 1; i < 3; i++)
+                {
+                    itemProduct.Items.Add(new ItemModel { Id = id, Name = "Old Item " + id, Count = i });
+                    id += 1;
+                }
+            }
+
+            return Ok(products);
+        }
+
         #region helpers
         private IList<ProcductModel> CreateProducts(int qtd)
         {

@@ -33,7 +33,7 @@ export class AutoCompleteComponent implements OnInit {
 
     onSelectItem(itemSelected: Object)
     {
-        this.resultsFromUrl = Observable.of([]);
+        this.resultsFromUrl = null;
 
         this.textToSearch.setValue(itemSelected[this.displayPropertyName]);
         this.onReturnObject.emit(itemSelected);

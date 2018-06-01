@@ -1,0 +1,47 @@
+<h2>Row</h2>
+
+<br />
+
+<br />
+
+<div class="row" *ngFor="let product of products" >
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th colspan="3">
+                    <p>
+                        Items of {{product.name}}
+                        <button type="button" (click)="addItem(product)" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Item</button>
+                    </p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Count
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of product.items">
+                <td>
+                    {{item.name}}
+                </td>
+                <td>
+                    {{item.count}}
+                </td>
+                <td>
+                    <button type="button" (click)="removeItem(product, item)" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

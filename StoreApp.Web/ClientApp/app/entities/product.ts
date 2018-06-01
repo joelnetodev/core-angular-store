@@ -8,4 +8,12 @@ export class Product
     public id: number;
     public name: string;
     public price: number;
+
+    public items: Item[];
+}
+
+export class Item {
+    public id: number;
+    public name: string;
+    public count: number;
 }
