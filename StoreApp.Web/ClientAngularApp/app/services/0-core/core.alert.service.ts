@@ -8,15 +8,15 @@ import { Subject } from 'rxjs/Subject';
 export class CoreAlertService
 {
     private subject = new Subject<Alert>();
-    private keepAfterRouteChange = false;
+    private keepAlertWhenNavigate = false;
 
     constructor(private router: Router) {
         // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
-                if (this.keepAfterRouteChange) {
+                if (this.keepAlertWhenNavigate) {
                     // only keep for a single route change
-                    this.keepAfterRouteChange = false;
+                    this.keepAlertWhenNavigate = false;
                 } else {
                     // clear alert messages
                     this.clear();
@@ -27,12 +27,18 @@ export class CoreAlertService
 
     getAlert(): Observable<any>
     {
+        //Return an observable to subscribe a callback
         return this.subject.asObservable();
     }
 
-    createAlert(type: AlertType, message: string, keepAfterRouteChange = false) {
-        this.keepAfterRouteChange = keepAfterRouteChange;
-        this.subject.next(<Alert>{ type: type, message: message });
+    createAlert(type: AlertType, message: string)
+    {
+        let alert = new Alert();
+        alert.type = type;
+        alert.message = message;
+
+        //When an alert is created, the next method trigger the callbacks subscribed 
+        this.subject.next(alert);
     }
 
     clear() {

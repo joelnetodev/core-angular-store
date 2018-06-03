@@ -29,7 +29,7 @@ export class AppInterceptor implements HttpInterceptor {
                 {
                     switch (response.status) {
 
-                        //999 code is a generic error created to handle messages from server
+                        //999 and 998 code is a generic error created to handle messages from server
 
                         case 401: this.baseService.removeUser(); this.router.navigate(['/login']); break;
                         case 403: this.router.navigate(['/permission']); break;

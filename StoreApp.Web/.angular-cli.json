@@ -5,7 +5,7 @@
   },
   "apps": [
     {
-      "root": "ClientApp",
+      "root": "ClientAngularApp",
       "outDir": "wwwroot",
       "assets": [
         "assets",

@@ -9,6 +9,7 @@ using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
 {
+    [Route("api/[controller]")]
     [AllowAnonymous]
     public class StatusController : Controller
     {

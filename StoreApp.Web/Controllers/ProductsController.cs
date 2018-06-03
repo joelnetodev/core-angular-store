@@ -6,10 +6,9 @@ using StoreApp.Util.Exceptions;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
-{  
+{
     [Route("api/[controller]")]
-    public class ProductsController
-        : Controller
+    public class ProductsController : Controller
     {
         [Authorize]
         [HttpGet]

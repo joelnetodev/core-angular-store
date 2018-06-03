@@ -49,8 +49,7 @@ export class AutoCompleteComponent implements OnInit {
             .merge(this.textToSearch.valueChanges)
             .filter((txt) => { return txt.length > 2 })
             .debounceTime(700)
-            .map((txt) => { return this.url + "/" + txt; })
-            .switchMap((path) => { return this.baseServ.httpGet(path); })
+            .switchMap((path) => { return this.baseServ.httpGet(this.url + "/" + path); })
             .map((data) => { return data as Object[]; })
             .retry(2);
     }

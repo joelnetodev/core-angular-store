@@ -14,32 +14,25 @@ export class AlertComponent implements OnInit
 
     ngOnInit()
     {
-        //subscribe the 'next' method of alert array
-        //Put a callback function that is executed everytime that an alert is created
-        this.alertService.getAlert().subscribe((alert: Alert) =>
+        //Subscribe the Observer with a callback that is executed everytime that an alert is created in service
+        this.alertService.getAlert().subscribe(x =>
         {
+            let alert = x as Alert;
             if (!alert)
-            {
-                // clear alerts when an empty alert is received
-                this.alerts = [];
                 return;
-            }
 
-            // add alert to array
             this.alerts.push(alert);
         });
     }
 
     removeAlert(alert: Alert) {
-        this.alerts = this.alerts.filter(x => x !== alert);
+        this.alerts.splice(this.alerts.indexOf(alert), 1);
     }
 
-    cssClass(alert: Alert)
+    chooseCssClass(alert: Alert)
     {
         if (!alert)
-        {
             return;
-        }
 
         // return css class based on alert type
         switch (alert.type) {

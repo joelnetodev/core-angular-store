@@ -78,9 +78,10 @@ namespace StoreApp.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "api/{controller=Status}/{action=Get}/{id?}");
-
+                name: "default",
+                template: "api/{controller}/{action}",
+                defaults: new { controller = "Status", action = "Get" }
+                );
             });
         }
     }
