@@ -5,9 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using StoreApp.Util.Exceptions;
-using StoreApp.Util.Authentication;
+using StoreApp.Infra.Exceptions;
+using StoreApp.Infra.Authentication;
 using Microsoft.AspNetCore.HttpOverrides;
+using StoreApp.Infra.Extension;
 
 namespace StoreApp.Web
 {
@@ -45,6 +46,8 @@ namespace StoreApp.Web
                             };
                         });
 
+            //This is a extension method to configure interfaces and classes of the project
+            services.StartRegisterProjectDependencies();
             services.AddMvc();
         }
 
@@ -83,6 +86,9 @@ namespace StoreApp.Web
                 defaults: new { controller = "Status", action = "Get" }
                 );
             });
+
+            //This is a extension method to share services provider
+            app.ShareContextToContainer();
         }
     }
 }

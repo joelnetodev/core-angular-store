@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StoreApp.Util\StoreApp.Util.csproj" />
+    <ProjectReference Include="..\StoreApp.Domain.Entity\StoreApp.Domain.Entity.csproj" />
+    <ProjectReference Include="..\StoreApp.Domain.Repository\StoreApp.Domain.Repository.csproj" />
+    <ProjectReference Include="..\StoreApp.Infra\StoreApp.Infra.csproj" />
   </ItemGroup>
 
   <Target Name="Build Angular" Condition="'$(Configuration)'=='Release'" BeforeTargets="Build">

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StoreApp.Util.Exceptions
+namespace StoreApp.Infra.Exceptions
 {
     public class MessageInfoException : Exception
     {

@@ -43,3 +43,7 @@ Price: {{product.price}}
 <comp-autocomplete [url]="'products/findbyname'" [displayPropertyName]="'name'" (onReturnObject)="onReturnProduct($event)"></comp-autocomplete>
 <br />
 Miss
+
+<br />
+<br />
+<button class="btn btn-primary" (click)="postItem()">Post Item</button>

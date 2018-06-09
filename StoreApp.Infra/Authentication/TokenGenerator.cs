@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace StoreApp.Util.Authentication
+namespace StoreApp.Infra.Authentication
 {
     public static class TokenGenerator
     {

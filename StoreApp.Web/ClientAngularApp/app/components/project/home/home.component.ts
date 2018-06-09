@@ -45,4 +45,8 @@ export class HomeComponent implements OnInit {
     {
         this.product = obj as Product;
     }
+
+    postItem() {
+        this.baseService.httpGet('items').subscribe();
+    }
 }

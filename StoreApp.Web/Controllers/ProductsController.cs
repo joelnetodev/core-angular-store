@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StoreApp.Util.Exceptions;
+using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
@@ -14,7 +14,7 @@ namespace StoreApp.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(CreateProducts(3));
+            return Ok(CreateProducts(4));
         }
 
         [AllowAnonymous]
