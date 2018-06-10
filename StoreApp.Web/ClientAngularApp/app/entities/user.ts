@@ -6,6 +6,5 @@ It contains the declarations of every others (Main or not) modules, or component
 export class User
 {
     public token: string;
-    public userName: string;
-    public id: number;
+    public username: string;
 }

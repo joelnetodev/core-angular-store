@@ -8,15 +8,14 @@ namespace StoreApp.Infra.Authentication
 {
     public static class TokenGenerator
     {
-        public static string Generate(string username, int id)
+        public static string Generate(string username, string role)
         {
             //Uniq name and name ID to identify the user
             //also, roles claim to use with permission attribute on controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, username),
-                new Claim(JwtRegisteredClaimNames.NameId, id.ToString()),
-                new Claim("roles", username.Equals("Admin") ? "Admin" : "Ordinary")
+                new Claim("roles", role)
             };
 
             var creds = new SigningCredentials(Config.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256);

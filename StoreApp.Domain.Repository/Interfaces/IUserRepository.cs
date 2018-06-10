@@ -10,8 +10,8 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        User GetByUserName(string userName);
+        User GetByUsername(string userName);
 
-        bool VerifyUserNameExists(string userName);
+        bool VerifyUsernameExists(string userName);
     }
 }

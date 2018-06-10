@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        var login = { UserName: this.username, Password: this.password };
+        var login = { Username: this.username, Password: this.password };
 
         this.baseServ.httpPost('login', login).subscribe(x => {
             let user = x.valueOf() as User;

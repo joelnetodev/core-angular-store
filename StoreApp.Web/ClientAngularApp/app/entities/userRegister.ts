@@ -8,7 +8,7 @@ It contains the declarations of every others (Main or not) modules, or component
 export class UserRegister
 {
     public name: string;
-    public userName: string;
+    public username: string;
     public password: number;
     public role: RoleEnum;
 

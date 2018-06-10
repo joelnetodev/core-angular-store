@@ -10,14 +10,14 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public User GetByUserName(string userName)
+        public User GetByUsername(string userName)
         {
-            return Entity.FirstOrDefault(x => x.UserName == userName);
+            return Entity.FirstOrDefault(x => x.Username == userName);
         }
 
-        public bool VerifyUserNameExists(string userName)
+        public bool VerifyUsernameExists(string userName)
         {
-            return Entity.Any(x => x.UserName == userName);
+            return Entity.Any(x => x.Username == userName);
         }
     }
 }

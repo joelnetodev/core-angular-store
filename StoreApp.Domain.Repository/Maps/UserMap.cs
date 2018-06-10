@@ -15,7 +15,7 @@ namespace StoreApp.Domain.Repository.Maps
 
             Id(x => x.Id).Column("id");
             Map(x => x.Name).Column("name");
-            Map(x => x.UserName).Column("login");
+            Map(x => x.Username).Column("login");
             Map(x => x.Password).Column("password");
             Map(x => x.Role).Column("role");
             Map(x => x.IsActive).Column("is_active");

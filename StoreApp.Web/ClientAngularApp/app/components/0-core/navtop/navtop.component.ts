@@ -16,11 +16,11 @@ export class NavTopComponent implements OnInit {
     menuModuleEnum = MenuModuleEnum;
     menuItemEnum = MenuItemEnum;
 
-    userName: string;
+    username: string;
 
     isLogged(): boolean {
         if (this.baseService.isUserStored()){
-            this.userName = this.baseService.getUser().userName;
+            this.username = this.baseService.getUser().username;
             return true;
         }
         return false;

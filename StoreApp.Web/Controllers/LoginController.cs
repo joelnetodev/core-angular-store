@@ -29,24 +29,30 @@ namespace StoreApp.Web.Controllers
             //verifica se usuário existe, se sim gera o token
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrEmpty(loginModel.UserName) || string.IsNullOrEmpty(loginModel.Password))
+                if (string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password))
                 {
-                    throw new MessageWarningException("Username or password incorrect.");
+                    throw new MessageWarningException("Missing fields.");
                 }
 
-                string token = TokenGenerator.Generate(loginModel.UserName, 1);
-                return Ok(CreateLogin(1, loginModel.UserName, token));
+                var userFromDb = _userRepository.GetByUsername(loginModel.Username);
+                var password = PasswordEncryptator.Encrypit(loginModel.Password);
+                if (userFromDb == null || userFromDb.Password != password)
+                {
+                    throw new MessageWarningException("Username or Password incorrect.");
+                }
+
+                string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
+                return Ok(CreateLogin(loginModel.Username, token));
             }
             else
                 throw new MessageWarningException("Model is not valid.");
         }
 
-        private UserModel CreateLogin(int id, string userName, string token)
+        private UserModel CreateLogin(string userName, string token)
         {
             return new UserModel
             {
-                UserName = userName,
-                Id = id,
+                Username = userName,
                 Token = token
             };
         }
@@ -57,18 +63,18 @@ namespace StoreApp.Web.Controllers
             //verifica se usuário existe, se sim gera o token
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.Name))
+                if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.Name))
                 {
                     throw new MessageWarningException("Missing fields.");
                 }
 
 
-                if(_userRepository.VerifyUserNameExists(model.UserName))
+                if(_userRepository.VerifyUsernameExists(model.Username))
                     throw new MessageWarningException("Username already exists.");
 
                 var user = new User();
                 user.Name = model.Name;
-                user.UserName = model.UserName;
+                user.Username = model.Username;
                 user.Role = model.Role;
                 user.Password = PasswordEncryptator.Encrypit(model.Password);
                 _userRepository.SaveOrUpdate(user);
