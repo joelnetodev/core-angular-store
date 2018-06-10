@@ -31,7 +31,7 @@ export class CoreAlertService
         return this.subject.asObservable();
     }
 
-    createAlert(type: AlertType, message: string)
+    createAlert(type: AlertTypeEnum, message: string)
     {
         let alert = new Alert();
         alert.type = type;
@@ -48,11 +48,11 @@ export class CoreAlertService
 }
 
 export class Alert {
-    type: AlertType;
+    type: AlertTypeEnum;
     message: string;
 }
 
-export enum AlertType {
+export enum AlertTypeEnum {
     Success,
     Error,
     Info,

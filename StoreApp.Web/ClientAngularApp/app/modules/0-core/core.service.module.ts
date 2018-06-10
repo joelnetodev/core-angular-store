@@ -2,6 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { CoreBaseService } from '../../services/0-core/core.base.service';
 import { CoreAlertService } from '../../services/0-core/core.alert.service';
+import { CoreMenuService } from '../../services/0-core/core.menu.service';
 
 
 //A module to keep the global services to not mess the AppModule organization
@@ -9,7 +10,8 @@ import { CoreAlertService } from '../../services/0-core/core.alert.service';
     providers:
     [
         CoreAlertService,
-        CoreBaseService
+        CoreBaseService,
+        CoreMenuService
     ],
 })
 export class CoreServiceModule {

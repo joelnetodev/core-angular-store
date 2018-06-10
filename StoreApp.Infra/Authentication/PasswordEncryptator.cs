@@ -8,9 +8,9 @@ namespace StoreApp.Infra.Authentication
 {
     public static class PasswordEncryptator
     {
-        private static string Encrypit(string value)
+        public static string Encrypit(string value)
         {
-            byte[] bytesCryptedFromPassword = new System.Security.Cryptography.SHA256Managed().ComputeHash(Encoding.ASCII.GetBytes(value));
+            byte[] bytesCryptedFromPassword = new System.Security.Cryptography.HMACMD5().ComputeHash(Encoding.ASCII.GetBytes(value));
             return Encoding.ASCII.GetString(bytesCryptedFromPassword);
         }
     }

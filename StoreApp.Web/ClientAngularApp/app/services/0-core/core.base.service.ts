@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { CoreAlertService, AlertType } from './core.alert.service';
+import { CoreAlertService, AlertTypeEnum } from './core.alert.service';
 
 import { User } from '../../entities/user';
 
@@ -74,19 +74,19 @@ export class CoreBaseService {
 
 
     public createAlertSuccess(message: string) {
-        this.alertService.createAlert(AlertType.Success, message);
+        this.alertService.createAlert(AlertTypeEnum.Success, message);
     }
 
     public createAlertInfo(message: string) {
-        this.alertService.createAlert(AlertType.Info, message);
+        this.alertService.createAlert(AlertTypeEnum.Info, message);
     }
 
     public createAlertError(message: string) {
-        this.alertService.createAlert(AlertType.Error, message);
+        this.alertService.createAlert(AlertTypeEnum.Error, message);
     }
 
     public createAlertWarning(message: string) {
-        this.alertService.createAlert(AlertType.Warning, message);
+        this.alertService.createAlert(AlertTypeEnum.Warning, message);
     }
   
 }

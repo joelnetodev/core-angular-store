@@ -6,7 +6,7 @@ namespace StoreApp.Domain.Entity.Enums
 {
     public enum RoleEnum
     {
-        Regular,
-        Admin
+        Admin,
+        Regular
     }
 }

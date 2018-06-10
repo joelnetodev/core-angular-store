@@ -9,9 +9,15 @@
             <a href="#" class="navbar-brand">StoreApp</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
-            <ul class="nav navbar-nav">
-                <li><a routerLink="/login">Login</a></li>
-                <li><a routerLink="/products">Products</a></li>
+
+            <ul class="nav navbar-nav" *ngIf="!isLogged()">
+                <li class="{{ chooseModuleCSS(menuModuleEnum.Login) }}"><a routerLink="/login">Login</a></li>
+                <li class="{{ chooseModuleCSS(menuModuleEnum.Register) }}"><a routerLink="/register">Register</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav" *ngIf="isLogged()">
+                <li class="{{ chooseModuleCSS(menuModuleEnum.Products) }}"><a routerLink="/products">Products</a></li>
+                <li class="{{ chooseModuleCSS(menuModuleEnum.Items) }}"><a routerLink="/items">Items</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right" *ngIf="isLogged()">

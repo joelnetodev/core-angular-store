@@ -15,17 +15,18 @@ import { routing } from './app.routing';
 
 import { CoreServiceModule } from './modules/0-core/core.service.module';
 import { CoreSharedModule } from './modules/0-core/core.shared.module';
-import { CoreCompModule } from './modules/0-core/core.comp.module';
+import { CoreComponentModule } from './modules/0-core/core.component.module';
 
-import { AppComponent } from './components/app/app.component';
+
 import { HomeComponent } from './components/project/home/home.component';
 import { ProductsComponent } from './components/project/products/products.component';
 import { RowComponent } from './components/project/products/row/row.component';
 import { LoginComponent } from './components/project/login/login.component';
-import { NavTopComponent } from './components/project/navtop/navtop.component';
+import { RegisterComponent } from './components/project/register/register.component';
 import { PermissionComponent } from './components/project/permission/permission.component';
 
 import { AppInterceptor } from './app.interceptor';
+import { AppComponent } from './components/0-core/app/app.component';
 
 
 //NgModule to identify this class as a Module
@@ -34,12 +35,11 @@ import { AppInterceptor } from './app.interceptor';
     //DECLARATIONS are private scope and should be used for templates (inside this Module only) 
     //Should be filled by Components, directives, etc
     declarations: [
-        AppComponent,
         HomeComponent,
         ProductsComponent,
         RowComponent,
         LoginComponent,
-        NavTopComponent,
+        RegisterComponent,
         PermissionComponent
     ],
 
@@ -51,7 +51,7 @@ import { AppInterceptor } from './app.interceptor';
         routing,
         CoreServiceModule,
         CoreSharedModule,
-        CoreCompModule
+        CoreComponentModule
     ],
 
     //PROVIDERS public scope and sould be used for SERVICES or something that will handle data

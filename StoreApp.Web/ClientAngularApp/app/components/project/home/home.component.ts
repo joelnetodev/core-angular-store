@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CoreBaseService } from '../../../services/0-core/core.base.service';
 import { Product } from '../../../entities/product';
+import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
 
 @Component({
     selector: 'comp-home',
@@ -9,9 +10,10 @@ import { Product } from '../../../entities/product';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private baseService: CoreBaseService) { }
+    constructor(private baseService: CoreBaseService, private menuServ: CoreMenuService) { }
 
     ngOnInit() {
+        this.menuServ.setModule(MenuModuleEnum.Home);
     }
 
     returnedId: number = 0;

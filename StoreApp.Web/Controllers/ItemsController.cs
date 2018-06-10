@@ -13,6 +13,14 @@ namespace StoreApp.Web.Controllers
     [Route("api/[controller]")]
     public class ItemsController : Controller
     {
+        IItemRepository _itemRepository;
+
+        public ItemsController(IItemRepository itemRepo)
+        {
+            _itemRepository = itemRepo;
+        }
+
+
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Post([FromBody]ItemModel model)
@@ -47,9 +55,8 @@ namespace StoreApp.Web.Controllers
             item.Name = "Cebola";
             item.Description ="";
 
-            var repository = new ItemRepository();
-            repository.SaveOrUpdate(item);
-            repository.SaveOrUpdate(item);
+            _itemRepository.SaveOrUpdate(item);
+            _itemRepository.SaveOrUpdate(item);
 
             return Ok();
         }

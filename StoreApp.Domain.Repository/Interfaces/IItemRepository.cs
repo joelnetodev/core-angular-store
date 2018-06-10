@@ -7,7 +7,7 @@ using System.Text;
 
 namespace StoreApp.Domain.Repository.Classes
 {
-    public class ItemRepository : RepositoryBase<Item>, IItemRepository
+    public interface IItemRepository : IRepositoryBase<Item>
     {
     }
 }

@@ -9,6 +9,7 @@ using StoreApp.Infra.Exceptions;
 using StoreApp.Infra.Authentication;
 using Microsoft.AspNetCore.HttpOverrides;
 using StoreApp.Infra.Extension;
+using StoreApp.Domain.Repository.Classes;
 
 namespace StoreApp.Web
 {
@@ -49,6 +50,14 @@ namespace StoreApp.Web
             //This is a extension method to configure interfaces and classes of the project
             services.StartRegisterProjectDependencies();
             services.AddMvc();
+
+            RegisterRepositories(services);
+        }
+
+        public void RegisterRepositories(IServiceCollection services)
+        {
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IItemRepository, ItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

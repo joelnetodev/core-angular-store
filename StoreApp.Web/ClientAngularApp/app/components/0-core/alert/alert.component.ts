@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CoreAlertService, Alert, AlertType } from '../../../services/0-core/core.alert.service';
+import { CoreAlertService, Alert, AlertTypeEnum } from '../../../services/0-core/core.alert.service';
 
 @Component({
     selector: 'comp-alert',
@@ -29,18 +29,18 @@ export class AlertComponent implements OnInit
         this.alerts.splice(this.alerts.indexOf(alert), 1);
     }
 
-    chooseCssClass(alert: Alert)
+    chooseAlertCSS(alert: Alert)
     {
         if (!alert)
             return;
 
         // return css class based on alert type
         switch (alert.type) {
-            case AlertType.Success:
+            case AlertTypeEnum.Success:
                 return 'alert alert-success';
-            case AlertType.Error:
+            case AlertTypeEnum.Error:
                 return 'alert alert-danger';
-            case AlertType.Warning:
+            case AlertTypeEnum.Warning:
                 return 'alert alert-warning';
             default:
                 return 'alert alert-info';
