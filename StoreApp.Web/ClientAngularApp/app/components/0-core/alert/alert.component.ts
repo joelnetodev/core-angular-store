@@ -18,10 +18,12 @@ export class AlertComponent implements OnInit
         this.alertService.getAlert().subscribe(x =>
         {
             let alert = x as Alert;
-            if (!alert)
-                return;
-
-            this.alerts.push(alert);
+            if (!alert) {
+                this.alerts.length = 0;
+            }
+            else {
+                this.alerts.push(alert);
+            }
         });
     }
 

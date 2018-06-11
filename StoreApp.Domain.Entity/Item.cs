@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StoreApp.Domain.Entity
 {
-    public class Item : Entity.Active.Entity
+    public class Item : Infra.Entity.Active.Entity
     {
         public virtual string Name { get; set; }
 

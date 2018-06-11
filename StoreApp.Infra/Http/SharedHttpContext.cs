@@ -6,13 +6,11 @@ namespace StoreApp.Infra.Http
     //A Shared HttpContext with the current context every web request
     internal static class SharedHttpContext
     {
-        private static IHttpContextAccessor _contextAccessorBase;
+        public static IHttpContextAccessor HttpContextAccessor;
 
-        public static HttpContext Current => _contextAccessorBase.HttpContext;
-
-        public static void Configure(IHttpContextAccessor contextAccessorBase)
+        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
         {
-            _contextAccessorBase = contextAccessorBase;
+            HttpContextAccessor = httpContextAccessor;
         }
     }
 }

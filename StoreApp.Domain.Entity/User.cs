@@ -3,7 +3,7 @@ using System;
 
 namespace StoreApp.Domain.Entity
 {
-    public class User : Entity.Active.Entity
+    public class User : Infra.Entity.Active.Entity
     {
         public virtual string Name { get; set; }
 

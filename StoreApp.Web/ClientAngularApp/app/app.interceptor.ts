@@ -5,12 +5,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
-import { CoreBaseService } from './services/0-core/core.base.service';
+import { CoreUserService } from './services/0-core/core.user.service';
+import { CoreAlertService } from './services/0-core/core.alert.service';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private baseService: CoreBaseService) { }
+    constructor(private router: Router, private userServ: CoreUserService, private alertServ: CoreAlertService) { }
 
     //intercept is a overrided method to intercept requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,13 +32,13 @@ export class AppInterceptor implements HttpInterceptor {
 
                         //999 and 998 code is a generic error created to handle messages from server
 
-                        case 401: this.baseService.removeUser(); this.router.navigate(['/login']); break;
+                        case 401: this.userServ.removeUser(); this.router.navigate(['/login']); break;
                         case 403: this.router.navigate(['/permission']); break;
-                        case 998: this.baseService.createAlertInfo(response.error); break;
-                        case 999: this.baseService.createAlertWarning(response.error); break;
+                        case 998: this.alertServ.createInfo(response.error); break;
+                        case 999: this.alertServ.createWarning(response.error); break;
                         default:
                             console.log(response);
-                            this.baseService.createAlertError('Something got wrong. Take a look at console info.');
+                            this.alertServ.createError('Something got wrong. Take a look at console info.');
                             break;
                     }
                 }

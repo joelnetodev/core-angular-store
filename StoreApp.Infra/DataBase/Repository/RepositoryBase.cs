@@ -1,6 +1,6 @@
 ﻿using NHibernate;
 using StoreApp.Infra.DataBase.SessionFactory;
-using StoreApp.Infra.IoC;
+using StoreApp.Infra.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +8,19 @@ using System.Text;
 
 namespace StoreApp.Infra.DataBase
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.Entity
     {
         protected ISession Session
         {
             get
             {
                 //Get "SessionFactoryBase" from ServiceProvider and get the Session
-                return Container.Get<SessionFactoryInfra>().GetCurrentSession();
+                var sessionFac = SharedHttpContext.HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
+                if(sessionFac != null)
+                {
+                    return sessionFac.GetCurrentSession();
+                }
+                return null;
             }
         }
 
@@ -56,6 +61,16 @@ namespace StoreApp.Infra.DataBase
             {
                 SaveOrUpdate(entity);
             }
+        }
+
+        public IList<T> FindAll()
+        {
+            return Entity.ToList();
+        }
+
+        public T GetById(int id)
+        {
+            return Entity.FirstOrDefault(x => x.Id == id);
         }
     }
 }

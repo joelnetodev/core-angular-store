@@ -8,18 +8,18 @@ import { Subject } from 'rxjs/Subject';
 export class CoreAlertService
 {
     private subject = new Subject<Alert>();
-    private keepAlertWhenNavigate = false;
+    private keepForOneCicle = false;
 
     constructor(private router: Router) {
-        // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
+        //clear alert messages when route changes, unless 'keepAfterRouteChange' flag is true
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
-                if (this.keepAlertWhenNavigate) {
-                    // only keep for a single route change
-                    this.keepAlertWhenNavigate = false;
-                } else {
-                    // clear alert messages
-                    this.clear();
+                if (!this.keepForOneCicle) {
+                    this.keepForOneCicle = true;
+                    this.subject.next();
+                }
+                else {
+                    this.keepForOneCicle = false;
                 }
             }
         });
@@ -31,7 +31,27 @@ export class CoreAlertService
         return this.subject.asObservable();
     }
 
-    createAlert(type: AlertTypeEnum, message: string)
+    createSuccess(message: string, keepForOneCicle = false) {
+        this.createAlert(AlertTypeEnum.Success, message);
+        this.keepForOneCicle = keepForOneCicle;
+    }
+
+    createInfo(message: string, keepForOneCicle = false) {
+        this.createAlert(AlertTypeEnum.Info, message);
+        this.keepForOneCicle = keepForOneCicle;
+    }
+
+    createWarning(message: string, keepForOneCicle = false) {
+        this.createAlert(AlertTypeEnum.Warning, message);
+        this.keepForOneCicle = keepForOneCicle;
+    }
+
+    createError(message: string, keepForOneCicle = false) {
+        this.createAlert(AlertTypeEnum.Error, message);
+        this.keepForOneCicle = keepForOneCicle;
+    }
+
+    private createAlert(type: AlertTypeEnum, message: string)
     {
         let alert = new Alert();
         alert.type = type;
@@ -39,11 +59,6 @@ export class CoreAlertService
 
         //When an alert is created, the next method trigger the callbacks subscribed 
         this.subject.next(alert);
-    }
-
-    clear() {
-        // clear alerts
-        this.subject.next();
     }
 }
 

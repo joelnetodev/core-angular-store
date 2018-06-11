@@ -2,7 +2,7 @@
 
 namespace StoreApp.Infra.Http
 {
-    internal class HttpContextAccessorInfra : IHttpContextAccessor
+    internal class HttpContextAccessor : IHttpContextAccessor
     {
         public HttpContext HttpContext { get; set; }
     }

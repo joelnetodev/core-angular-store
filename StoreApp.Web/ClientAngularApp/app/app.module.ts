@@ -19,11 +19,15 @@ import { CoreComponentModule } from './modules/0-core/core.component.module';
 
 
 import { HomeComponent } from './components/project/home/home.component';
-import { ProductsComponent } from './components/project/products/products.component';
-import { RowComponent } from './components/project/products/row/row.component';
+
 import { LoginComponent } from './components/project/login/login.component';
 import { RegisterComponent } from './components/project/register/register.component';
 import { PermissionComponent } from './components/project/permission/permission.component';
+
+import { ProductsComponent } from './components/project/products/products.component';
+import { RowComponent } from './components/project/products/row/row.component';
+import { ItemListComponent } from './components/project/items/list/item.list.component';
+import { ItemEditComponent } from './components/project/items/edit/item.edit.component';
 
 import { AppInterceptor } from './app.interceptor';
 import { AppComponent } from './components/0-core/app/app.component';
@@ -36,11 +40,14 @@ import { AppComponent } from './components/0-core/app/app.component';
     //Should be filled by Components, directives, etc
     declarations: [
         HomeComponent,
-        ProductsComponent,
-        RowComponent,
         LoginComponent,
         RegisterComponent,
-        PermissionComponent
+        PermissionComponent,
+
+        ProductsComponent,
+        RowComponent,
+        ItemListComponent,
+        ItemEditComponent,
     ],
 
     //IMPORTS are used to reference other Modules to use their scopes, like Http, Route, etc.

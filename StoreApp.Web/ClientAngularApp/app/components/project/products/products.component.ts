@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CoreBaseService } from '../../../services/0-core/core.base.service';
-import { Product, Item } from '../../../entities/product';
+import { CoreHttpService } from '../../../services/0-core/core.http.service';
+import { Product, Item } from '../../../models/product';
 import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
 
 @Component({
@@ -12,13 +12,13 @@ export class ProductsComponent implements OnInit {
 
     products: Product[];
 
-    constructor(private baseService: CoreBaseService, private menuServ: CoreMenuService) { }
+    constructor(private httpServ: CoreHttpService, private menuServ: CoreMenuService) { }
 
     ngOnInit() {
 
         this.menuServ.setModule(MenuModuleEnum.Products);
 
-        this.baseService.httpGet('products/row').subscribe(x => {
+        this.httpServ.httpGet('products/row').subscribe(x => {
             this.products = x.valueOf() as Product[];
         });
        

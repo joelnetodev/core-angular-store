@@ -10,21 +10,21 @@ namespace StoreApp.Infra.Extension
     {
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" 
         //with others Dependencies of the Project
-        public static IServiceCollection StartRegisterProjectDependencies(
+        public static IServiceCollection AddProjectDependencies(
             this IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessorInfra>();
+            services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
 
-            services.AddScoped<SessionFactoryInfra>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             return services;
         }
 
         //Store the Context into SharedHttpContext to get access to the ServiceProvider
-        public static void ShareContextToContainer(this IApplicationBuilder app)
+        public static void ShareContext(this IApplicationBuilder app)
         {
-            var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
-            SharedHttpContext.Configure(httpContextAccessor);
+            var httpContextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>();
+            SharedHttpContext.SetHttpContextAccessor(httpContextAccessor);
         }
     }
 }

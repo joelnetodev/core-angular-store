@@ -58,7 +58,7 @@ namespace StoreApp.Web.Controllers
             {
                 for (int i = 1; i < 3; i++)
                 {
-                    itemProduct.Items.Add(new ItemModel { Id = id, Name = "Old Item " + id, Count = i });
+                    itemProduct.Items.Add(new ProductItemModel { Id = id, Name = "Old Item " + id, Count = i });
                     id += 1;
                 }
             }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CoreBaseService } from '../../../services/0-core/core.base.service';
-import { Product } from '../../../entities/product';
+import { CoreAlertService } from '../../../services/0-core/core.alert.service';
+import { CoreHttpService } from '../../../services/0-core/core.http.service';
+import { Product } from '../../../models/product';
 import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.m
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private baseService: CoreBaseService, private menuServ: CoreMenuService) { }
+    constructor(private alertServ: CoreAlertService, private httpServ: CoreHttpService, private menuServ: CoreMenuService) { }
 
     ngOnInit() {
         this.menuServ.setModule(MenuModuleEnum.Home);
@@ -25,20 +26,20 @@ export class HomeComponent implements OnInit {
 
     async getOne()
     {
-        let response = await this.baseService.httpGet('products/' + this.id).toPromise();
+        let response = await this.httpServ.httpGet('products/' + this.id).toPromise();
         this.product = response.valueOf() as Product;
     }
 
     async postOne()
     {
-        let response = await this.baseService.httpPost('products/', this.product).toPromise();
+        let response = await this.httpServ.httpPost('products/', this.product).toPromise();
 
-        this.baseService.createAlertSuccess('Product saved');
+        this.alertServ.createSuccess('Product saved');
     }
 
     async getAll()
     {
-        let response = await this.baseService.httpGet('products/').toPromise();
+        let response = await this.httpServ.httpGet('products/').toPromise();
         this.products = response.valueOf() as Product[];
     }
 
@@ -49,6 +50,6 @@ export class HomeComponent implements OnInit {
     }
 
     postItem() {
-        this.baseService.httpGet('items').subscribe();
+        this.httpServ.httpGet('items').subscribe();
     }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CoreBaseService } from '../../../services/0-core/core.base.service';
-import { UserRegister } from '../../../entities/userRegister';
+import { CoreAlertService } from '../../../services/0-core/core.alert.service';
+import { CoreHttpService } from '../../../services/0-core/core.http.service';
+import { UserRegister } from '../../../models/userRegister';
 import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
-import { RoleEnum } from '../../../entities/Enums/roleEnum';
+import { RoleEnum } from '../../../models/Enums/roleEnum';
 
 @Component({
     selector: 'comp-register',
@@ -18,7 +19,7 @@ export class RegisterComponent implements OnInit {
     
     user: UserRegister = new UserRegister();
 
-    constructor(private router: Router, private baseServ: CoreBaseService, private menuServ: CoreMenuService) {
+    constructor(private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService, private menuServ: CoreMenuService) {
     }
 
     ngOnInit() {
@@ -28,8 +29,8 @@ export class RegisterComponent implements OnInit {
 
     createUser() {
 
-        this.baseServ.httpPost('login/create', this.user).subscribe(x => {
-            this.baseServ.createAlertSuccess('User created.');
+        this.httpServ.httpPost('login/create', this.user).subscribe(x => {
+            this.alertServ.createSuccess('User created.');
             this.user = new UserRegister(); 
         });
     }

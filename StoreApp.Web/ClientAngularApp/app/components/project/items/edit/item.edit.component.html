@@ -1,0 +1,24 @@
+
+<h2>{{title}} Item</h2>
+
+<div class="col-md-6 col-md-offset-3">
+    
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" class="form-control" name="name" [(ngModel)]="item.name" required />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input id="description" type="text" class="form-control" name="description" [(ngModel)]="item.description" required />
+        </div>
+        <div class="form-group">
+            <input id="isActive" type="checkbox" class="form-check-input" name="isActive" [(ngModel)]="item.isActive" required />
+            <label class="form-check-label" for="isActive">Is Active</label>
+        </div>
+
+
+        <div class="form-group">
+            <a class="btn btn-default" routerLink="/items">Cancel</a>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
+</div>

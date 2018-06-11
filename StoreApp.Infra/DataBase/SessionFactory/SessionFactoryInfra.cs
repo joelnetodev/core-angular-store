@@ -2,16 +2,17 @@
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Mapping;
 using NHibernate;
+using NHibernate.Cfg;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace StoreApp.Infra.DataBase.SessionFactory
 {
-    public class SessionFactoryInfra : IDisposable
+    public class SessionFactoryInfra : ISessionFactoryInfra
     {
-        private readonly ISession _session;
         private readonly ISessionFactory _sessionFactory;
+        private readonly ISession _session;
 
         public SessionFactoryInfra()
         {
@@ -36,8 +37,6 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 
         public void Dispose()
         {
-            _session.Close();
-            _session.Dispose();
             _sessionFactory.Close();
             _sessionFactory.Dispose();
         }

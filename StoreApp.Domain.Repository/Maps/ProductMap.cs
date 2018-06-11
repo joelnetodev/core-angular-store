@@ -8,7 +8,7 @@ using System.Text;
 
 namespace StoreApp.Domain.Repository.Maps
 {
-    internal class ProductMap : ClassMap<Procduct>
+    internal class ProductMap : ClassMap<Product>
     {
         public ProductMap()
         {

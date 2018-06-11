@@ -48,7 +48,7 @@ namespace StoreApp.Web
                         });
 
             //This is a extension method to configure interfaces and classes of the project
-            services.StartRegisterProjectDependencies();
+            services.AddProjectDependencies();
             services.AddMvc();
 
             RegisterRepositories(services);
@@ -71,10 +71,10 @@ namespace StoreApp.Web
             //On linux, a request (sent to apache or nginx, etc) will be redirected to 
             //an AspNet core app ran by a kestrel service.
             //This line is to keep headers integrity after those actions
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            //});
 
             //habilitar suporte a autenticação
             app.UseAuthentication();
@@ -97,7 +97,7 @@ namespace StoreApp.Web
             });
 
             //This is a extension method to share services provider
-            app.ShareContextToContainer();
+            app.ShareContext();
         }
     }
 }

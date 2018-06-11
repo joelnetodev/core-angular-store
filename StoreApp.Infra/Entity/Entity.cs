@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreApp.Domain.Entity.Entity
+namespace StoreApp.Infra.Entity
 {
     public abstract class Entity
     {

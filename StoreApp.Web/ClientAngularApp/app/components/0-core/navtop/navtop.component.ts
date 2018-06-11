@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreBaseService } from '../../../services/0-core/core.base.service';
+import { CoreUserService } from '../../../services/0-core/core.user.service';
 import { Router } from '@angular/router';
 import { CoreMenuService, MenuModuleEnum, MenuItemEnum } from '../../../services/0-core/core.menu.service';
 
@@ -9,7 +9,7 @@ import { CoreMenuService, MenuModuleEnum, MenuItemEnum } from '../../../services
 })
 export class NavTopComponent implements OnInit {
 
-    constructor(private baseService: CoreBaseService, private router: Router, private menuServ: CoreMenuService) { }
+    constructor(private userServ: CoreUserService, private router: Router, private menuServ: CoreMenuService) { }
 
     ngOnInit() { }
 
@@ -19,8 +19,8 @@ export class NavTopComponent implements OnInit {
     username: string;
 
     isLogged(): boolean {
-        if (this.baseService.isUserStored()){
-            this.username = this.baseService.getUser().username;
+        if (this.userServ.isUserStored()){
+            this.username = this.userServ.getUser().username;
             return true;
         }
         return false;
@@ -41,7 +41,7 @@ export class NavTopComponent implements OnInit {
     }
 
     onLogout() {
-        this.baseService.removeUser();
+        this.userServ.removeUser();
         this.router.navigate(['/login']);
     }
 }

@@ -1,6 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { CoreBaseService } from '../../services/0-core/core.base.service';
+import { CoreUserService } from '../../services/0-core/core.user.service';
+import { CoreHttpService } from '../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../services/0-core/core.alert.service';
 import { CoreMenuService } from '../../services/0-core/core.menu.service';
 
@@ -10,8 +11,9 @@ import { CoreMenuService } from '../../services/0-core/core.menu.service';
     providers:
     [
         CoreAlertService,
-        CoreBaseService,
-        CoreMenuService
+        CoreUserService,
+        CoreMenuService,
+        CoreHttpService
     ],
 })
 export class CoreServiceModule {

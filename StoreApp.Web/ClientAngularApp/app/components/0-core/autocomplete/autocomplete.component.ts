@@ -1,6 +1,6 @@
 
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { CoreBaseService } from '../../../services/0-core/core.base.service';
+import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -27,7 +27,7 @@ export class AutoCompleteComponent implements OnInit {
 
     resultsFromUrl = this.observableResults();
 
-    constructor(private baseServ: CoreBaseService)
+    constructor(private httpServ: CoreHttpService)
     {    }
 
     ngOnInit() {
@@ -49,7 +49,7 @@ export class AutoCompleteComponent implements OnInit {
             .merge(this.textToSearch.valueChanges)
             .filter((txt) => { return txt.length > 2 })
             .debounceTime(700)
-            .switchMap((path) => { return this.baseServ.httpGet(this.url + "/" + path); })
+            .switchMap((path) => { return this.httpServ.httpGet(this.url + "/" + path); })
             .map((data) => { return data as Object[]; })
             .retry(2);
     }

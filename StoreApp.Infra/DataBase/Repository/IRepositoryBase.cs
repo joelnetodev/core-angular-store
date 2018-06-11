@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoreApp.Infra.DataBase
 {
-    public interface IRepositoryBase<T> where T : class
+    public interface IRepositoryBase<T> where T : Entity.Entity
     {
         void SaveOrUpdate(T entity);
 
@@ -13,5 +13,9 @@ namespace StoreApp.Infra.DataBase
         void Delete(T entity);
 
         void Delete(IList<T> entity);
+
+        IList<T> FindAll();
+
+        T GetById(int id);
     }
 }

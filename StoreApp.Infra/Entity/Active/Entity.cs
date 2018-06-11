@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreApp.Domain.Entity.Entity.Active
+namespace StoreApp.Infra.Entity.Active
 {
-    public abstract class Entity : Domain.Entity.Entity.Entity
+    public abstract class Entity : Infra.Entity.Entity
     {
         public virtual bool IsActive { get; set; }
     }

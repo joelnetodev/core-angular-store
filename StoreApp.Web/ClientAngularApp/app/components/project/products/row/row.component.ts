@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Product, Item } from '../../../../entities/product';
-import { CoreBaseService } from '../../../../services/0-core/core.base.service';
+import { Product, Item } from '../../../../models/product';
 
 @Component({
     selector: 'comp-row',
@@ -12,7 +11,7 @@ export class RowComponent implements OnInit {
     @Input()
     products: Product[];
 
-    constructor(private baseService: CoreBaseService) { }
+    constructor() { }
 
     ngOnInit() {
     }

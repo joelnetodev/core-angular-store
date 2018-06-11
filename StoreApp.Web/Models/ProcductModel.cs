@@ -11,15 +11,15 @@ namespace StoreApp.Web.Models
 
         public float Price { get; set; }
 
-        public List<ItemModel> Items { get; set; }
+        public List<ProductItemModel> Items { get; set; }
 
         public ProcductModel()
         {
-            Items = new List<ItemModel>();
+            Items = new List<ProductItemModel>();
         }
     }
 
-    public class ItemModel
+    public class ProductItemModel
     {
         public int Id { get; set; }
 

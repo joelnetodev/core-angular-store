@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StoreApp.Domain.Entity
 {
-    public class Procduct : Entity.Active.Entity
+    public class Product : Infra.Entity.Active.Entity
     {
         public virtual string Name { get; set; }
 
@@ -13,7 +13,7 @@ namespace StoreApp.Domain.Entity
 
         public virtual ICollection<ProductItem> Items { get; set; }
 
-        public Procduct()
+        public Product()
         {
             Items = new List<ProductItem>();
         }
