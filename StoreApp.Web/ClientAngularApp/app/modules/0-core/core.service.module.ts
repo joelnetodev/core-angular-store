@@ -4,6 +4,8 @@ import { CoreUserService } from '../../services/0-core/core.user.service';
 import { CoreHttpService } from '../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../services/0-core/core.alert.service';
 import { CoreMenuService } from '../../services/0-core/core.menu.service';
+import { CoreErrorService } from '../../services/0-core/core.error.service';
+import { CoreLoadService } from '../../services/0-core/core.load.service';
 
 
 //A module to keep the global services to not mess the AppModule organization
@@ -13,7 +15,9 @@ import { CoreMenuService } from '../../services/0-core/core.menu.service';
         CoreAlertService,
         CoreUserService,
         CoreMenuService,
-        CoreHttpService
+        CoreHttpService,
+        CoreErrorService,
+        CoreLoadService
     ],
 })
 export class CoreServiceModule {

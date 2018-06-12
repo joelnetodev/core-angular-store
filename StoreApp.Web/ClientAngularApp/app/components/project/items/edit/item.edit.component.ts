@@ -30,7 +30,7 @@ export class ItemEditComponent implements OnInit {
 
         let id = this.route.snapshot.paramMap.get('id');
 
-        this.httpServ.httpGet('items/edit/' + id).subscribe(
+        this.httpServ.httpGet('items/' + id).subscribe(
             (x) => {
                 this.item = x.valueOf() as Item;
             });

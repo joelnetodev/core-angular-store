@@ -41,11 +41,6 @@ export class CoreAlertService
         this.keepForOneCicle = keepForOneCicle;
     }
 
-    createWarning(message: string, keepForOneCicle = false) {
-        this.createAlert(AlertTypeEnum.Warning, message);
-        this.keepForOneCicle = keepForOneCicle;
-    }
-
     createError(message: string, keepForOneCicle = false) {
         this.createAlert(AlertTypeEnum.Error, message);
         this.keepForOneCicle = keepForOneCicle;

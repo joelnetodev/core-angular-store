@@ -31,7 +31,23 @@ export class AlertComponent implements OnInit
         this.alerts.splice(this.alerts.indexOf(alert), 1);
     }
 
-    chooseAlertCSS(alert: Alert)
+    chooseType(type: AlertTypeEnum) {
+        if (!alert)
+            return;
+
+        switch (type) {
+            case AlertTypeEnum.Success:
+                return 'Success';
+            case AlertTypeEnum.Error:
+                return 'Error';
+            case AlertTypeEnum.Warning:
+                return 'Warning';
+            default:
+                return 'Info';
+        }
+    }
+
+    chooseCSS(alert: Alert)
     {
         if (!alert)
             return;

@@ -30,7 +30,7 @@ namespace StoreApp.Web.Controllers
         {
             if(!ModelState.IsValid || string.IsNullOrEmpty(productModel.Name) || productModel.Price == 0)
             {
-                throw new MessageWarningException("Product has missing fields");
+                throw new ErrorException("Product has missing fields");
             }
 
             return Ok();

@@ -11,6 +11,7 @@ using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class ItemsController : Controller
     {
@@ -21,28 +22,6 @@ namespace StoreApp.Web.Controllers
             _itemRepository = itemRepo;
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost("Delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            using (var unit = UnitOfWork.Start())
-            {
-                var item = _itemRepository.GetById(id);
-                if (item != null)
-                {
-                    _itemRepository.Delete(item);
-                    unit.Commit();
-                }
-                else
-                {
-                    throw new MessageWarningException("Item not found.");
-                }
-
-                return Ok(); 
-            }   
-        }
-
-        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
@@ -53,27 +32,27 @@ namespace StoreApp.Web.Controllers
             return Ok(models);
         }
 
-        [Authorize]
-        [HttpGet("Edit/{id}")]
-        public IActionResult Edit(int id)
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{id:int}")]
+        public IActionResult Get(int id)
         {
             var item = _itemRepository.GetById(id);
 
             if(item == null)
             {
-                throw new MessageWarningException("No item found.");
+                throw new ErrorException("No item found.");
             }
 
             return Ok(CreateItemModel(item));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Post([FromBody]ItemModel model)
+        public IActionResult Save([FromBody]ItemModel model)
         {
             if(!ModelState.IsValid)
             {
-                throw new MessageWarningException("Model invalid.");
+                throw new ErrorException("Model invalid.");
             }
 
             var item = CreateItem(model);
@@ -95,6 +74,27 @@ namespace StoreApp.Web.Controllers
             }
 
             return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            using (var unit = UnitOfWork.Start())
+            {
+                var item = _itemRepository.GetById(id);
+                if (item != null)
+                {
+                    _itemRepository.Delete(item);
+                    unit.Commit();
+                }
+                else
+                {
+                    throw new ErrorException("Item not found.");
+                }
+
+                return Ok();
+            }
         }
 
         private ItemModel CreateItemModel(Item item)

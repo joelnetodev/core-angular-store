@@ -25,21 +25,21 @@ namespace StoreApp.Web.Controllers
             {
                 if (string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password))
                 {
-                    throw new MessageWarningException("Missing fields.");
+                    throw new ErrorException("Missing fields.");
                 }
 
                 var userFromDb = _userRepository.GetByUsername(loginModel.Username);
                 var password = PasswordEncryptator.Encrypit(loginModel.Password);
                 if (userFromDb == null || userFromDb.Password != password)
                 {
-                    throw new MessageWarningException("Username or Password incorrect.");
+                    throw new ErrorException("Username or Password incorrect.");
                 }
 
                 string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
                 return Ok(CreateLogin(loginModel.Username, token));
             }
             else
-                throw new MessageWarningException("Model is not valid.");
+                throw new ErrorException("Model is not valid.");
         }
 
         private UserModel CreateLogin(string userName, string token)
@@ -59,12 +59,12 @@ namespace StoreApp.Web.Controllers
             {
                 if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.Name))
                 {
-                    throw new MessageWarningException("Missing fields.");
+                    throw new ErrorException("Missing fields.");
                 }
 
 
                 if(_userRepository.VerifyUsernameExists(model.Username))
-                    throw new MessageWarningException("Username already exists.");
+                    throw new ErrorException("Username already exists.");
 
                 var user = new User();
                 user.Name = model.Name;
@@ -76,7 +76,7 @@ namespace StoreApp.Web.Controllers
                 return Ok();
             }
             else
-                throw new MessageWarningException("Model is not valid.");
+                throw new ErrorException("Model is not valid.");
         }
     }
 }

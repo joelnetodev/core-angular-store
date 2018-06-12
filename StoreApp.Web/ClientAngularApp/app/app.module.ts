@@ -22,7 +22,6 @@ import { HomeComponent } from './components/project/home/home.component';
 
 import { LoginComponent } from './components/project/login/login.component';
 import { RegisterComponent } from './components/project/register/register.component';
-import { PermissionComponent } from './components/project/permission/permission.component';
 
 import { ProductsComponent } from './components/project/products/products.component';
 import { RowComponent } from './components/project/products/row/row.component';
@@ -42,7 +41,6 @@ import { AppComponent } from './components/0-core/app/app.component';
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        PermissionComponent,
 
         ProductsComponent,
         RowComponent,

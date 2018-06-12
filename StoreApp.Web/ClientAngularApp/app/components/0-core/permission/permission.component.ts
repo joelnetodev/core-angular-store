@@ -14,9 +14,4 @@ export class PermissionComponent implements OnInit {
     ngOnInit() {
 
     }
-
-    back()
-    {
-        this.location.back();
-    }
 }
