@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreApp.Infra.UnitOfWork
+namespace StoreApp.Infra.DataBase.UnitOfWork
 {
     public class UnitOfWork : IDisposable
     {

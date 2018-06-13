@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreApp.Infra.DataBase.Repository
+namespace StoreApp.Infra.DataBase
 {
     public interface IRepositoryBase<T> where T : Entity.Entity
     {

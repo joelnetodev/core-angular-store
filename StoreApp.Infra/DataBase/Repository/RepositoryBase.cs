@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace StoreApp.Infra.DataBase
+namespace StoreApp.Infra.DataBase.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.Entity
     {

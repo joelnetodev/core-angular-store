@@ -6,7 +6,7 @@ using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Classes;
 using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.Exceptions;
-using StoreApp.Infra.UnitOfWork;
+using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers

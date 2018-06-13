@@ -16,8 +16,8 @@ namespace StoreApp.Web
     public class Startup
     {
         /*
-         Para configurar o bundleconfig.js foi necessário executar "dotnet add package BuildBundlerMinifier"
-         Dessa maneira, o pacote de bundles é intalado e a complação transfere os arquivos de css e js 
+         Para configurar o bundleconfig.js foi necessï¿½rio executar "dotnet add package BuildBundlerMinifier"
+         Dessa maneira, o pacote de bundles ï¿½ intalado e a complaï¿½ï¿½o transfere os arquivos de css e js 
          para a pasta wwwroot, de acordo com o bundleconfig.js
              */
 
@@ -31,7 +31,7 @@ namespace StoreApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Adiciona JWT como autenticação base
+            //Adiciona JWT como autenticaï¿½ï¿½o base
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         .AddJwtBearer(options =>
                         {
@@ -61,7 +61,7 @@ namespace StoreApp.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceCollection services)
         {
             if (env.IsDevelopment())
             {
@@ -76,7 +76,7 @@ namespace StoreApp.Web
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             //});
 
-            //habilitar suporte a autenticação
+            //habilitar suporte a autenticaï¿½ï¿½o
             app.UseAuthentication();
 
             //Use static files para detectar arquivos estativos em wwwroot
@@ -85,7 +85,7 @@ namespace StoreApp.Web
             app.UseStaticFiles();
 
             //Use ExceptionMiddleware to intercpect exceptions
-            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<ExceptionMiddlewareInfra>();
 
             app.UseMvc(routes =>
             {
@@ -97,7 +97,7 @@ namespace StoreApp.Web
             });
 
             //This is a extension method to share services provider
-            app.ShareContext();
+            app.ConfigureSharedHttpContext(services);
         }
     }
 }

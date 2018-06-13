@@ -11,11 +11,11 @@ namespace StoreApp.Infra.Exceptions
      It has a constructor that will receive the request and
      an ascyn method that will be invoked when exceptions occurs.
      */
-    public class ExceptionMiddleware
+    public class ExceptionMiddlewareInfra
     {
         private readonly RequestDelegate _next;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddlewareInfra(RequestDelegate next)
         {
             _next = next;
         }
