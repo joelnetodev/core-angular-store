@@ -55,8 +55,8 @@ namespace StoreApp.Web
             //This is a extension method to configure interfaces and classes of the project
             services.AddProjectDependencies();
 
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IItemRepository, ItemRepository>();
+            //services.AddSingleton<IUserRepository, UserRepository>();
+            //services.AddSingleton<IItemRepository, ItemRepository>();
 
             services.AddMvc();
         }
