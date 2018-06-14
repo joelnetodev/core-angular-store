@@ -17,7 +17,7 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 
         public SessionFactoryInfra()
         {
-            var assemblyWithMaps = AssemblyLocator.GetByName("StroeApp.Domain.Repository.dll");
+            var assemblyWithMaps = AssemblyLocator.GetByName("StoreApp.Domain.Repository.dll");
 
             string connString = @"Server=127.0.0.1;Port=3306;Database=db_store;Uid=user_test;Pwd=password_test;SslMode=none";
 

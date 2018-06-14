@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Classes;
+using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Authentication;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
@@ -11,12 +12,10 @@ namespace StoreApp.Web.Controllers
     public class LoginController : Controller
     {
         IUserRepository _userRepository;
-
         public LoginController(IUserRepository userRepo)
         {
             _userRepository = userRepo;
         }
-
         [HttpPost]
         public IActionResult Access([FromBody]LoginModel loginModel)
         {

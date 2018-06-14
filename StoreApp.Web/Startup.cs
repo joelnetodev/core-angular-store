@@ -10,6 +10,11 @@ using StoreApp.Infra.Authentication;
 using Microsoft.AspNetCore.HttpOverrides;
 using StoreApp.Infra.Extension;
 using StoreApp.Domain.Repository.Classes;
+using StoreApp.Domain.Repository.Interfaces;
+using StoreApp.Infra;
+using StoreApp.Infra.DataBase.Repository;
+using StoreApp.Infra.DataBase;
+using System.Linq;
 
 namespace StoreApp.Web
 {
@@ -49,19 +54,16 @@ namespace StoreApp.Web
 
             //This is a extension method to configure interfaces and classes of the project
             services.AddProjectDependencies();
-            services.AddMvc();
 
-            RegisterRepositories(services);
-        }
-
-        public void RegisterRepositories(IServiceCollection services)
-        {
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IItemRepository, ItemRepository>();
+
+            services.AddMvc();
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceCollection services)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -97,7 +99,7 @@ namespace StoreApp.Web
             });
 
             //This is a extension method to share services provider
-            app.ConfigureSharedHttpContext(services);
+            app.ConfigureSharedHttpContext();
         }
     }
 }

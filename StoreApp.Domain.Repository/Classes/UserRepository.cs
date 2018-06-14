@@ -1,5 +1,6 @@
 ﻿
 using StoreApp.Domain.Entity;
+using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.DataBase.Repository;
 using System;
 using System.Collections.Generic;

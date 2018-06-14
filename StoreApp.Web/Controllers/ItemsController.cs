@@ -8,6 +8,7 @@ using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Web.Models;
+using StoreApp.Domain.Repository.Interfaces;
 
 namespace StoreApp.Web.Controllers
 {

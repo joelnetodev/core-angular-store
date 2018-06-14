@@ -7,12 +7,12 @@ using StoreApp.Infra.DataBase.Repository;
 
 namespace StoreApp.Infra
 {
-    internal static class AssemblyLocator
+    public static class AssemblyLocator
     {
         public static Assembly GetByName(string assemblyName)
         {
-             var assemblyPath = AppDomain.CurrentDomain.BaseDirectory + "\\" + assemblyName;
-             return System.Reflection.Assembly.LoadFile(assemblyPath);
+             var assemblyPath = AppDomain.CurrentDomain.BaseDirectory + assemblyName;
+             return Assembly.LoadFile(assemblyPath);
         }
     }
 }
