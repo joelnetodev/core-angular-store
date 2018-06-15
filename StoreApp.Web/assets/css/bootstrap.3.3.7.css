@@ -4,14 +4,15 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */ /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
-html {
+ html {
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%
 }
 
 body {
-    margin: 0
+    margin: 0;
+    background-color: #f1f3f6;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
@@ -1357,7 +1358,7 @@ body {
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
-    background-color: #fff
+    background-color: #f1f3f6;
 }
 
 button, input, select, textarea {
@@ -5866,7 +5867,13 @@ a.list-group-item-danger, button.list-group-item-danger {
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: 0 1px 1px rgba(0,0,0,.05)
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-form
+{
+    margin: 5px;
+    padding: 5px;
 }
 
 .panel-body {

@@ -1,8 +1,8 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Item } from '../../../../models/item';
-import { CoreHttpService } from '../../../../services/0-core/core.http.service';
+import { Item } from '../../../models/item';
+import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { Router } from '@angular/router';
 
 @Component({

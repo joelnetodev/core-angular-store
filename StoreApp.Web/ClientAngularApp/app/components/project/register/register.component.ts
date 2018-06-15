@@ -8,7 +8,8 @@ import { RoleEnum } from '../../../models/Enums/roleEnum';
 
 @Component({
     selector: 'comp-register',
-    templateUrl: './register.component.html'
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
 

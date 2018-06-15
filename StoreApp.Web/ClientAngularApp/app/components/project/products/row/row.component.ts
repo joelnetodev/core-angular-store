@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Product, Item } from '../../../../models/product';
+import { CoreAlertService } from '../../../../services/0-core/core.alert.service';
 
 @Component({
     selector: 'comp-row',
@@ -11,13 +12,15 @@ export class RowComponent implements OnInit {
     @Input()
     products: Product[];
 
-    constructor() { }
+    constructor(private alertServ: CoreAlertService) { }
 
     ngOnInit() {
     }
 
     addItem(product: Product) {
         product.items.push(this.createEmptyItem());
+
+        this.alertServ.createSuccess('Created.');
     }
 
     removeItem(product: Product, item: Item) {
