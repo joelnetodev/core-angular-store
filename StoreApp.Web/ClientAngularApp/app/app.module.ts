@@ -17,7 +17,7 @@ import { CoreServiceModule } from './modules/0-core/core.service.module';
 import { CoreSharedModule } from './modules/0-core/core.shared.module';
 import { CoreComponentModule } from './modules/0-core/core.component.module';
 
-
+import { NavTopComponent } from './components/project/navtop/navtop.component';
 import { HomeComponent } from './components/project/home/home.component';
 
 import { LoginComponent } from './components/project/login/login.component';
@@ -30,6 +30,8 @@ import { ItemEditComponent } from './components/project/items/edit/item.edit.com
 
 import { AppInterceptor } from './app.interceptor';
 import { AppComponent } from './components/0-core/app/app.component';
+import { PermissionComponent } from './components/project/permission/permission.component';
+import { ErrorComponent } from './components/project/error/error.component';
 
 
 //NgModule to identify this class as a Module
@@ -38,6 +40,10 @@ import { AppComponent } from './components/0-core/app/app.component';
     //DECLARATIONS are private scope and should be used for templates (inside this Module only) 
     //Should be filled by Components, directives, etc
     declarations: [
+        NavTopComponent,
+        PermissionComponent, 
+        ErrorComponent,
+
         HomeComponent,
         LoginComponent,
         RegisterComponent,

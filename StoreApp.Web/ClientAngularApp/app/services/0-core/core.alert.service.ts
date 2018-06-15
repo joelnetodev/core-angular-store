@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { NavigationStart, Router } from '@angular/router';
 
 
 @Injectable()
-export class CoreAlertService
-{
-    private subject = new Subject<Alert>();
+export class CoreAlertService {
+    private alert = new Subject<Alert>();
     private keepForOneCicle = false;
 
-    constructor(private router: Router) {
-        //clear alert messages when route changes, unless 'keepAfterRouteChange' flag is true
+    constructor(private router: Router, ) {
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
+                
                 if (!this.keepForOneCicle) {
                     this.keepForOneCicle = true;
-                    this.subject.next();
+                    this.alert.next();
                 }
                 else {
                     this.keepForOneCicle = false;
@@ -25,10 +24,9 @@ export class CoreAlertService
         });
     }
 
-    getAlert(): Observable<any>
-    {
+    getAlert(): Observable<any> {
         //Return an observable to subscribe a callback
-        return this.subject.asObservable();
+        return this.alert.asObservable();
     }
 
     createSuccess(message: string, keepForOneCicle = false) {
@@ -46,14 +44,13 @@ export class CoreAlertService
         this.keepForOneCicle = keepForOneCicle;
     }
 
-    private createAlert(type: AlertTypeEnum, message: string)
-    {
+    private createAlert(type: AlertTypeEnum, message: string) {
         let alert = new Alert();
         alert.type = type;
         alert.message = message;
 
         //When an alert is created, the next method trigger the callbacks subscribed 
-        this.subject.next(alert);
+        this.alert.next(alert);
     }
 }
 

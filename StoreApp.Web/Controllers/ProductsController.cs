@@ -7,24 +7,22 @@ using StoreApp.Web.Models;
 
 namespace StoreApp.Web.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(CreateProducts(4));
         }
-
-        [AllowAnonymous]
+        
         [HttpGet("{id:int}")]
         public IActionResult Get(int Id)
         {
             return Ok(CreateProduct(Id, "Product " + Id, ("1." + Id.ToString())));
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Post([FromBody]ProcductModel productModel)
         {
@@ -36,7 +34,6 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
         [HttpGet("FindByName/{name}")]
         public IActionResult FindByName(string name)
         {
@@ -47,7 +44,6 @@ namespace StoreApp.Web.Controllers
             return Ok(result);
         }
 
-        [Authorize]
         [HttpGet("Row")]
         public IActionResult Row()
         {

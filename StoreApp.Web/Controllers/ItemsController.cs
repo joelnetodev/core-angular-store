@@ -12,7 +12,7 @@ using StoreApp.Domain.Repository.Interfaces;
 
 namespace StoreApp.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class ItemsController : Controller
     {
@@ -33,7 +33,6 @@ namespace StoreApp.Web.Controllers
             return Ok(models);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
@@ -47,7 +46,6 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateItemModel(item));
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Save([FromBody]ItemModel model)
         {
@@ -77,7 +75,6 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {

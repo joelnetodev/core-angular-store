@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Item } from '../../../../models/item';
 import { CoreHttpService } from '../../../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../../../services/0-core/core.alert.service';
-import { CoreMenuService, MenuModuleEnum } from '../../../../services/0-core/core.menu.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,12 +15,11 @@ export class ItemEditComponent implements OnInit {
     title = "Add"
     item: Item = new Item();
 
-    constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private menuServ: CoreMenuService, private alertServ: CoreAlertService) {
+    constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
 
     ngOnInit() {
-
-        this.menuServ.setModule(MenuModuleEnum.Items);
+        //this.menuServ.setModule(MenuModuleEnum.Items);
 
         if (!this.route.snapshot.paramMap.has('id'))
             return;

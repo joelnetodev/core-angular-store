@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreUserService } from '../../../services/0-core/core.user.service';
-import { Router } from '@angular/router';
-import { CoreMenuService, MenuModuleEnum, MenuItemEnum } from '../../../services/0-core/core.menu.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { MenuModuleEnum, MenuItemEnum } from '../../../models/Enums/menuEnum';
 
 @Component({
     selector: 'comp-navtop',
@@ -9,17 +10,27 @@ import { CoreMenuService, MenuModuleEnum, MenuItemEnum } from '../../../services
 })
 export class NavTopComponent implements OnInit {
 
-    constructor(private userServ: CoreUserService, private router: Router, private menuServ: CoreMenuService) { }
+    constructor(private userServ: CoreUserService, private router: Router, private activatedRoute: ActivatedRoute) { 
+    }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this.module = this.activatedRoute.snapshot.data['module'];
+        this.title = this.activatedRoute.snapshot.data['title'];
+    }
 
     menuModuleEnum = MenuModuleEnum;
     menuItemEnum = MenuItemEnum;
 
     username: string;
+    
+    module: MenuModuleEnum;
+    item: MenuItemEnum;
+
+    title:string;
+    
 
     isLogged(): boolean {
-        if (this.userServ.isUserStored()){
+        if(this.userServ.isUserStored()){
             this.username = this.userServ.getUser().username;
             return true;
         }
@@ -27,14 +38,14 @@ export class NavTopComponent implements OnInit {
     }
 
     chooseModuleCSS(module: MenuModuleEnum): string {
-        if (module == this.menuServ.getModule())
+        if (module == this.module)
             return "nav-item active";
 
         return "nav-item";
     }
 
     chooseItemCSS(item: MenuItemEnum): string {
-        if (item == this.menuServ.getItem())
+        if (item == this.item)
             return "nav-item active";
 
         return "nav-item";

@@ -1,8 +1,10 @@
 
-<h2>{{title}} Item</h2>
+<comp-navtop></comp-navtop>
 
-<div class="col-md-6 col-md-offset-3">
-    
+<div class="row">
+
+    <div class="col-md-6 col-md-offset-3">
+
         <div class="form-group">
             <label for="name">Name</label>
             <input id="name" type="text" class="form-control" name="name" [(ngModel)]="item.name" required />
@@ -21,4 +23,5 @@
             <a class="btn btn-default" routerLink="/items">Cancel</a>
             <button class="btn btn-primary" (click)="save()">Save</button>
         </div>
+    </div>
 </div>

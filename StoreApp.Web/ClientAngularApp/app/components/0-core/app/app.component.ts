@@ -18,4 +18,5 @@ export class AppComponent
 {
   //Every component works like a ViewModel for the HTML template (the view)
   //the properties and methods could be used in HTML templates to display, store and process information
+  
 }

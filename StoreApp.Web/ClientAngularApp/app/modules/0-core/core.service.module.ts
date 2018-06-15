@@ -3,7 +3,6 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreUserService } from '../../services/0-core/core.user.service';
 import { CoreHttpService } from '../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../services/0-core/core.alert.service';
-import { CoreMenuService } from '../../services/0-core/core.menu.service';
 import { CoreErrorService } from '../../services/0-core/core.error.service';
 import { CoreLoadService } from '../../services/0-core/core.load.service';
 
@@ -14,7 +13,6 @@ import { CoreLoadService } from '../../services/0-core/core.load.service';
     [
         CoreAlertService,
         CoreUserService,
-        CoreMenuService,
         CoreHttpService,
         CoreErrorService,
         CoreLoadService

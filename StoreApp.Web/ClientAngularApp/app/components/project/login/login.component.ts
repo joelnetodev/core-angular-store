@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CoreUserService } from '../../../services/0-core/core.user.service';
 import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { User } from '../../../models/user';
-import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
 
 @Component({
     selector: 'comp-login',
@@ -15,11 +14,11 @@ export class LoginComponent implements OnInit {
     username: string = "";
     password: string = "";
 
-    constructor(private router: Router, private httpServ: CoreHttpService, private userServ: CoreUserService, private menuServ: CoreMenuService) {
+    constructor(private router: Router, private httpServ: CoreHttpService, private userServ: CoreUserService) {
     }
 
     ngOnInit() {
-        this.menuServ.setModule(MenuModuleEnum.Login);
+        //this.menuServ.setModule(MenuModuleEnum.Login);
     }
 
     login() {

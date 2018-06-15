@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CoreAlertService } from '../../../services/0-core/core.alert.service';
 import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { UserRegister } from '../../../models/userRegister';
-import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
 import { RoleEnum } from '../../../models/Enums/roleEnum';
 
 @Component({
@@ -19,12 +18,11 @@ export class RegisterComponent implements OnInit {
     
     user: UserRegister = new UserRegister();
 
-    constructor(private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService, private menuServ: CoreMenuService) {
+    constructor(private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
 
     ngOnInit() {
-
-        this.menuServ.setModule(MenuModuleEnum.Register);
+        //this.menuServ.setModule(MenuModuleEnum.Register);
     }
 
     createUser() {

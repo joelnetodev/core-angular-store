@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CoreAlertService } from '../../../services/0-core/core.alert.service';
 import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { Product } from '../../../models/product';
-import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.menu.service';
 
 @Component({
     selector: 'comp-home',
@@ -11,10 +10,10 @@ import { CoreMenuService, MenuModuleEnum } from '../../../services/0-core/core.m
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private alertServ: CoreAlertService, private httpServ: CoreHttpService, private menuServ: CoreMenuService) { }
+    constructor(private alertServ: CoreAlertService, private httpServ: CoreHttpService) { }
 
     ngOnInit() {
-        this.menuServ.setModule(MenuModuleEnum.Home);
+        //this.menuServ.setModule(MenuModuleEnum.Home);
     }
 
     returnedId: number = 0;
