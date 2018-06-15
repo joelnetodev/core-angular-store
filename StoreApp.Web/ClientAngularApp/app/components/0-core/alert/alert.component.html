@@ -1,6 +1,6 @@
 
 
-<div *ngFor="let alert of alerts" class="{{ chooseCSS(alert) }} alert-dismissable">
-    <strong>{{chooseType(alert.type)}}!</strong>&nbsp;{{alert.message}}
+<div *ngFor="let alert of getAlerts()" class="{{ chooseCSS(alert) }} alert-dismissable">
+    <strong>{{chooseTypeName(alert.type)}}!</strong>&nbsp;{{alert.message}}
     <a class="close" (click)="removeAlert(alert)">&times;</a>
 </div>

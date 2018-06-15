@@ -36,8 +36,6 @@ export class ItemEditComponent implements OnInit {
 
     save() {
 
-        console.log(this.item);
-
         this.httpServ.httpPost('items', this.item).subscribe(
             (x) => {
                 this.alertServ.createSuccess('Item saved.', true);

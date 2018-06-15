@@ -8,30 +8,23 @@ import { CoreAlertService, Alert, AlertTypeEnum } from '../../../services/0-core
 })
 export class AlertComponent implements OnInit
 {
-    alerts: Alert[] = [];
-
     constructor(private alertService: CoreAlertService) { }
 
     ngOnInit()
     {
-        //Subscribe the Observer with a callback that is executed everytime that an alert is created in service
-        this.alertService.getAlert().subscribe(x =>
-        {
-            let alert = x as Alert;
-            if (!alert) {
-                this.alerts.length = 0;
-            }
-            else {
-                this.alerts.push(alert);
-            }
-        });
+        this.alertService.verifyKeepForACicle();
+    }
+
+    getAlerts()
+    {
+        return this.alertService.getAlerts();
     }
 
     removeAlert(alert: Alert) {
-        this.alerts.splice(this.alerts.indexOf(alert), 1);
+        this.alertService.removeAlert(alert);
     }
 
-    chooseType(type: AlertTypeEnum) {
+    chooseTypeName(type: AlertTypeEnum) {
         if (!alert)
             return;
 
