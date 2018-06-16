@@ -24,7 +24,7 @@ import { RegisterComponent } from './components/project/register/register.compon
 
 import { ProductsComponent } from './components/project/products/products.component';
 import { RowComponent } from './components/project/products/row/row.component';
-import { ItemListComponent } from './components/project/items/item.list.component';
+import { ItemsComponent } from './components/project/items/items.component';
 import { ItemEditComponent } from './components/project/items/edit/item.edit.component';
 
 import { AppInterceptor } from './app.interceptor';
@@ -43,7 +43,7 @@ import { AppComponent } from './components/0-core/app/app.component';
 
         ProductsComponent,
         RowComponent,
-        ItemListComponent,
+        ItemsComponent,
         ItemEditComponent,
     ],
 

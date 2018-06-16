@@ -6,10 +6,10 @@ import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'comp-item-list',
-    templateUrl: './item.list.component.html'
+    selector: 'comp-items',
+    templateUrl: './items.component.html'
 })
-export class ItemListComponent implements OnInit {
+export class ItemsComponent implements OnInit {
 
     @Input()
     items: Item[] = new Array<Item>();
