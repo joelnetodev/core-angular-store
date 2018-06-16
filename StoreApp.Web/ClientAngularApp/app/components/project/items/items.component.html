@@ -8,7 +8,7 @@
         <a class="btn btn-primary float-right" routerLink="/items/edit">Add</a>
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>
@@ -37,10 +37,10 @@
                     {{item.isActive}}
                 </td>
                 <td>
-                    <a class="btn btn-default btn-sm" [routerLink]="['/items/edit', item.id]" title="edit">
+                    <a class="btn btn-secondary btn-sm" [routerLink]="['/items/edit', item.id]" title="edit">
                         <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
                     </a>
-                    <a class="btn btn-default btn-sm" (click)="remove(item)" title="remove">
+                    <a class="btn btn-secondary btn-sm" (click)="remove(item)" title="remove">
                         <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
                     </a>
 

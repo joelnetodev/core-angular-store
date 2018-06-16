@@ -4,19 +4,20 @@
     <comp-load></comp-load>
 
     <div class="row">
-        <div class="col-sm">
+        <div class="col-6">
             <label for="name">Name</label>
             <input id="name" type="text" class="form-control" name="name" [(ngModel)]="item.name" required />
         </div>
 
-        <div class="col-sm">
+        <div class="col-6">
             <label for="description">Description</label>
             <input id="description" type="text" class="form-control" name="description" [(ngModel)]="item.description" required />
         </div>
 
-        <div class="col-sm">
+        <div class="col-6">
+            <br />
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="isActive"  [(ngModel)]="item.isActive">
+                <input class="form-check-input" type="checkbox" value="" id="isActive" [(ngModel)]="item.isActive">
                 <label class="form-check-label" for="isActive">Is Active</label>
             </div>
         </div>

@@ -47,7 +47,6 @@ export class AppInterceptor implements HttpInterceptor {
                 }
 
                 return Observable.throw(response);
-
             })
             .finally(() => { this.loadServ.hide(); });
     }

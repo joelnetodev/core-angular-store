@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StoreApp.Domain.Entity;
+using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 
@@ -11,20 +13,31 @@ namespace StoreApp.Web.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
+        private IProductRepository _prodRepository;
+
+        public ProductsController(IProductRepository prodRepo)
+        {
+            _prodRepository = prodRepo;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(CreateProducts(4));
+            var products = _prodRepository.FindAllWithItems();
+
+            return Ok(CreateProducts(products));
         }
         
         [HttpGet("{id:int}")]
-        public IActionResult Get(int Id)
+        public IActionResult Get(int id)
         {
-            return Ok(CreateProduct(Id, "Product " + Id, ("1." + Id.ToString())));
+            var prod = _prodRepository.GetById(id);
+
+            return Ok(CreateProduct(prod));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]ProcductModel productModel)
+        public IActionResult Save([FromBody]ProductModel productModel)
         {
             if(!ModelState.IsValid || string.IsNullOrEmpty(productModel.Name) || productModel.Price == 0)
             {
@@ -34,50 +47,33 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("FindByName/{name}")]
-        public IActionResult FindByName(string name)
-        {
-            var list = CreateProducts(4);
-
-            var result = list.Where(x => x.Name.ToLower().Contains(name.ToLower())).OrderBy(x => x.Name).Take(10).ToList();
-
-            return Ok(result);
-        }
-
-        [HttpGet("Row")]
-        public IActionResult Row()
-        {
-            var products = CreateProducts(3);
-
-            int id = 1;
-            foreach (var itemProduct in products)
-            {
-                for (int i = 1; i < 3; i++)
-                {
-                    itemProduct.Items.Add(new ProductItemModel { Id = id, Name = "Old Item " + id, Count = i });
-                    id += 1;
-                }
-            }
-
-            return Ok(products);
-        }
-
         #region helpers
-        private IList<ProcductModel> CreateProducts(int qtd)
+        private IList<ProductModel> CreateProducts(IList<Product> products)
         {
-            var list = new List<ProcductModel>();
+            var list = new List<ProductModel>();
 
-            for (int i = 1; i <= qtd; i++)
+            foreach (var product in products)
             {
-                list.Add(CreateProduct(i, "Product " + i, ("1." + i.ToString())));
+                list.Add(CreateProduct(product));
             }
 
             return list;
         }
 
-        private ProcductModel CreateProduct(int id, string name, string price)
+        private ProductModel CreateProduct(Product product)
         {
-            return new ProcductModel { Id = id, Name = name, Price = float.Parse(price) };
+            var items = new List<ProductItemModel>();
+            foreach (var item in product.Items)
+            {
+                items.Add(new ProductItemModel {
+                    Id = item.Id,
+                    ItemId = item.Item.Id,
+                    Name = item.Item.Name,
+                    Count = item.Count
+                });
+            }
+
+            return new ProductModel { Id = product.Id, Name = product.Name, Price = product.Price, Items = items };
         }
         #endregion
     }

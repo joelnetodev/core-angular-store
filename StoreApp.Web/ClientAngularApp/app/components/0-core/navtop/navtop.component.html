@@ -15,7 +15,12 @@
         </ul>
 
         <div class="form-inline my-2 my-lg-0">
-            <a class="nav-link text-light" routerLink="/users/edit/{{username}}">{{username}}</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="{{ chooseModuleCSS(menuModuleEnum.Users) }}">
+                    <a class="nav-link text-light" routerLink="/users/edit/{{username}}">{{username}}</a>
+                </li>
+            </ul>
+        
             <button class="btn btn-danger navbar-btn" type="button" (click)="onLogout()">Logout</button>
         </div>
 

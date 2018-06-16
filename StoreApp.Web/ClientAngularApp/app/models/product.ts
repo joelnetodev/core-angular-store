@@ -8,12 +8,12 @@ export class Product
     public id: number;
     public name: string;
     public price: number;
-
-    public items: Item[];
+    public items: ProductItem[] = new Array<ProductItem>();
 }
 
-export class Item {
+export class ProductItem {
     public id: number;
+    public itemId: number;
     public name: string;
     public count: number;
 }

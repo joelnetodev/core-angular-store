@@ -1,10 +1,64 @@
 
 <comp-navtop></comp-navtop>
-<div class="panel card-body">
+
+<div class="card card-body">
     <comp-load></comp-load>
 
-    <p>This is how component inside component works</p>
+    <div class="float-right">
+        <a class="btn btn-primary float-right" routerLink="/products/edit">Add</a>
+    </div>
 
-    <comp-row [products]="products"></comp-row>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Is Active
+                </th>
+                <th>
+                    Items
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let productModel of productsModels">
+                <td>
+                    {{productModel.product.name}}
+                </td>
+                <td>
+                    {{productModel.product.price}}
+                </td>
+                <td>
+                    {{productModel.itemsNames}}
+                </td>
+                <td>
+                    {{productModel.product.isActive}}
+                </td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" [routerLink]="['/products/edit', productModel.product.id]" title="edit">
+                        <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
+                    </a>
+                    <a class="btn btn-secondary btn-sm" (click)="remove(productModel)" title="remove">
+                        <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+                    </a>
 
+                </td>
+            </tr>
+
+            <tr *ngIf="productsModels.length == 0">
+                <td colspan="5" style="text-align: center;">
+                    No products.
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 </div>

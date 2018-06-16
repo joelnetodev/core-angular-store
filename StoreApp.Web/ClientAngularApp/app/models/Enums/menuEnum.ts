@@ -1,9 +1,8 @@
 export enum MenuModuleEnum {
     Home,
-    Login,
-    Register,
     Products,
-    Items
+    Items,
+    Users
 }
 
 export enum MenuItemEnum {
