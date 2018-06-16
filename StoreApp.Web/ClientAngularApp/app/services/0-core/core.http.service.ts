@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { CoreUserService } from './core.user.service';
+import { CoreLoadService } from './core.load.service';
 
 
 @Injectable()
@@ -10,7 +11,7 @@ export class CoreHttpService {
 
     private urlApi: string = '';
 
-    constructor(private http: HttpClient, private userServ: CoreUserService)
+    constructor(private http: HttpClient, private userServ: CoreUserService, private loadServ: CoreLoadService)
     {
         //the orign is the first part, the domain: http://www.domain.com
         //and the path is / or /path/ that has been given by the server to your app 

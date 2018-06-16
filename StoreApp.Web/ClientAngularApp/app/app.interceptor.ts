@@ -49,7 +49,7 @@ export class AppInterceptor implements HttpInterceptor {
                 return Observable.throw(response);
 
             })
-            .finally(() => this.loadServ.hide());
+            .finally(() => { this.loadServ.hide(); });
     }
 
     /*Seems to be more apropriated to let CoreBaseService responsible for httpRequests

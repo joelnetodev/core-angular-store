@@ -9,6 +9,7 @@ using StoreApp.Infra.Exceptions;
 using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Web.Models;
 using StoreApp.Domain.Repository.Interfaces;
+using System.Threading;
 
 namespace StoreApp.Web.Controllers
 {
@@ -36,6 +37,8 @@ namespace StoreApp.Web.Controllers
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
+            Thread.Sleep(4000);
+
             var item = _itemRepository.GetById(id);
 
             if(item == null)

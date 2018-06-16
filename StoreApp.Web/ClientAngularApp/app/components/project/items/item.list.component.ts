@@ -18,19 +18,19 @@ export class ItemListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getItems();
+    }
 
-        //this.menuServ.setModule(MenuModuleEnum.Items);
-
-        this.httpServ.httpGet('items').subscribe(
-            (x) => {
-                this.items = x.valueOf() as Item[];
-            });
+    getItems() {
+        this.httpServ.httpGet('items').subscribe(x => {
+            this.items = x.valueOf() as Item[]
+        });
     }
 
     remove(item: Item) {
         this.httpServ.httpPost('items/delete/' + item.id).subscribe(
             (x) => {
-                this.items.splice(this.items.indexOf(item), 1);
+                //this.items.splice(this.items.indexOf(item), 1);
             });
     }
 }

@@ -1,59 +1,59 @@
 
 <comp-navtop></comp-navtop>
+<div class="panel panel-body">
+    <comp-load></comp-load>
 
-<div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-form">
-                <comp-load></comp-load>
+    <div class="float-right">
+        <a class="btn btn-primary float-right" routerLink="/items/edit">Add</a>
+        <a class="btn btn-primary float-right" (click)="getItems()">Get</a>
+    </div>
 
-<a class="btn btn-primary float-right" routerLink="/items/edit">Add</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Is Active
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>
+                    {{item.name}}
+                </td>
+                <td>
+                    {{item.description}}
+                </td>
+                <td>
+                    {{item.isActive}}
+                </td>
+                <td>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Is Active
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of items">
-            <td>
-                {{item.name}}
-            </td>
-            <td>
-                {{item.description}}
-            </td>
-            <td>
-                {{item.isActive}}
-            </td>
-            <td>
+                    <a class="btn btn-default btn-sm" [routerLink]="['/items/edit', item.id]" title="edit">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </a>
+                    <a class="btn btn-default btn-sm" (click)="remove(item)" title="remove">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                    </a>
 
-                <a class="btn btn-default btn-sm" [routerLink]="['/items/edit', item.id]" title="edit">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                </a>
-                <a class="btn btn-default btn-sm" (click)="remove(item)" title="remove">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                </a>
+                </td>
+            </tr>
 
-            </td>
-        </tr>
+            <tr *ngIf="items.length == 0">
+                <td colspan="4" style="text-align: center;">
+                    No items.
+                </td>
+            </tr>
 
-        <tr *ngIf="items.length == 0">
-            <td colspan="4" style="text-align: center;">
-                No items.
-            </td>
-        </tr>
-
-    </tbody>
-</table>
-</div>
+        </tbody>
+    </table>
 </div>

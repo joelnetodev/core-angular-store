@@ -5,6 +5,7 @@ using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Authentication;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
+using System.Threading;
 
 namespace StoreApp.Web.Controllers
 {

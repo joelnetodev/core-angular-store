@@ -6,22 +6,21 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class CoreLoadService
 {
-    private subject = new Subject<boolean>();
+    private isToShow: boolean = false;
 
     constructor() {
     }
 
-    getIsToShow(): Observable<any>
+    getIsToShow(): boolean
     {
-        //Return an observable to subscribe a callback
-        return this.subject.asObservable();
+        return this.isToShow;
     }
 
     show() {
-        this.subject.next(true);
+        this.isToShow = true;
     }
 
     hide() {
-        this.subject.next(false);
+        this.isToShow = false;
     }
 }

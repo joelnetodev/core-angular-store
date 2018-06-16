@@ -9,16 +9,14 @@ import { CoreLoadService } from '../../../services/0-core/core.load.service';
 })
 export class LoadComponent implements OnInit
 {
-    isToShow: boolean;
-
     constructor(private loadServ: CoreLoadService) { }
 
     ngOnInit()
     {
-        //Subscribe the Observer with a callback that is executed everytime that an alert is created in service
-        this.loadServ.getIsToShow().subscribe(x =>
-        {
-            this.isToShow = x;
-        });
+
+    }
+
+    isToShow(): boolean {
+        return this.loadServ.getIsToShow();
     }
 }
