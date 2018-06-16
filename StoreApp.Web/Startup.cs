@@ -73,10 +73,10 @@ namespace StoreApp.Web
             //On linux, a request (sent to apache or nginx, etc) will be redirected to 
             //an AspNet core app ran by a kestrel service.
             //This line is to keep headers integrity after those actions
-            //app.UseForwardedHeaders(new ForwardedHeadersOptions
-            //{
-            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            //});
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             //habilitar suporte a autentica��o
             app.UseAuthentication();
