@@ -15,6 +15,7 @@ using StoreApp.Infra;
 using StoreApp.Infra.DataBase.Repository;
 using StoreApp.Infra.DataBase;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace StoreApp.Web
 {
@@ -63,7 +64,7 @@ namespace StoreApp.Web
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -99,7 +100,7 @@ namespace StoreApp.Web
             });
 
             //This is a extension method to share services provider
-            app.ConfigureSharedHttpContext();
+            app.ConfigureSharedHttpContext(serviceProvider);
         }
     }
 }

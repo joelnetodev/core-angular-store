@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-
+using System;
 
 namespace StoreApp.Infra.Http
 {
@@ -8,9 +8,9 @@ namespace StoreApp.Infra.Http
     {
         public static IHttpContextAccessor HttpContextAccessor;
 
-        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
+        public static void SetHttpContextAccessor(IHttpContextAccessor accessor)
         {
-            HttpContextAccessor = httpContextAccessor;
+            HttpContextAccessor = accessor;
         }
     }
 }

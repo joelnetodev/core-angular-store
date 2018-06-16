@@ -21,7 +21,7 @@ namespace StoreApp.Infra.Extension
             this IServiceCollection services)
         {
             services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var assemblies = new[] { AssemblyLocator.GetByName("StoreApp.Domain.Repository.dll") };
             var typeRepositoryBase = typeof(IRepositoryBase<>);
@@ -52,10 +52,10 @@ namespace StoreApp.Infra.Extension
             }
         }
 
-        //Store the Context into SharedHttpContext to get access to the ServiceProvider
-        public static void ConfigureSharedHttpContext(this IApplicationBuilder app)
+        //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context
+        public static void ConfigureSharedHttpContext(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            SharedHttpContext.SetHttpContextAccessor(app.ApplicationServices.GetService<IHttpContextAccessor>());
+            SharedHttpContext.SetHttpContextAccessor(serviceProvider.GetService<IHttpContextAccessor>());
         }
     }
 }
