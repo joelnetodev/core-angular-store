@@ -1,27 +1,31 @@
 
 <comp-navtop></comp-navtop>
-<div class="panel panel-body">
+<div class="panel card-body">
     <comp-load></comp-load>
 
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" class="form-control" name="name" [(ngModel)]="item.name" required />
-    </div>
+    <div class="row">
+        <div class="col-sm">
+            <label for="name">Name</label>
+            <input id="name" type="text" class="form-control" name="name" [(ngModel)]="item.name" required />
+        </div>
 
-    <div class="form-group">
-        <label for="description">Description</label>
-        <input id="description" type="text" class="form-control" name="description" [(ngModel)]="item.description" required />
-    </div>
+        <div class="col-sm">
+            <label for="description">Description</label>
+            <input id="description" type="text" class="form-control" name="description" [(ngModel)]="item.description" required />
+        </div>
 
-    <div class="form-group">
-        <input id="isActive" type="checkbox" class="form-check-input" name="isActive" [(ngModel)]="item.isActive" required />
-        <label class="form-check-label" for="isActive">Is Active</label>
-    </div>
-
-    <div class="form-group">
-        <div class="float-right">
-            <a class="btn btn-default" routerLink="/items">Cancel</a>
-            <button class="btn btn-primary" (click)="save()">Save</button>
+        <div class="col-sm">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="isActive"  [(ngModel)]="item.isActive">
+                <label class="form-check-label" for="isActive">Is Active</label>
+            </div>
         </div>
     </div>
-    </div>
+
+
+        <div class="float-sm-right">
+            <a class="btn btn-secondary" routerLink="/items">Cancel</a>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
+
+</div>

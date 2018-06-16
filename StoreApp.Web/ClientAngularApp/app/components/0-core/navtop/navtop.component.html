@@ -1,44 +1,29 @@
-    <nav class="navbar navbar-inverse" *ngIf="isLogged()">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9"
-                    aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#" class="navbar-brand">StoreApp</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
 
-                <ul class="nav navbar-nav" *ngIf="isLogged()">
-                    <li class="{{ chooseModuleCSS(menuModuleEnum.Products) }}">
-                        <a routerLink="/products">Products</a>
-                    </li>
-                    <li class="{{ chooseModuleCSS(menuModuleEnum.Items) }}">
-                        <a routerLink="/items">Items</a>
-                    </li>
-                </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">StoreApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="{{ chooseModuleCSS(menuModuleEnum.Products) }}">
+                <a class="nav-link" routerLink="/products">Products</a>
+            </li>
+            <li class="{{ chooseModuleCSS(menuModuleEnum.Items) }}">
+                <a class="nav-link" routerLink="/items">Items</a>
+            </li>
+        </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{username}}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li (click)="onLogout()">
-                                <a>Logout</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+        <div class="form-inline my-2 my-lg-0">
+            <a class="nav-link text-light" routerLink="/users/edit/{{username}}">{{username}}</a>
+            <button class="btn btn-danger navbar-btn" type="button" (click)="onLogout()">Logout</button>
         </div>
-    </nav>
 
-    <div class="panel panel-title">
-        {{title}}
     </div>
+</nav>
+
+<div class="card-header">
+    <h4> {{title}}</h4>
+</div>
 
 <comp-alert></comp-alert>

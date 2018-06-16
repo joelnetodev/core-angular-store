@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
   </ItemGroup>
 
@@ -19,6 +19,10 @@
     <ProjectReference Include="..\StoreApp.Domain.Map\StoreApp.Domain.Map.csproj" />
     <ProjectReference Include="..\StoreApp.Domain.Repository\StoreApp.Domain.Repository.csproj" />
     <ProjectReference Include="..\StoreApp.Infra\StoreApp.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientAngularApp\assets\js\" />
   </ItemGroup>
 
   <Target Name="Build Angular" Condition="'$(Configuration)'=='Release'" BeforeTargets="Build">

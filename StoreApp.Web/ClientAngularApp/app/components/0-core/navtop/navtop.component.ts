@@ -16,6 +16,14 @@ export class NavTopComponent implements OnInit {
     ngOnInit() { 
         this.module = this.activatedRoute.snapshot.data['module'];
         this.title = this.activatedRoute.snapshot.data['title'];
+
+        if (this.userServ.isUserStored()) {
+            this.username = this.userServ.getUser().username;
+        }
+        else {
+            this.router.navigate(['/login']);
+        }
+
     }
 
     menuModuleEnum = MenuModuleEnum;
@@ -28,15 +36,6 @@ export class NavTopComponent implements OnInit {
 
     title:string;
     
-
-    isLogged(): boolean {
-        if(this.userServ.isUserStored()){
-            this.username = this.userServ.getUser().username;
-            return true;
-        }
-        return false;
-    }
-
     chooseModuleCSS(module: MenuModuleEnum): string {
         if (module == this.module)
             return "nav-item active";

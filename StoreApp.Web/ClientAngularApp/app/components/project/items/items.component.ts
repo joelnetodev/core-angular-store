@@ -30,7 +30,7 @@ export class ItemsComponent implements OnInit {
     remove(item: Item) {
         this.httpServ.httpPost('items/delete/' + item.id).subscribe(
             (x) => {
-                //this.items.splice(this.items.indexOf(item), 1);
+                this.items.splice(this.items.indexOf(item), 1);
             });
     }
 }

@@ -37,8 +37,6 @@ namespace StoreApp.Web.Controllers
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
-            Thread.Sleep(4000);
-
             var item = _itemRepository.GetById(id);
 
             if(item == null)
