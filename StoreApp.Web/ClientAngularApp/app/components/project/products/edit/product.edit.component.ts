@@ -54,7 +54,7 @@ export class ProductEditComponent implements OnInit {
         itemModel.isEditingCount = false;
     }
 
-    onClickCount(itemModel: ItemModel, event) {
+    onClickCount(itemModel: ItemModel) {
         itemModel.isEditingCount = true;
     }
 }

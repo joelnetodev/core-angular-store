@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 import { CoreServiceModule } from './modules/0-core/core.service.module';
 import { CoreSharedModule } from './modules/0-core/core.shared.module';
 import { CoreComponentModule } from './modules/0-core/core.component.module';
+import { CoreDirectiveModule } from './modules/0-core/core.directive.module';
 
 import { HomeComponent } from './components/project/home/home.component';
 
@@ -55,7 +56,8 @@ import { AppComponent } from './components/0-core/app/app.component';
         routing,
         CoreServiceModule,
         CoreSharedModule,
-        CoreComponentModule
+        CoreComponentModule,
+        CoreDirectiveModule
     ],
 
     //PROVIDERS public scope and sould be used for SERVICES or something that will handle data

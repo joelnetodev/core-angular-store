@@ -53,9 +53,9 @@
                     <td>
                         {{itemModel.item.name}}
                     </td>
-                   <td>
-                        <p *ngIf="!itemModel.isEditingCount" (click)="onClickCount(itemModel, $event)">{{itemModel.item.count}}</p>
-                        <input *ngIf="itemModel.isEditingCount" type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
+                   <td (click)="onClickCount(itemModel)">
+                        <p *ngIf="!itemModel.isEditingCount">{{itemModel.item.count}}</p>
+                        <input di-focus *ngIf="itemModel.isEditingCount" type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
                     </td>
                     <td>
                         <a class="btn btn-light btn-sm" (click)="remove(itemModel)" title="remove">
