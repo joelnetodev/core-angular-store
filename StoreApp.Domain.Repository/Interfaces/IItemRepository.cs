@@ -10,5 +10,6 @@ namespace StoreApp.Domain.Repository.Interfaces
 {
     public interface IItemRepository : IRepositoryBase<Item>
     {
+        ICollection<Item> FindByIds(IList<int> idsItems);
     }
 }

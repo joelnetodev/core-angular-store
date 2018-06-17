@@ -15,10 +15,12 @@ namespace StoreApp.Web.Controllers
     public class ProductsController : Controller
     {
         private IProductRepository _prodRepository;
+        private IItemRepository _itemRepo;
 
-        public ProductsController(IProductRepository prodRepo)
+        public ProductsController(IProductRepository prodRepo, IItemRepository itemRepo)
         {
             _prodRepository = prodRepo;
+            _itemRepo = itemRepo;
         }
 
         [HttpGet]
@@ -79,15 +81,34 @@ namespace StoreApp.Web.Controllers
 
         private Product CreateProduct(ProductModel model)
         {
+            if (model.Items.GroupBy(x => x.Id).Any(x => x.Count() > 1))
+            {
+                throw new ErrorException("Product can not have the same item more than once.");
+            }
+
             var product = new Product();
             product.Name = model.Name;
             product.Description = model.Description;
             product.Price = model.Price;
             product.IsActive = model.IsActive;
 
-            if(model.Items.GroupBy(x => x.Id).Any(x => x.Count() > 1))
+            if(model.Items.Any())
             {
-                throw new ErrorException("Product can not have the same item more than once.");
+                var itemsFromBd = _itemRepo.FindByIds(model.Items.Select(x => x.Id).ToList());
+                foreach (var itemModel in model.Items)
+                {
+                    var itemFromBd = itemsFromBd.FirstOrDefault(x => x.Id == itemModel.Id);
+                    if(itemFromBd == null)
+                    {
+                        throw new ErrorException(string.Format("It was not possible to find item {0}.", itemModel.Id));
+                    }
+
+                    var prodItem = new ProductItem();
+                    prodItem.Item = itemFromBd;
+                    prodItem.Count = itemModel.Count;
+                    prodItem.Procduct = product;
+                    product.Items.Add(prodItem);
+                }
             }
 
             return product;

@@ -3,27 +3,27 @@
 <div class="panel card-body">
     <comp-load></comp-load>
 
-    <div class="row">
+  <div class="row">
         <div class="col-6">
             <label for="name">Name</label>
-            <input id="name" type="text" class="form-control" name="name" [(ngModel)]="product.name" required />
+            <input id="name" type="text" class="form-control" [(ngModel)]="model.product.name" required />
         </div>
 
         <div class="col-6">
             <label for="description">Description</label>
-            <input id="description" type="text" class="form-control" name="description" [(ngModel)]="product.description" required />
+            <input id="description" type="text" class="form-control" [(ngModel)]="model.product.description" required />
         </div>
 
 
         <div class="col-6">
             <label for="price">Price</label>
-            <input id="price" type="text" class="form-control" name="price" [(ngModel)]="product.price" required />
+            <input id="price" type="text" class="form-control" [(ngModel)]="model.product.price" required />
         </div>
 
         <div class="col-6">
             <br />
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="isActive" [(ngModel)]="product.isActive">
+                <input class="form-check-input" type="checkbox" id="isActive" [(ngModel)]="model.product.isActive">
                 <label class="form-check-label" for="isActive">Is Active</label>
             </div>
         </div>
@@ -49,21 +49,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of product.items">
+                <tr *ngFor="let itemModel of model.items">
                     <td>
-                        {{item.name}}
+                        {{itemModel.item.name}}
+                    </td>
+                   <td>
+                        <p *ngIf="!itemModel.isEditingCount" (click)="onClickCount(itemModel, $event)">{{itemModel.item.count}}</p>
+                        <input *ngIf="itemModel.isEditingCount" type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
                     </td>
                     <td>
-                        {{item.count}}
-                    </td>
-                    <td>
-                        <a class="btn btn-light btn-sm" (click)="remove(item)" title="remove">
+                        <a class="btn btn-light btn-sm" (click)="remove(itemModel)" title="remove">
                             <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
                         </a>
                     </td>
                 </tr>
 
-                <tr *ngIf="product.items.length == 0">
+                <tr *ngIf="model.items.length == 0">
                     <td colspan="3" style="text-align: center;">
                         No items.
                     </td>

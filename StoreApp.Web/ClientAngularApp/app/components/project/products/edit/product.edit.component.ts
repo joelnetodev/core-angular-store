@@ -12,15 +12,12 @@ import { Router } from '@angular/router';
 })
 export class ProductEditComponent implements OnInit {
 
-    title = "Add"
-    product: Product = new Product();
+    model: ProductModel = new ProductModel();
 
     constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
 
     ngOnInit() {
-        //this.menuServ.setModule(MenuModuleEnum.Items);
-
         if (!this.route.snapshot.paramMap.has('id'))
             return;
 
@@ -28,23 +25,46 @@ export class ProductEditComponent implements OnInit {
 
         this.httpServ.httpGet('products/' + id).subscribe(
             (x) => {
-                this.product = x.valueOf() as Product;
+                this.model.product = x.valueOf() as Product;
+
+                for (var i = 0; i < this.model.product.items.length; i++) {
+                    
+                    let itemModel = new ItemModel();
+                    itemModel.item = this.model.product.items[i];
+                    this.model.items.push(itemModel);
+                }
             });
     }
 
     save() {
 
-        console.log(this.product);
-
-        this.httpServ.httpPost('products', this.product).subscribe(
+        this.httpServ.httpPost('products', this.model.product).subscribe(
             (x) => {
                 this.alertServ.createSuccess('Product saved.', true);
                 this.router.navigate(["products"]);
             });
     }
 
-    remove(item: ProductItem) {
-        this.product.items = this.product.items.filter(x => x != item);
+    remove(itemModel: ItemModel) {
+        this.model.items = this.model.items.filter(x => x != itemModel);
+        this.model.product.items = this.model.product.items.filter(x => x != itemModel.item);
     }
 
+    onFocusOutCount(itemModel: ItemModel) {
+        itemModel.isEditingCount = false;
+    }
+
+    onClickCount(itemModel: ItemModel, event) {
+        itemModel.isEditingCount = true;
+    }
+}
+
+export class ProductModel {
+    public product: Product = new Product();
+    public items: ItemModel[] = new Array<ItemModel>();
+}
+export class ItemModel {
+    public item: ProductItem = new ProductItem();
+    public isEditingCount: boolean;
+    public isEditingItem: boolean;
 }
