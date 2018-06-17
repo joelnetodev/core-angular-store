@@ -29,25 +29,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let productModel of productsModels">
+            <tr *ngFor="let model of productsModels">
                 <td>
-                    {{productModel.product.name}}
+                    {{model.product.name}}
                 </td>
                 <td>
-                    {{productModel.product.price}}
+                    {{model.product.price}}
                 </td>
                 <td>
-                    {{productModel.itemsNames}}
+                    {{model.product.isActive}}
                 </td>
                 <td>
-                    {{productModel.product.isActive}}
-                </td>
-                <td>
-                    <a class="btn btn-secondary btn-sm" [routerLink]="['/products/edit', productModel.product.id]" title="edit">
-                        <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
+                    {{model.getItemsNames()}}
+
+                    <a *ngIf="model.getIsToHide()" class="btn btn-sm" (click)="setDisplayed(model)" title="{{getTitle(model)}}">
+                        <span class="oi oi-arrow-circle-{{getArrowDirection(model)}}" aria-hidden="true"></span>
                     </a>
-                    <a class="btn btn-secondary btn-sm" (click)="remove(productModel)" title="remove">
-                        <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+
+
+                </td>
+                <td>
+                    <a class="btn btn-light btn-sm" [routerLink]="['/products/edit', model.product.id]" title="edit">
+                        <span class="oi oi-pencil" aria-hidden="true"></span>
+                    </a>
+                    <a class="btn btn-light btn-sm" (click)="remove(model)" title="remove">
+                        <span class="oi oi-trash" aria-hidden="true"></span>
                     </a>
 
                 </td>

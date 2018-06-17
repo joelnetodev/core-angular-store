@@ -34,6 +34,8 @@ export class ProductEditComponent implements OnInit {
 
     save() {
 
+        console.log(this.product);
+
         this.httpServ.httpPost('products', this.product).subscribe(
             (x) => {
                 this.alertServ.createSuccess('Product saved.', true);
@@ -42,8 +44,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     remove(item: ProductItem) {
-
-
+        this.product.items = this.product.items.filter(x => x != item);
     }
 
 }

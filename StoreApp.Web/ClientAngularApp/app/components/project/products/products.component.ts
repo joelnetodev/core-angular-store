@@ -26,14 +26,11 @@ export class ProductsComponent implements OnInit {
 
             for (var i = 0; i < products.length; i++) {
                 let product = products[i];
-                let productM = new ProductModel();
-                productM.product = product;
-                productM.itemsNames = this.getItemsNames(product);
-                productM.enableHide = this.getEnableHide(productM.itemsNames);
-
-                this.productsModels.push(productM);
+                let model = new ProductModel();
+                model.product = product;
+                model.itemsNamesFull = this.getItemsNamesFull(product);
+                this.productsModels.push(model);
             }
-
         });
     }
 
@@ -44,27 +41,47 @@ export class ProductsComponent implements OnInit {
             });
     }
 
-    getItemsNames(product: Product): string {
+    getItemsNamesFull(product: Product): string {
         let itemsName = "";
 
         for (var i = 0; i < product.items.length; i++) {
-            itemsName += itemsName;
+            itemsName += product.items[i].name;
 
             if (i != product.items.length - 1)
-                itemsName += ",";
+                itemsName += ", ";
         }
 
         return itemsName;
     }
 
-    getEnableHide(itemsNames: string) {
-        return itemsNames.length > 50;
+
+    setDisplayed(productModel: ProductModel) {
+        productModel.displayed = !productModel.displayed;
+    }
+
+    getArrowDirection(productModel: ProductModel):string {
+        return productModel.displayed ? "left" : "right";
+    }
+
+    getTitle(productModel: ProductModel): string {
+        return productModel.displayed ? "hide" : "show";
     }
 }
 
 export class ProductModel {
     public product: Product;
-    public itemsNames: string;
-    public enableHide: boolean;
-    public display: boolean;
+    public itemsNamesFull: string;
+    public displayed: boolean;
+
+    public getIsToHide(): boolean {
+        return this.itemsNamesFull.length >= 20;
+    }
+
+    public getItemsNames(): string {
+        if (this.displayed || !this.getIsToHide())
+            return this.itemsNamesFull;
+        else {
+            return this.itemsNamesFull.substr(0, 20) + "...";
+        }
+    }
 }

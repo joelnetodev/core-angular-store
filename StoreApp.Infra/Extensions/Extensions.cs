@@ -17,12 +17,16 @@ namespace StoreApp.Infra.Extension
     {
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" 
         //with others Dependencies of the Project
-        public static void AddProjectDependencies(
-            this IServiceCollection services)
+        public static void AddProjectDependencies(this IServiceCollection services)
         {
             services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            AddRepositoriesAndServices(services);
+        }
+
+        private static void AddRepositoriesAndServices(IServiceCollection services)
+        {
             var assemblies = new[] { AssemblyLocator.GetByName("StoreApp.Domain.Repository.dll") };
             var typeRepositoryBase = typeof(IRepositoryBase<>);
             var typeServiceBase = typeof(IServiceBase);
@@ -35,7 +39,6 @@ namespace StoreApp.Infra.Extension
 
                 foreach (Type itemInterface in interfacesFromAssembly)
                 {
-
                     if (!typeServiceBase.IsAssignableFrom(itemInterface)
                         && !itemInterface.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeRepositoryBase))
                     {
@@ -53,9 +56,9 @@ namespace StoreApp.Infra.Extension
         }
 
         //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context
-        public static void ConfigureSharedHttpContext(this IApplicationBuilder app, IServiceProvider serviceProvider)
+        public static void ConfigureSharedHttpContext(this IApplicationBuilder app, IHttpContextAccessor accessor)
         {
-            SharedHttpContext.SetHttpContextAccessor(serviceProvider.GetService<IHttpContextAccessor>());
+            SharedHttpContext.SetHttpContextAccessor(accessor);
         }
     }
 }

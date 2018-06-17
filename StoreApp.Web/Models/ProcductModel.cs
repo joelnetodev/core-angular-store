@@ -7,9 +7,13 @@ namespace StoreApp.Web.Models
     {
         public int Id { get; set; }
 
+        public string Description { get; set; }
+
         public string Name { get; set; }
 
         public decimal Price { get; set; }
+
+        public bool IsActive { get; set; }
 
         public List<ProductItemModel> Items { get; set; }
 
@@ -22,8 +26,6 @@ namespace StoreApp.Web.Models
     public class ProductItemModel
     {
         public int Id { get; set; }
-
-        public int ItemId { get; set; }
 
         public string Name { get; set; }
 

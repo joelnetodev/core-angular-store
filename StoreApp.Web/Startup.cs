@@ -99,8 +99,8 @@ namespace StoreApp.Web
                 );
             });
 
-            //This is a extension method to share services provider
-            app.ConfigureSharedHttpContext(serviceProvider);
+            //This is a extension method to share http service provider
+            app.ConfigureSharedHttpContext(serviceProvider.GetService<IHttpContextAccessor>());
         }
     }
 }

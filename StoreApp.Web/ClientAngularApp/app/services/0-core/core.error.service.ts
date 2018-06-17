@@ -1,25 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Injectable()
 export class CoreErrorService
 {
-    private message: string;
+    url: string;
+    status: string;
+    message: string;
 
     constructor() {
-        this.setDefaultErrorMessage();
+    }
+
+    getUrl() {
+        return this.url;
+    }
+
+    getStatus() {
+        return this.status;
     }
 
     getMessage() {
         return this.message;
     }
 
-    setMessage(message: string) {
-        this.message = message;
+    setError(error: HttpErrorResponse) {
+        this.url = error.url;
+        this.status = error.statusText;
+        this.message = error.error ? error.error : "No messae to display.";
     }
 
-    setDefaultErrorMessage() {
-        this.message = "No errors to show.";
+    setDefaults() {
+        this.url = "None";
+        this.status = "None";
+        this.message = "None.";
     }
 }

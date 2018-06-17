@@ -41,7 +41,7 @@ export class AppInterceptor implements HttpInterceptor {
                         case 403: this.router.navigate(['/permission']); break;
                         case 997: this.alertServ.createInfo(response.error); break;
                         case 998: this.alertServ.createError(response.error); break;
-                        default: this.errorServ.setMessage(response.error); this.router.navigate(['/error']); break;
+                        default: this.errorServ.setError(response); this.router.navigate(['/error']); break;
                         //default: console.log(response); break;
                     }
                 }
