@@ -64,13 +64,17 @@ namespace StoreApp.Web
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            //This is a extension method to share http service provider
+            //Should configure first than the other
+            app.ConfigureMiddleware();
+            
             //On linux, a request (sent to apache or nginx, etc) will be redirected to 
             //an AspNet core app ran by a kestrel service.
             //This line is to keep headers integrity after those actions
@@ -95,9 +99,6 @@ namespace StoreApp.Web
                 defaults: new { controller = "Status", action = "Get" }
                 );
             });
-
-            //This is a extension method to share http service provider
-            app.ConfigureMiddleware();
         }
     }
 }

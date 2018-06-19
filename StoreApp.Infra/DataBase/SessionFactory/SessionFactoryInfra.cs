@@ -29,7 +29,7 @@ namespace StoreApp.Infra.DataBase.SessionFactory
                             .Host("localhost")
                             .Port(5432)
                             .Database("store")
-                            .Username("postgre")
+                            .Username("postgres")
                             .Password("admin")))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assemblyWithMaps))
                 .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)                                            
