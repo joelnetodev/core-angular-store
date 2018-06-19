@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using StoreApp.Infra.DataBase;
 using StoreApp.Infra.DataBase.Repository;
 using StoreApp.Infra.DataBase.SessionFactory;
+using StoreApp.Infra.Exceptions;
 using StoreApp.Infra.Http;
 
 namespace StoreApp.Infra.Extension
@@ -20,7 +21,6 @@ namespace StoreApp.Infra.Extension
         public static void AddProjectDependencies(this IServiceCollection services)
         {
             services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             AddRepositoriesAndServices(services);
         }
@@ -56,9 +56,9 @@ namespace StoreApp.Infra.Extension
         }
 
         //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context
-        public static void ConfigureSharedHttpContext(this IApplicationBuilder app, IHttpContextAccessor accessor)
+        public static void ConfigureMiddleware(this IApplicationBuilder app)
         {
-            SharedHttpContext.SetHttpContextAccessor(accessor);
+            app.UseMiddleware<RequestMiddleware>();
         }
     }
 }

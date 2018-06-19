@@ -15,7 +15,7 @@ namespace StoreApp.Infra.DataBase.Repository
             get
             {
                 //Get "SessionFactoryBase" from ServiceProvider and get the Session
-                var sessionFac = SharedHttpContext.HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
+                var sessionFac = SharedHttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
                 if(sessionFac != null)
                 {
                     return sessionFac.GetCurrentSession();
