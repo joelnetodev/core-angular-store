@@ -47,6 +47,16 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateItemModel(item));
         }
 
+        [HttpGet("Active")]
+        public IActionResult GetActive()
+        {
+            var items = _itemRepository.FindAllActives();
+
+            var models = items.Select(x => CreateItemModel(x));
+
+            return Ok(models);
+        }
+
         [HttpPost]
         public IActionResult Save([FromBody]ItemModel model)
         {

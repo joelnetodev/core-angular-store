@@ -16,5 +16,10 @@ namespace StoreApp.Domain.Repository.Classes
         {
             return Entity.Where(x => idsItems.Contains(x.Id)).ToList();
         }
+
+        public ICollection<Item> FindAllActives()
+        {
+            return Entity.Where(x => x.IsActive).ToList();
+        }
     }
 }

@@ -16,5 +16,5 @@ export class Product
 export class ProductItem {
     public id: number;
     public name: string;
-    public count: number;
+    public count: number = 0;
 }

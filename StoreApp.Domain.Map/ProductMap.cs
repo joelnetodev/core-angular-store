@@ -19,7 +19,7 @@ namespace StoreApp.Domain.Map
             Map(x => x.Description).Column("description");
             Map(x => x.IsActive).Column("is_active");
 
-            HasMany(x => x.Items).Table("products_items").KeyColumn("product_id").Cascade.SaveUpdate();
+            HasMany(x => x.Items).Table("products_items").KeyColumn("product_id").Not.KeyNullable().Not.KeyUpdate().Cascade.AllDeleteOrphan();
 
             //HasManyToMany(x => x.Items)
             //.Table("products_items")

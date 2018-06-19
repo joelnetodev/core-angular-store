@@ -46,8 +46,6 @@ export class CoreAlertService {
         alert.keepForOneCicle = keepForOneCicle;
         //When an alert is created, the next method trigger the callbacks subscribed 
         this.alerts.push(alert);
-
-        console.log(this.alerts);
     }
 }
 

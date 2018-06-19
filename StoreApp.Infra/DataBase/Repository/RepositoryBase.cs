@@ -42,7 +42,7 @@ namespace StoreApp.Infra.DataBase.Repository
             Session.Delete(entity);
         }
 
-        public void Delete(IList<T> entities)
+        public void Delete(ICollection<T> entities)
         {
             foreach (var entity in entities)
             {
@@ -55,7 +55,7 @@ namespace StoreApp.Infra.DataBase.Repository
             Session.SaveOrUpdate(entity);
         }
 
-        public void SaveOrUpdate(IList<T> entities)
+        public void SaveOrUpdate(ICollection<T> entities)
         {
             foreach (var entity in entities)
             {
@@ -63,7 +63,7 @@ namespace StoreApp.Infra.DataBase.Repository
             }
         }
 
-        public IList<T> FindAll()
+        public ICollection<T> FindAll()
         {
             return Entity.ToList();
         }

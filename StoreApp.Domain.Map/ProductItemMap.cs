@@ -16,8 +16,7 @@ namespace StoreApp.Domain.Map
             Id(x => x.Id).Column("id");
             Map(x => x.Count).Column("count");
 
-            References(x => x.Procduct).Column("product_id");
-            References(x => x.Item).Column("item_id"); 
+            References(x => x.Item).Column("item_id").Cascade.None();
         }
     }
 }

@@ -8,10 +8,8 @@ using System.Text;
 
 namespace StoreApp.Domain.Repository.Interfaces
 {
-    public interface IItemRepository : IRepositoryBase<Item>
+    public interface IProductItemRepository : IRepositoryBase<ProductItem>
     {
-        ICollection<Item> FindByIds(IList<int> idsItems);
 
-        ICollection<Item> FindAllActives();
     }
 }

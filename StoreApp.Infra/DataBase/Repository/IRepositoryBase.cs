@@ -8,13 +8,13 @@ namespace StoreApp.Infra.DataBase.Repository
     {
         void SaveOrUpdate(T entity);
 
-        void SaveOrUpdate(IList<T> entity);
+        void SaveOrUpdate(ICollection<T> entity);
 
         void Delete(T entity);
 
-        void Delete(IList<T> entity);
+        void Delete(ICollection<T> entity);
 
-        IList<T> FindAll();
+        ICollection<T> FindAll();
 
         T GetById(int id);
     }
