@@ -22,7 +22,7 @@ namespace StoreApp.Infra.DataBase.UnitOfWork
 
         private ISession GetCurrentSession()
         {
-            var sessionFac = SharedHttpContext.HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
+            var sessionFac = SharedHttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
             if (sessionFac != null)
             {
                 return sessionFac.GetCurrentSession();
