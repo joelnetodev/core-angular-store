@@ -34,7 +34,7 @@ namespace StoreApp.Infra.Exceptions
                 context.Response.ContentType = "text/html";
                 
                 await context.Response.WriteAsync(context.Response.StatusCode == (int)HttpStatusCode.BadRequest 
-                    ? ex.Message + " - " + ex.StackTrace
+                    ? ex.Message + "/n" + ex.StackTrace
                     : ex.Message);
             }
         }
