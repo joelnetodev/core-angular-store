@@ -3,6 +3,7 @@ using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Classes;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Authentication;
+using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 using System.Threading;
@@ -54,29 +55,34 @@ namespace StoreApp.Web.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody]UserRegisterModel model)
         {
-            //verifica se usuário existe, se sim gera o token
-            if (ModelState.IsValid)
+            using (var unit = UnitOfWork.Start())
             {
-                if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.Name))
+                //verifica se usuário existe, se sim gera o token
+                if (ModelState.IsValid)
                 {
-                    throw new ErrorException("Missing fields.");
+                    if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.Name))
+                    {
+                        throw new ErrorException("Missing fields.");
+                    }
+
+
+                    if (_userRepository.VerifyUsernameExists(model.Username))
+                        throw new ErrorException("Username already exists.");
+
+                    var user = new User();
+                    user.Name = model.Name;
+                    user.Username = model.Username;
+                    user.Role = model.Role;
+                    user.Password = PasswordEncryptator.Encrypit(model.Password);
+                    _userRepository.SaveOrUpdate(user);
+
+                    unit.Commit();
+
+                    return Ok();
                 }
-
-
-                if(_userRepository.VerifyUsernameExists(model.Username))
-                    throw new ErrorException("Username already exists.");
-
-                var user = new User();
-                user.Name = model.Name;
-                user.Username = model.Username;
-                user.Role = model.Role;
-                user.Password = PasswordEncryptator.Encrypit(model.Password);
-                _userRepository.SaveOrUpdate(user);
-
-                return Ok();
+                else
+                    throw new ErrorException("Model is not valid.");
             }
-            else
-                throw new ErrorException("Model is not valid.");
         }
     }
 }

@@ -4,6 +4,7 @@ using FluentNHibernate.Mapping;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Event;
+using NHibernate.Tool.hbm2ddl;
 using StoreApp.Infra.Extension;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,17 @@ namespace StoreApp.Infra.DataBase.SessionFactory
             //Fliently configuration using Postgre Connector and "StoreApp.Domain.Repository.dll" mapped assembly
             //Quary and Cache setted to false due to problems making quaries constantly
             _sessionFactory = Fluently.Configure()
-                .Database(PostgreSQLConfiguration.Standard.ConnectionString(c => c
+                .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(c => c
                             .Host("localhost")
                             .Port(5432)
                             .Database("store")
                             .Username("postgres")
                             .Password("admin")))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assemblyWithMaps))
-                .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)                                            
-                                                 .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
-                                                 .SetProperty(NHibernate.Cfg.Environment.UseQueryCache, Boolean.FalseString))
+                //.ExposeConfiguration(config => new SchemaExport(config).Create(false, true))
+                //.ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)                                            
+                //                                 .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
+                //                                 .SetProperty(NHibernate.Cfg.Environment.UseQueryCache, Boolean.FalseString))
                 .BuildSessionFactory();
 
             _session = _sessionFactory.OpenSession();
