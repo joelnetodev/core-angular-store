@@ -19,5 +19,12 @@ namespace StoreApp.Domain.Repository.Classes
                 .FetchMany(x => x.Items)
                 .ThenFetch(x => x.Item).ToList();
         }
+
+        public Product GetByIdWithItems(int id)
+        {
+            return Entity.Where(x => x.Id == id)
+                .FetchMany(x => x.Items)
+                .ThenFetch(x => x.Item).ToList().FirstOrDefault();
+        }
     }
 }

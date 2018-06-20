@@ -21,8 +21,7 @@ namespace StoreApp.Infra.Extension
         public static void AddProjectDependenciesInfra(this IServiceCollection services)
         {
             services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.BuildServiceProvider().GetRequiredService
 
             AddRepositoriesAndServices(services);
@@ -62,7 +61,8 @@ namespace StoreApp.Infra.Extension
         //Should be the first configuration than any other
         public static void ConfigureMiddlewareInfra(this IApplicationBuilder app, IServiceProvider provider)
         {
-            SharedHttpContext.SetHttpContex(provider.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor);
+            var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            System.Web.HttpContext.Configure(httpContextAccessor);
 
             app.UseMiddleware<RequestMiddlewareInfra>();
         }

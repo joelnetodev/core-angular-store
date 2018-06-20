@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace StoreApp.Infra.DataBase.Repository
 {
@@ -15,12 +16,7 @@ namespace StoreApp.Infra.DataBase.Repository
             get
             {
                 //Get "SessionFactoryBase" from ServiceProvider and get the Session
-                var sessionFac = SharedHttpContext.Accessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
-                if(sessionFac != null)
-                {
-                    return sessionFac.GetCurrentSession();
-                }
-                return null;
+               return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
             }
         }
 

@@ -4,6 +4,7 @@ using StoreApp.Infra.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Web;
 
 namespace StoreApp.Infra.DataBase.UnitOfWork
 {
@@ -22,9 +23,7 @@ namespace StoreApp.Infra.DataBase.UnitOfWork
 
         private ISession GetCurrentSession()
         {
-            var sessionFac = SharedHttpContext.Accessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
-
-            return sessionFac.GetCurrentSession();
+            return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
         }
 
         public void Commit()

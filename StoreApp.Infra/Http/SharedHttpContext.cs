@@ -1,21 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 
-namespace StoreApp.Infra.Http
+namespace System.Web
 {
-    public class HttpContextAccessor : IHttpContextAccessor
+    public static class HttpContext
     {
-        public HttpContext HttpContext { get; set; }
-    }
+        private static IHttpContextAccessor _contextAccessor;
 
-    //A Shared HttpContext with the current context every web request
-    internal static class SharedHttpContext
-    {
-        public static IHttpContextAccessor Accessor;
+        public static Microsoft.AspNetCore.Http.HttpContext Current => _contextAccessor.HttpContext;
 
-        public static void SetHttpContex(IHttpContextAccessor accessor)
+        internal static void Configure(IHttpContextAccessor contextAccessor)
         {
-            Accessor = accessor;
+            _contextAccessor = contextAccessor;
         }
     }
 }

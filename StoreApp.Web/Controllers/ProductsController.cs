@@ -36,7 +36,7 @@ namespace StoreApp.Web.Controllers
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
-            var prod = _prodRepository.GetById(id);
+            var prod = _prodRepository.GetByIdWithItems(id);
             //var prod = new Product { Name = "Teste", Items = new List<ProductItem>
             //{
             //    new ProductItem {

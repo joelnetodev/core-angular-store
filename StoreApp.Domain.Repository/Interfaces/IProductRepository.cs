@@ -11,5 +11,7 @@ namespace StoreApp.Domain.Repository.Interfaces
     public interface IProductRepository : IRepositoryBase<Product>
     {
         List<Product> FindAllWithItems();
+
+        Product GetByIdWithItems(int id);
     }
 }
