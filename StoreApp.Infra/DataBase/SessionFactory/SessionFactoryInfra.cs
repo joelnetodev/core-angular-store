@@ -43,13 +43,11 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 
         public ISession GetCurrentSession()
         {
-            return _session;
+            return _session.IsOpen ? _session : _sessionFactory.OpenSession();
         }
 
         public void Dispose()
         {
-            _session.Close();
-            _session.Dispose();
             _sessionFactory.Close();
             _sessionFactory.Dispose();
         }
