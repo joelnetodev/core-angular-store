@@ -3,14 +3,19 @@ using System;
 
 namespace StoreApp.Infra.Http
 {
+    public class HttpContextAccessor : IHttpContextAccessor
+    {
+        public HttpContext HttpContext { get; set; }
+    }
+
     //A Shared HttpContext with the current context every web request
     internal static class SharedHttpContext
     {
-        public static HttpContext Current;
+        public static IHttpContextAccessor Accessor;
 
-        public static void SetHttpContex(HttpContext contex)
+        public static void SetHttpContex(IHttpContextAccessor accessor)
         {
-            Current = contex;
+            Accessor = accessor;
         }
     }
 }

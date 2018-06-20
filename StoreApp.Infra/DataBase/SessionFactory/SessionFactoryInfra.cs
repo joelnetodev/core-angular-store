@@ -33,10 +33,9 @@ namespace StoreApp.Infra.DataBase.SessionFactory
                             .Username("postgres")
                             .Password("admin")))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assemblyWithMaps))
-                //.ExposeConfiguration(config => new SchemaExport(config).Create(false, true))
-                //.ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)                                            
-                //                                 .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
-                //                                 .SetProperty(NHibernate.Cfg.Environment.UseQueryCache, Boolean.FalseString))
+                .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)                                            
+                                                 .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
+                                                 .SetProperty(NHibernate.Cfg.Environment.UseQueryCache, Boolean.FalseString))
                 .BuildSessionFactory();
 
             _session = _sessionFactory.OpenSession();
@@ -49,6 +48,8 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 
         public void Dispose()
         {
+            _session.Close();
+            _session.Dispose();
             _sessionFactory.Close();
             _sessionFactory.Dispose();
         }

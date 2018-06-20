@@ -22,13 +22,9 @@ namespace StoreApp.Infra.DataBase.UnitOfWork
 
         private ISession GetCurrentSession()
         {
-            var sessionFac = SharedHttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
-            if (sessionFac != null)
-            {
-                return sessionFac.GetCurrentSession();
-            }
+            var sessionFac = SharedHttpContext.Accessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra;
 
-            return null;
+            return sessionFac.GetCurrentSession();
         }
 
         public void Commit()

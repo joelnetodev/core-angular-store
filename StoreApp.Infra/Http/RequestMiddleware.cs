@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StoreApp.Infra.Http
 {
-    public class RequestMiddleware
+    public class RequestMiddlewareInfra
     {
         private readonly RequestDelegate _next;
 
-        public RequestMiddleware(RequestDelegate next)
+        public RequestMiddlewareInfra(RequestDelegate next)
         {
             _next = next;
         }
@@ -19,7 +19,7 @@ namespace StoreApp.Infra.Http
         {
             try
             {
-                SharedHttpContext.SetHttpContex(context);
+                //SharedHttpContext.SetHttpContex(context.RequestServices.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor);
                 await _next(context);
             }
             catch (Exception ex)

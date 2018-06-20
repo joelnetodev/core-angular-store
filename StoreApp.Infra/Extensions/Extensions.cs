@@ -16,11 +16,14 @@ namespace StoreApp.Infra.Extension
 {
     public static class Extensions
     {
-        //Register the "IHttpContextAccessor" and "SessionFactoryInfra" 
-        //with others Dependencies of the Project
-        public static void AddProjectDependencies(this IServiceCollection services)
+        //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
+        //Shold stay above AddMVC
+        public static void AddProjectDependenciesInfra(this IServiceCollection services)
         {
             services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //services.BuildServiceProvider().GetRequiredService
 
             AddRepositoriesAndServices(services);
         }
@@ -55,10 +58,13 @@ namespace StoreApp.Infra.Extension
             }
         }
 
-        //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context
-        public static void ConfigureMiddleware(this IApplicationBuilder app)
+        //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context.
+        //Should be the first configuration than any other
+        public static void ConfigureMiddlewareInfra(this IApplicationBuilder app, IServiceProvider provider)
         {
-            app.UseMiddleware<RequestMiddleware>();
+            SharedHttpContext.SetHttpContex(provider.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor);
+
+            app.UseMiddleware<RequestMiddlewareInfra>();
         }
     }
 }
