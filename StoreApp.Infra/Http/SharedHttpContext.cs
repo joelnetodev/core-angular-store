@@ -40,7 +40,7 @@ namespace StoreApp.Infra.Http
         {
             lock (obj)
             {
-                if (Current.Items.ContainsKey(SessionFactoryInfraKey))
+                if (Current != null && Current.Items.ContainsKey(SessionFactoryInfraKey))
                 {
                     ((SessionFactoryInfra)Current.Items[SessionFactoryInfraKey]).Dispose();
                     Current.Items.Remove(SessionFactoryInfraKey);
