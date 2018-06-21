@@ -26,10 +26,10 @@ namespace StoreApp.Infra.Extension
         //Shold stay above AddMVC
         public static void AddProjectDependenciesInfra(this IServiceCollection services)
         {
-            services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.BuildServiceProvider().GetRequiredService
-
+            //services.Add();
             AddRepositoriesAndServices(services);
         }
 
@@ -58,7 +58,7 @@ namespace StoreApp.Infra.Extension
                     if (classThatImplements == null)
                         continue;
 
-                    services.AddScoped(itemInterface, classThatImplements);
+                    services.AddSingleton(itemInterface, classThatImplements);
                 }
             }
         }
@@ -67,8 +67,8 @@ namespace StoreApp.Infra.Extension
         //Should be the first configuration than any other
         public static void ConfigureMiddlewareInfra(this IApplicationBuilder app, IServiceProvider provider)
         {
-            //var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
-            //System.Web.HttpContext.Configure(httpContextAccessor);
+            var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            SharedHttpContext.Configure(httpContextAccessor);
 
             app.UseMiddleware<RequestMiddlewareInfra>();
         }

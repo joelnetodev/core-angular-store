@@ -13,11 +13,6 @@ namespace StoreApp.Infra.DataBase.Repository
     {
 
 
-        public RepositoryBase()
-        {
-
-        }
-
         protected ISession Session
         {
             get
