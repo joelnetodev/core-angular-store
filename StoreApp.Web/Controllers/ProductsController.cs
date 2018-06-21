@@ -8,6 +8,7 @@ using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace StoreApp.Web.Controllers
 {
@@ -64,7 +65,7 @@ namespace StoreApp.Web.Controllers
                 throw new ErrorException("Product can not have the same item more than once.");
             }
 
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
             {
                 var prod = CreateProduct(model);
                 _prodRepository.SaveOrUpdate(prod);
@@ -77,7 +78,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
             {
                 var prod = _prodRepository.GetById(id);
                 if (prod != null)

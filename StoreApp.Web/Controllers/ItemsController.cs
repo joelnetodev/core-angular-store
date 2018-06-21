@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Domain.Entity;
-using StoreApp.Domain.Repository.Classes;
+using Microsoft.Extensions.DependencyInjection;
 using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Infra.DataBase.UnitOfWork;
@@ -67,7 +67,7 @@ namespace StoreApp.Web.Controllers
 
             var item = CreateItem(model);
 
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
             {
 
                 if (model.Id != 0)
@@ -89,7 +89,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
             {
                 var item = _itemRepository.GetById(id);
                 if (item != null)

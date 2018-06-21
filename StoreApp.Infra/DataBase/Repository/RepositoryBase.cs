@@ -11,16 +11,21 @@ namespace StoreApp.Infra.DataBase.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.Entity
     {
-
+        private ISessionFactoryInfra _sessionFactoryInfra;
+        public RepositoryBase(ISessionFactoryInfra sessionFactoryInfra)
+        {
+            _sessionFactoryInfra = sessionFactoryInfra;
+        }
 
         protected ISession Session
         {
             get
             {
 
-                return SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
-            //Get "SessionFactoryBase" from ServiceProvider and get the Session
-            //return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
+                return _sessionFactoryInfra.GetCurrentSession();
+                    //SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
+                    //Get "SessionFactoryBase" from ServiceProvider and get the Session
+                    //return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
             }
         }
 

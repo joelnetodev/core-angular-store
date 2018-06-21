@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Domain.Entity;
-using StoreApp.Domain.Repository.Classes;
+using Microsoft.Extensions.DependencyInjection;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Authentication;
 using StoreApp.Infra.DataBase.SessionFactory;
@@ -56,7 +56,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody]UserRegisterModel model)
         {
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
             {
                 //verifica se usuário existe, se sim gera o token
                 if (ModelState.IsValid)

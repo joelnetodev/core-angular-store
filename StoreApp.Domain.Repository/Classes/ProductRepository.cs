@@ -14,7 +14,9 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
-  
+        public ProductRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
+        {
+        }
 
         public List<Product> FindAllWithItems()
         {

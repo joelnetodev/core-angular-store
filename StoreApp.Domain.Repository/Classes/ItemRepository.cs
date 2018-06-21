@@ -13,6 +13,9 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class ItemRepository : RepositoryBase<Item>, IItemRepository
     {
+        public ItemRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
+        {
+        }
 
         public ICollection<Item> FindByIds(IList<int> idsItems)
         {

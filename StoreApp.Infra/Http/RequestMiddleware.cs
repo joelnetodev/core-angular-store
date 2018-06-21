@@ -35,7 +35,7 @@ namespace StoreApp.Infra.Http
             }
             finally
             {
-                SharedHttpContext.DisposeSessionFactory();
+                //SharedHttpContext.DisposeSessionFactory();
             }
         }
     }
