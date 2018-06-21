@@ -21,19 +21,21 @@ export class ProductEditComponent implements OnInit {
 
     ngOnInit() {
 
-        this.populateItems();
+        this.httpServ.httpGet('items/active').subscribe(
+            (x) => {
+                this.items = x.valueOf() as Item[];
 
-        if (this.route.snapshot.paramMap.has('id')) {
+                if (this.route.snapshot.paramMap.has('id')) {
 
-            let id = this.route.snapshot.paramMap.get('id');
+                    let id = this.route.snapshot.paramMap.get('id');
 
-            this.populateProduct(id);   
-        } 
+                    this.populateProduct(id);
+                }
+            });
     }
 
     populateProduct(id) {
        
-
         this.httpServ.httpGet('products/' + id).subscribe(
             (x) => {
                 this.model.product = x.valueOf() as Product;
@@ -46,14 +48,6 @@ export class ProductEditComponent implements OnInit {
                 }
             });
     }
-
-    populateItems() {
-        this.httpServ.httpGet('items/active').subscribe(
-            (x) => {
-                this.items = x.valueOf() as Item[];
-            });
-    }
-
 
     save() {
 

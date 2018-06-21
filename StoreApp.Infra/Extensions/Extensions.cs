@@ -65,7 +65,7 @@ namespace StoreApp.Infra.Extension
 
         //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context.
         //Should be the first configuration than any other
-        public static void ConfigureMiddlewareInfra(this IApplicationBuilder app, IServiceProvider provider)
+        public static void ConfigureMiddlewareInfra(this IApplicationBuilder app)
         {
             var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
             SharedHttpContext.Configure(httpContextAccessor);

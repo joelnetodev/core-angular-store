@@ -10,11 +10,9 @@ namespace StoreApp.Infra.DataBase.UnitOfWork
 {
     public class UnitOfWork : IDisposable
     {
-        
-
         public UnitOfWork()
         {
-            
+            GetCurrentSession().BeginTransaction();
         }
 
         public static UnitOfWork Start()

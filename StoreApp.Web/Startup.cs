@@ -54,21 +54,16 @@ namespace StoreApp.Web
                             };
                         });
 
-            //services.AddSingleton<IUserRepository, UserRepository>();
-            //services.AddSingleton<IItemRepository, ItemRepository>();
-
-            services.AddMvc();
-
             //This is a extension method to configure interfaces and classes of the project
             //Should stay above AddMVC
             services.AddProjectDependenciesInfra();
+
+            services.AddMvc();
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-         ILoggerFactory loggerFactory, IApplicationLifetime appLifetime,
-         IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -76,7 +71,7 @@ namespace StoreApp.Web
             }
 
             //This is a extension method to share http service provider
-            app.ConfigureMiddlewareInfra(serviceProvider);
+            app.ConfigureMiddlewareInfra();
             
             //On linux, a request (sent to apache or nginx, etc) will be redirected to 
             //an AspNet core app ran by a kestrel service.

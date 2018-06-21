@@ -4,13 +4,15 @@ using System;
 
 namespace StoreApp.Infra.Http
 {
-    public static class SharedHttpContext
+    public class SharedHttpContext
     {
+        public static object obj = new object();
+
         public const string SessionFactoryInfraKey = "session.factory.infra.Key";
 
-        private static IHttpContextAccessor _contextAccessor;
+        public static IHttpContextAccessor _contextAccessor;
 
-        public static Microsoft.AspNetCore.Http.HttpContext Current => _contextAccessor.HttpContext;
+        public static HttpContext Current => _contextAccessor.HttpContext;
 
         internal static void Configure(IHttpContextAccessor contextAccessor)
         {
@@ -19,24 +21,30 @@ namespace StoreApp.Infra.Http
 
         internal static ISessionFactoryInfra GetCurrentSessionFactoryInfra()
         {
-            if(Current.Items.ContainsKey(SessionFactoryInfraKey))
+            lock (obj)
             {
-                return (ISessionFactoryInfra)Current.Items[SessionFactoryInfraKey];
-            }
-            else
-            {
-                ISessionFactoryInfra sessionFactory = new SessionFactoryInfra();
-                Current.Items.Add(SessionFactoryInfraKey, sessionFactory);
-                return sessionFactory;
+                if (Current.Items.ContainsKey(SessionFactoryInfraKey))
+                {
+                    return (ISessionFactoryInfra)Current.Items[SessionFactoryInfraKey];
+                }
+                else
+                {
+                    ISessionFactoryInfra sessionFactory = new SessionFactoryInfra();
+                    Current.Items.Add(SessionFactoryInfraKey, sessionFactory);
+                    return sessionFactory;
+                }
             }
         }
 
         internal static void DisposeSessionFactory()
         {
-            if(Current.Items.ContainsKey(SessionFactoryInfraKey))
+            lock (obj)
             {
-                ((SessionFactoryInfra)Current.Items[SessionFactoryInfraKey]).Dispose();
-                Current.Items.Remove(SessionFactoryInfraKey);
+                if (Current.Items.ContainsKey(SessionFactoryInfraKey))
+                {
+                    ((SessionFactoryInfra)Current.Items[SessionFactoryInfraKey]).Dispose();
+                    Current.Items.Remove(SessionFactoryInfraKey);
+                }
             }
         }
     }
