@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Interfaces;
+using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
@@ -29,6 +30,7 @@ namespace StoreApp.Web.Controllers
         public IActionResult Get()
         {
             var products = _prodRepository.FindAllWithItems();
+            var items = _itemRepo.FindAll();
 
             return Ok(CreateProducts(products));
         }
@@ -36,7 +38,7 @@ namespace StoreApp.Web.Controllers
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
-            var prod = _prodRepository.GetByIdWithItems(id);
+            var prod = _prodRepository.GetById(id);
             //var prod = new Product { Name = "Teste", Items = new List<ProductItem>
             //{
             //    new ProductItem {
@@ -64,7 +66,7 @@ namespace StoreApp.Web.Controllers
                 throw new ErrorException("Product can not have the same item more than once.");
             }
 
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
             {
                 var prod = CreateProduct(model);
                 _prodRepository.SaveOrUpdate(prod);
@@ -77,7 +79,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
             {
                 var prod = _prodRepository.GetById(id);
                 if (prod != null)

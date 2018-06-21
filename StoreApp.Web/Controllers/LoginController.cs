@@ -3,6 +3,7 @@ using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Classes;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Authentication;
+using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
@@ -55,7 +56,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody]UserRegisterModel model)
         {
-            using (var unit = UnitOfWork.Start())
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
             {
                 //verifica se usuário existe, se sim gera o token
                 if (ModelState.IsValid)

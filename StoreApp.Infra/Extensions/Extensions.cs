@@ -14,6 +14,12 @@ using StoreApp.Infra.Http;
 
 namespace StoreApp.Infra.Extension
 {
+    //Unfortunately I could't found any better way to get the SessionFactory outside the controller (injecting dependency on Repositories) 
+    //In AspNet Classic the HttpContext were available at Aplication Level (every project or class had access to it)
+    //But in Asp.Net Core, the Current HttpContext is only in the controller and Could be accessed by HttpContextAccessor
+    //But I was having issues when tryied to get the Scoped Services by HttoContextAccessor
+    //So I made every Repository and Service = Scoped
+    //I hope the solution comes soon
     public static class Extensions
     {
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
@@ -21,7 +27,7 @@ namespace StoreApp.Infra.Extension
         public static void AddProjectDependenciesInfra(this IServiceCollection services)
         {
             services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.BuildServiceProvider().GetRequiredService
 
             AddRepositoriesAndServices(services);
@@ -52,7 +58,7 @@ namespace StoreApp.Infra.Extension
                     if (classThatImplements == null)
                         continue;
 
-                    services.AddSingleton(itemInterface, classThatImplements);
+                    services.AddScoped(itemInterface, classThatImplements);
                 }
             }
         }
@@ -61,8 +67,8 @@ namespace StoreApp.Infra.Extension
         //Should be the first configuration than any other
         public static void ConfigureMiddlewareInfra(this IApplicationBuilder app, IServiceProvider provider)
         {
-            var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
-            System.Web.HttpContext.Configure(httpContextAccessor);
+            //var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            //System.Web.HttpContext.Configure(httpContextAccessor);
 
             app.UseMiddleware<RequestMiddlewareInfra>();
         }

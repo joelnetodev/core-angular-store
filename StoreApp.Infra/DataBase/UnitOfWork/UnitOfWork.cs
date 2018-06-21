@@ -10,37 +10,34 @@ namespace StoreApp.Infra.DataBase.UnitOfWork
 {
     public class UnitOfWork : IDisposable
     {
-        public UnitOfWork()
+        private ISessionFactoryInfra _sessionFactory;
+
+        public UnitOfWork(ISessionFactoryInfra sessionFactory)
         {
-            var session =  GetCurrentSession();
-            session.BeginTransaction();
+            _sessionFactory = sessionFactory;
+            _sessionFactory.GetCurrentSession().BeginTransaction();
         }
 
-        public static UnitOfWork Start()
+        public static UnitOfWork Start(ISessionFactoryInfra sessionFactory)
         {
-            return new UnitOfWork();
-        }
-
-        private ISession GetCurrentSession()
-        {
-            return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
+            return new UnitOfWork(sessionFactory);
         }
 
         public void Commit()
         {
-            var session = GetCurrentSession();
+            var session = _sessionFactory.GetCurrentSession();
             session.Transaction.Commit();
         }
 
         public void RollBack()
         {
-            var session = GetCurrentSession();
+            var session = _sessionFactory.GetCurrentSession();
             session.Transaction.Rollback();
         }
 
         public void Dispose()
         {
-            GetCurrentSession().Transaction.Dispose();
+            _sessionFactory.GetCurrentSession().Transaction.Dispose();
         }
     }
 }

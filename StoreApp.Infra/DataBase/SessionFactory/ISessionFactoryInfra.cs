@@ -9,7 +9,7 @@ using System.Text;
 
 namespace StoreApp.Infra.DataBase.SessionFactory
 {
-    internal interface ISessionFactoryInfra : IDisposable
+    public interface ISessionFactoryInfra : IDisposable
     {
         ISession GetCurrentSession();
     }

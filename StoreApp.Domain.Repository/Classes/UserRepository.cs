@@ -2,6 +2,7 @@
 using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.DataBase.Repository;
+using StoreApp.Infra.DataBase.SessionFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
+        public UserRepository(ISessionFactoryInfra sessionFactory) : base(sessionFactory)
+        {
+        }
+
         public User GetByUsername(string userName)
         {
             return Entity.FirstOrDefault(x => x.Username == userName);
