@@ -13,9 +13,6 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class ItemRepository : RepositoryBase<Item>, IItemRepository
     {
-        public ItemRepository(ISessionFactoryInfra sessionFactory) : base(sessionFactory)
-        {
-        }
 
         public ICollection<Item> FindByIds(IList<int> idsItems)
         {

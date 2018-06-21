@@ -56,7 +56,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody]UserRegisterModel model)
         {
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
+            using (var unit = UnitOfWork.Start())
             {
                 //verifica se usuário existe, se sim gera o token
                 if (ModelState.IsValid)

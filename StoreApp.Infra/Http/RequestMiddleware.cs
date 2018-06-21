@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.Exceptions;
 using System;
 using System.Net;
@@ -18,8 +19,7 @@ namespace StoreApp.Infra.Http
         public async Task Invoke(HttpContext context)
         {
             try
-            {
-                //SharedHttpContext.SetHttpContex(context.RequestServices.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor);
+            {                
                 await _next(context);
             }
             catch (Exception ex)
@@ -32,6 +32,10 @@ namespace StoreApp.Infra.Http
                 await context.Response.WriteAsync(context.Response.StatusCode == (int)HttpStatusCode.BadRequest
                     ? ex.Message + " | " + ex.StackTrace
                     : ex.Message);
+            }
+            finally
+            {
+                SharedHttpContext.DisposeSessionFactory();
             }
         }
     }

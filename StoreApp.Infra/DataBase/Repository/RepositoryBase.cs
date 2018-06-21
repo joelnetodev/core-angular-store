@@ -11,11 +11,11 @@ namespace StoreApp.Infra.DataBase.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.Entity
     {
-        private ISessionFactoryInfra _sessionFactory;
 
-        public RepositoryBase(ISessionFactoryInfra sessionFactory)
+
+        public RepositoryBase()
         {
-            _sessionFactory = sessionFactory;
+
         }
 
         protected ISession Session
@@ -23,7 +23,7 @@ namespace StoreApp.Infra.DataBase.Repository
             get
             {
 
-                return _sessionFactory.GetCurrentSession();
+                return SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
             //Get "SessionFactoryBase" from ServiceProvider and get the Session
             //return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
             }

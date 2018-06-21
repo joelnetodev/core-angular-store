@@ -16,14 +16,12 @@ namespace StoreApp.Web.Controllers
     public class ProductsController : Controller
     {
         private IProductRepository _prodRepository;
-        private IProductItemRepository _prodItemRepository;
         private IItemRepository _itemRepo;
 
-        public ProductsController(IProductRepository prodRepo, IProductItemRepository prodItemRepository, IItemRepository itemRepo)
+        public ProductsController(IProductRepository prodRepo, IItemRepository itemRepo)
         {
             _prodRepository = prodRepo;
             _itemRepo = itemRepo;
-            _prodItemRepository = prodItemRepository;
         }
 
         [HttpGet]
@@ -66,7 +64,7 @@ namespace StoreApp.Web.Controllers
                 throw new ErrorException("Product can not have the same item more than once.");
             }
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
+            using (var unit = UnitOfWork.Start())
             {
                 var prod = CreateProduct(model);
                 _prodRepository.SaveOrUpdate(prod);
@@ -79,7 +77,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
+            using (var unit = UnitOfWork.Start())
             {
                 var prod = _prodRepository.GetById(id);
                 if (prod != null)

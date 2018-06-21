@@ -67,7 +67,7 @@ namespace StoreApp.Web.Controllers
 
             var item = CreateItem(model);
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
+            using (var unit = UnitOfWork.Start())
             {
 
                 if (model.Id != 0)
@@ -89,7 +89,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra)) as ISessionFactoryInfra))
+            using (var unit = UnitOfWork.Start())
             {
                 var item = _itemRepository.GetById(id);
                 if (item != null)

@@ -12,9 +12,7 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public UserRepository(ISessionFactoryInfra sessionFactory) : base(sessionFactory)
-        {
-        }
+
 
         public User GetByUsername(string userName)
         {
