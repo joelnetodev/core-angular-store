@@ -8,6 +8,9 @@ import { ProductEditComponent } from './components/project/products/edit/product
 import { PermissionComponent } from './components/0-core/permission/permission.component';
 import { ItemsComponent } from './components/project/items/items.component';
 import { ItemEditComponent } from './components/project/items/edit/item.edit.component';
+import { ClientsComponent } from './components/project/clients/clients.component';
+import { ClientEditComponent } from './components/project/clients/edit/client.edit.component';
+
 import { ErrorComponent } from './components/0-core/error/error.component';
 import { MenuModuleEnum } from './models/Enums/menuEnum';
 
@@ -27,7 +30,11 @@ const routes: Routes = [
 
     { path: 'items', component: ItemsComponent, data: { title: 'Items', module: MenuModuleEnum.Items } },
     { path: 'items/edit', component: ItemEditComponent, data: { title: 'Item Add', module: MenuModuleEnum.Items } },
-    { path: 'items/edit/:id', component: ItemEditComponent, data: { title: 'Item Edit', module: MenuModuleEnum.Items } }
+    { path: 'items/edit/:id', component: ItemEditComponent, data: { title: 'Item Edit', module: MenuModuleEnum.Items } },
+
+    { path: 'clients', component: ClientsComponent, data: { title: 'Clients', module: MenuModuleEnum.Clients } },
+    { path: 'clients/edit', component: ClientEditComponent, data: { title: 'Client Add', module: MenuModuleEnum.Clients } },
+    { path: 'clients/edit/:id', component: ClientEditComponent, data: { title: 'Client Edit', module: MenuModuleEnum.Clients } }
 ];
 //Use hash to eneble refresh page, otherwise the reference of the page will be lost
 export const routing = RouterModule.forRoot(routes, { useHash: true });

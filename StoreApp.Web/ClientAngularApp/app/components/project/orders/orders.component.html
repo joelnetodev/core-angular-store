@@ -1,0 +1,70 @@
+
+<comp-navtop></comp-navtop>
+
+<div class="card card-body">
+    <comp-load></comp-load>
+
+    <div class="float-right">
+        <a class="btn btn-primary float-right" routerLink="/products/edit">Add</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Is Active
+                </th>
+                <th>
+                    Items
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let model of productsModels">
+                <td>
+                    {{model.product.name}}
+                </td>
+                <td>
+                    {{model.product.price}}
+                </td>
+                <td>
+                    {{model.product.isActive}}
+                </td>
+                <td>
+                    {{model.getItemsNames()}}
+
+                    <a *ngIf="model.getIsToHide()" class="btn btn-sm" (click)="setDisplayed(model)" title="{{getTitle(model)}}">
+                        <span class="oi oi-arrow-circle-{{getArrowDirection(model)}}" aria-hidden="true"></span>
+                    </a>
+
+
+                </td>
+                <td>
+                    <a class="btn btn-light btn-sm" [routerLink]="['/products/edit', model.product.id]" title="edit">
+                        <span class="oi oi-pencil" aria-hidden="true"></span>
+                    </a>
+                    <a class="btn btn-light btn-sm" (click)="remove(model)" title="remove">
+                        <span class="oi oi-trash" aria-hidden="true"></span>
+                    </a>
+
+                </td>
+            </tr>
+
+            <tr *ngIf="productsModels.length == 0">
+                <td colspan="5" style="text-align: center;">
+                    No products.
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

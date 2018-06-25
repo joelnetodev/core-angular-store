@@ -2,6 +2,7 @@ export enum MenuModuleEnum {
     Home,
     Products,
     Items,
+    Clients,
     Users
 }
 

@@ -20,7 +20,6 @@ namespace StoreApp.Web
         public static IWebHost BuildWebHost(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .UseKestrel()
                 .UseStartup<Startup>()
                 .Build();
         }

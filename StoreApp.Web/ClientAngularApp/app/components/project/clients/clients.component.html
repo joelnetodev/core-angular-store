@@ -1,0 +1,58 @@
+
+<comp-navtop></comp-navtop>
+
+<div class="card card-body">
+    <comp-load></comp-load>
+
+    <div class="float-right">
+        <a class="btn btn-primary float-right" routerLink="/clients/edit">Add</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Is Active
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients">
+                <td>
+                    {{client.name}}
+                </td>
+                <td>
+                    {{client.number}}
+                </td>
+                <td>
+                    {{client.isActive}}
+                </td>
+                <td>
+                    <a class="btn btn-light btn-sm" [routerLink]="['/clients/edit', client.id]" title="edit">
+                        <span class="oi oi-pencil" aria-hidden="true"></span>
+                    </a>
+                    <a class="btn btn-light btn-sm" (click)="remove(client)" title="remove">
+                        <span class="oi oi-trash" aria-hidden="true"></span>
+                    </a>
+
+                </td>
+            </tr>
+
+            <tr *ngIf="clients.length == 0">
+                <td colspan="5" style="text-align: center;">
+                    No products.
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

@@ -27,6 +27,8 @@ import { ProductsComponent } from './components/project/products/products.compon
 import { ProductEditComponent } from './components/project/products/edit/product.edit.component';
 import { ItemsComponent } from './components/project/items/items.component';
 import { ItemEditComponent } from './components/project/items/edit/item.edit.component';
+import { ClientsComponent } from './components/project/clients/clients.component';
+import { ClientEditComponent } from './components/project/clients/edit/client.edit.component';
 
 import { AppInterceptor } from './app.interceptor';
 import { AppComponent } from './components/0-core/app/app.component';
@@ -46,6 +48,8 @@ import { AppComponent } from './components/0-core/app/app.component';
         ProductEditComponent,
         ItemsComponent,
         ItemEditComponent,
+        ClientsComponent,
+        ClientEditComponent
     ],
 
     //IMPORTS are used to reference other Modules to use their scopes, like Http, Route, etc.
