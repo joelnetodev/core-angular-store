@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using StoreApp.Infra.DataBase;
 using StoreApp.Infra.DataBase.Repository;
 using StoreApp.Infra.DataBase.SessionFactory;
-using StoreApp.Infra.Exceptions;
 using StoreApp.Infra.Http;
 
 namespace StoreApp.Infra.Extension
