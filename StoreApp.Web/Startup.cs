@@ -46,7 +46,7 @@ namespace StoreApp.Web
                             {
                                 ValidateIssuer = true,
                                 ValidateAudience = true,
-                                ValidateLifetime = true,
+                                //ValidateLifetime = true,
                                 ValidateIssuerSigningKey = true,
                                 ValidIssuer = TokenGenerator.Config.Issuer,
                                 ValidAudience = TokenGenerator.Config.Audience,

@@ -33,7 +33,7 @@ namespace StoreApp.Infra.Authentication
 
         public static class Config
         {
-            public const int TokenLifetimeInMinutes = 30;
+            public const int TokenLifetimeInMinutes = 60;
 
             public const string Issuer = "joelnetodev";
             public const string Audience = "StoreAapp";
