@@ -21,7 +21,7 @@ namespace StoreApp.Domain.Map
             Map(x => x.State).Column("state");
             Map(x => x.IsActive).Column("is_active");
 
-            HasMany(x => x.Contacts).Table("client_contacts").KeyColumn("client_id").Not.KeyNullable().Not.KeyUpdate().Cascade.AllDeleteOrphan();
+            HasMany(x => x.Contacts).Table("clients_contacts").KeyColumn("client_id").Not.KeyNullable().Not.KeyUpdate().Cascade.AllDeleteOrphan();
         }
     }
 }

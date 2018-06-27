@@ -11,12 +11,12 @@ namespace StoreApp.Domain.Map
     {
         public ClientContactMap()
         {
-            Table("client_contacts");
+            Table("clients_contacts");
 
             Id(x => x.Id).Column("id");
             Map(x => x.Name).Column("name");
             Map(x => x.Email).Column("email");
-            Map(x => x.PhoneNumber).Column("phone_number");
+            Map(x => x.PhoneNumber).Column("phone");
         }
     }
 }

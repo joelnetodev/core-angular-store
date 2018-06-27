@@ -28,7 +28,7 @@ export class CoreErrorService
     setError(error: HttpErrorResponse) {
         this.url = error.url;
         this.status = error.statusText;
-        this.message = error.error ? error.error : "No messae to display.";
+        this.message = error.error ? error.error : "No message to display.";
     }
 
     setDefaults() {
