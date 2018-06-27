@@ -6,6 +6,7 @@ import { CoreHttpService } from '../../../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../../../services/0-core/core.alert.service';
 import { Router } from '@angular/router';
 import { Item } from '../../../../models/item';
+import { concat } from 'rxjs/operator/concat';
 
 @Component({
     selector: 'comp-client-edit',
@@ -14,6 +15,8 @@ import { Item } from '../../../../models/item';
 export class ClientEditComponent implements OnInit {
 
     client: Client = new Client();
+    currentContact = new ClientContact();
+    modalTitle: string = "Add";
 
     constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
@@ -27,7 +30,6 @@ export class ClientEditComponent implements OnInit {
     }
 
     populateClient(id) {
-
         this.httpServ.httpGet('clients/' + id).subscribe(
             (x) => {
                 this.client = x.valueOf() as Client;
@@ -43,16 +45,23 @@ export class ClientEditComponent implements OnInit {
             });
     }
 
-    //remove(itemModel: ItemModel) {
-    //    this.model.items = this.model.items.filter(x => x != itemModel);
-    //    this.model.product.items = this.model.product.items.filter(x => x != itemModel.item);
-    //}
+    edit(contact: ClientContact) {
+        this.currentContact = contact;
+        this.modalTitle = "Edit";
+    }
 
-    //add() {
-    //    let itemModel = new ItemModel();
-    //    itemModel.isEditingItem = true;
+    remove(contact: ClientContact) {
+        this.client.contacts = this.client.contacts.filter(x => x != contact);
+    }
 
-    //    this.model.product.items.push(itemModel.item);
-    //    this.model.items.push(itemModel);
-    //}
+    add() {
+        this.currentContact = new ClientContact();
+        this.modalTitle = "Add";
+    }
+
+    saveContact() {
+        if (this.modalTitle == "Add") {
+            this.client.contacts.push(this.currentContact);
+        }
+    }
 }

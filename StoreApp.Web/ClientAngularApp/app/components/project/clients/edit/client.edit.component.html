@@ -39,64 +39,103 @@
         </div>
     </div>
 
-  <!--<div class="row">
-      <h5>
-          Contacts of client
-      </h5>
+    <div class="row">
+        <h5>
+            Contacts of client
+        </h5>
 
-      <a class="btn btn-light btn-sm" (click)="add()" title="add">
-          <span class="oi oi-plus" title="add" aria-hidden="true"></span>
-      </a>
+        <a class="btn btn-light btn-sm" (click)="add()" title="add" data-toggle="modal" data-target="#modalClient">
+            <span class="oi oi-plus" title="add" aria-hidden="true"></span>
+        </a>
 
-      <table class="table table-bordered">
-          <thead>
-              <tr>
-                  <th>
-                      Name
-                  </th>
-                  <th>
-                      Email
-                  </th>
-                  <th>
-                      Phone Number
-                  </th>
-                  <th>
-                      Actions
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let itemModel of model.items">
-                  <td (click)="onClickItem(itemModel)">
-                      <p *ngIf="!itemModel.isEditingItem">{{itemModel.item.name}}</p>
-                      <select *ngIf="itemModel.isEditingItem" di-focus class="form-control" [(ngModel)]="itemModel.item.id" (focusout)="onFocusOutItem(itemModel)">
-                          <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
-                      </select>
-                  </td>
-                  <td (click)="onClickCount(itemModel)">
-                      <p *ngIf="!itemModel.isEditingCount">{{itemModel.item.count}}</p>
-                      <input *ngIf="itemModel.isEditingCount" di-focus type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
-                  </td>
-                  <td>
-                      <a class="btn btn-light btn-sm" (click)="remove(itemModel)" title="remove">
-                          <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
-                      </a>
-                  </td>
-              </tr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Phone Number
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let contact of client.contacts">
+                    <td>
+                        {{contact.name}}
+                    </td>
+                    <td>
+                        {{contact.email}}
+                    </td>
+                    <td>
+                        {{contact.phoneNumber}}
+                    </td>
+                    <td>
+                        <a class="btn btn-light btn-sm" (click)="edit(contact)" title="edit" data-toggle="modal" data-target="#modalClient">
+                            <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
+                        </a>
+                        <a class="btn btn-light btn-sm" (click)="remove(contact)" title="remove">
+                            <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
 
-              <tr *ngIf="model.items.length == 0">
-                  <td colspan="3" style="text-align: center;">
-                      No items.
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-
-  </div>-->
-
-        <div class="float-sm-right">
-            <a class="btn btn-secondary" routerLink="/clients">Cancel</a>
-            <button class="btn btn-primary" (click)="save()">Save</button>
-        </div>
+                <tr *ngIf="client.contacts.length == 0">
+                    <td colspan="4" style="text-align: center;">
+                        No contacts.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
+    <div class="float-sm-right">
+        <a class="btn btn-secondary" routerLink="/clients">Cancel</a>
+        <button class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalClient" tabindex="-1" role="dialog" aria-labelledby="modalClient" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{modalTitle}} Contact</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="price">Name</label>
+                    <input id="price" type="text" class="form-control" [(ngModel)]="currentContact.name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Email</label>
+                    <input id="price" type="text" class="form-control" [(ngModel)]="currentContact.email" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Phone Number</label>
+                    <input id="price" type="text" class="form-control" [(ngModel)]="currentContact.phoneNumber" required />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveContact()" >Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

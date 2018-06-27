@@ -140,7 +140,7 @@ namespace StoreApp.Web.Controllers
                     Id = item.Id,
                     Name = item.Name,
                     Email = item.Email,
-                    PhoneNumber = item.Email
+                    PhoneNumber = item.PhoneNumber
                 });
             }
 
