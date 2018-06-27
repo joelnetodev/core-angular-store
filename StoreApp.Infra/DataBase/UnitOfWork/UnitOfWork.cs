@@ -14,6 +14,7 @@ namespace StoreApp.Infra.DataBase.UnitOfWork
         public UnitOfWork(ISessionFactoryInfra sessionFactory)
         {
             _sessionFactory = sessionFactory;
+            GetCurrentSession().BeginTransaction();
         }
 
         public static UnitOfWork Start(ISessionFactoryInfra sessionFactory)
