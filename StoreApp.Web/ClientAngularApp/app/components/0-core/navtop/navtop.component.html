@@ -6,21 +6,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="{{ chooseModuleCSS(menuModuleEnum.Clients) }}">
+            <li *ngIf="getIsUserAdmin()" class="{{ chooseModuleCSS(menuModuleEnum.Clients) }}">
                 <a class="nav-link" routerLink="/clients">Clients</a>
             </li>
-            <li class="{{ chooseModuleCSS(menuModuleEnum.Products) }}">
+            <li *ngIf="getIsUserAdmin()" class="{{ chooseModuleCSS(menuModuleEnum.Products) }}">
                 <a class="nav-link" routerLink="/products">Products</a>
             </li>
-            <li class="{{ chooseModuleCSS(menuModuleEnum.Items) }}">
+            <li *ngIf="getIsUserAdmin()" class="{{ chooseModuleCSS(menuModuleEnum.Items) }}">
                 <a class="nav-link" routerLink="/items">Items</a>
             </li>
+            <li class="{{ chooseModuleCSS(menuModuleEnum.Orders) }}">
+                <a class="nav-link" routerLink="/order">Orders</a>
+            </li>
+            
+
         </ul>
 
         <div class="form-inline my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
                 <li class="{{ chooseModuleCSS(menuModuleEnum.Users) }}">
-                    <a class="nav-link" routerLink="/users/edit/{{username}}">{{username}}</a>
+                    <a class="nav-link" routerLink="/users/edit/{{userName}}">{{userName}}</a>
                 </li>
             </ul>
         

@@ -3,6 +3,7 @@ import { CoreUserService } from '../../../services/0-core/core.user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MenuModuleEnum, MenuItemEnum } from '../../../models/Enums/menuEnum';
+import { RoleEnum } from '../../../models/Enums/roleEnum';
 
 @Component({
     selector: 'comp-navtop',
@@ -18,23 +19,36 @@ export class NavTopComponent implements OnInit {
         this.title = this.activatedRoute.snapshot.data['title'];
 
         if (this.userServ.isUserStored()) {
-            this.username = this.userServ.getUser().username;
+
+            this.userName = this.userServ.getUser().username;
+            this.userRole = this.userServ.getUser().role;
         }
         else {
             this.router.navigate(['/login']);
         }
-
     }
 
     menuModuleEnum = MenuModuleEnum;
     menuItemEnum = MenuItemEnum;
 
-    username: string;
-    
+    userName: string;
+    userRole: RoleEnum;
+
     module: MenuModuleEnum;
     item: MenuItemEnum;
 
-    title:string;
+    title: string;
+
+    getIsUserAdmin(): boolean {
+        console.log(this.userRole.toString());
+        console.log(RoleEnum.Admin.toString());
+
+        var result = this.userRole.toString() == RoleEnum.Admin.toString();
+
+        console.log(result);
+
+        return result;
+    }
     
     chooseModuleCSS(module: MenuModuleEnum): string {
         if (module == this.module)

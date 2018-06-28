@@ -5,6 +5,6 @@ It contains the declarations of every others (Main or not) modules, or component
 
 export enum RoleEnum
 {
-    Admin,
-    Regular
+    Admin = 0,
+    Regular = 1
 }

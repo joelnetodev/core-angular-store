@@ -8,6 +8,7 @@ using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 using System.Threading;
+using StoreApp.Domain.Entity.Enums;
 
 namespace StoreApp.Web.Controllers
 {
@@ -38,17 +39,18 @@ namespace StoreApp.Web.Controllers
                 }
 
                 string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
-                return Ok(CreateLogin(loginModel.Username, token));
+                return Ok(CreateLogin(userFromDb, token));
             }
             else
                 throw new ErrorException("Model is not valid.");
         }
 
-        private UserModel CreateLogin(string userName, string token)
+        private UserModel CreateLogin(User user, string token)
         {
             return new UserModel
             {
-                Username = userName,
+                Username = user.Username,
+                Role = user.Role,
                 Token = token
             };
         }

@@ -64,4 +64,8 @@ export class ClientEditComponent implements OnInit {
             this.client.contacts.push(this.currentContact);
         }
     }
+
+    getIsEditingMode(): boolean {
+        return this.modalTitle == "Edit";
+    }
 }

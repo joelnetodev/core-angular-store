@@ -3,7 +3,8 @@ export enum MenuModuleEnum {
     Products,
     Items,
     Clients,
-    Users
+    Users,
+    Orders
 }
 
 export enum MenuItemEnum {
