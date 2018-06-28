@@ -5,7 +5,7 @@ namespace StoreApp.Domain.Entity
 {
     public class OrderProduct : Infra.Entity.Entity
     {
-        public virtual int Count { get; set; }
+        public virtual decimal Count { get; set; }
 
         public virtual decimal Price { get; set; }
 

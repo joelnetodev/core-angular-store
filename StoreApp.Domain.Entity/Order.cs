@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StoreApp.Domain.Entity
 {
-    public class Order : Infra.Entity.Entity
+    public class Order : Infra.Entity.Active.Entity
     {
         public virtual string Description { get; set; }
 
