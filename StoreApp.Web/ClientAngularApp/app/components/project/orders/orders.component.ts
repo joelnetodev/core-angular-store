@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
     selector: 'comp-orders',
     templateUrl: './orders.component.html'
 })
-export class ProductsComponent implements OnInit {
+export class OrdersComponent implements OnInit {
 
     productsModels: ProductModel[] = new Array<ProductModel>();
 
