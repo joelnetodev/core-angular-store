@@ -1,8 +1,8 @@
 {
-  "include": [ "./ClientAngularApp", "./wwwroot" ],
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./wwwroot/out-tsc",
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",

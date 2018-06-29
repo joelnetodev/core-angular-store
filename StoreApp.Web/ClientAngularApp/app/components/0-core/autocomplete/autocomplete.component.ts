@@ -1,4 +1,3 @@
-
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { CoreHttpService } from '../../../services/0-core/core.http.service';
 import { Observable } from 'rxjs';
@@ -45,12 +44,12 @@ export class AutoCompleteComponent implements OnInit {
 
     observableResults()
     {
-        return Observable.of([])
-            .merge(this.textToSearch.valueChanges)
-            .filter((txt) => { return txt.length > 2 })
-            .debounceTime(700)
-            .switchMap((path) => { return this.httpServ.httpGet(this.url + "/" + path); })
-            .map((data) => { return data as Object[]; })
-            .retry(2);
+        //return Observable.of([])
+        //    .merge(this.textToSearch.valueChanges)
+        //    .filter((txt) => { return txt.length > 2 })
+        //    .debounceTime(700)
+        //    .switchMap((path) => { return this.httpServ.httpGet(this.url + "/" + path); })
+        //    .map((data) => { return data as Object[]; })
+        //    .retry(2);
     }
 }

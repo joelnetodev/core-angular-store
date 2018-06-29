@@ -6,7 +6,6 @@ import { CoreHttpService } from '../../../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../../../services/0-core/core.alert.service';
 import { Router } from '@angular/router';
 import { Item } from '../../../../models/item';
-import { concat } from 'rxjs/operator/concat';
 
 @Component({
     selector: 'comp-client-edit',
