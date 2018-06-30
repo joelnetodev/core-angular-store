@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StoreApp.Web.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
@@ -25,6 +24,7 @@ namespace StoreApp.Web.Controllers
             _itemRepo = itemRepo;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -47,6 +47,15 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateProduct(prod));
         }
 
+        [HttpGet("Actives")]
+        public IActionResult GetActives()
+        {
+            var prods = _prodRepository.FindAllActives();
+
+            return Ok(CreateProducts(prods, false));
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Save([FromBody]ProductModel model)
         {
@@ -75,6 +84,7 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -95,6 +105,8 @@ namespace StoreApp.Web.Controllers
             }
         }
 
+
+        #region helpers
         private Product CreateProduct(ProductModel model)
         {
             if (model.Items.GroupBy(x => x.Id).Any(x => x.Count() > 1))
@@ -123,8 +135,8 @@ namespace StoreApp.Web.Controllers
 
 
             var itemsToDelete = new List<ProductItem>(product.Items);
-            var itemsFromBd = model.Items.Any() 
-                ?_itemRepo.FindByIds(model.Items.Select(x => x.Id).ToList())
+            var itemsFromBd = model.Items.Any()
+                ? _itemRepo.FindByIds(model.Items.Select(x => x.Id).ToList())
                 : null;
 
             foreach (var itemModel in model.Items)
@@ -158,30 +170,33 @@ namespace StoreApp.Web.Controllers
             return product;
         }
 
-        #region helpers
-        private IList<ProductModel> CreateProducts(IList<Product> products)
+        private IList<ProductModel> CreateProducts(IList<Product> products, bool withItems = true)
         {
             var list = new List<ProductModel>();
 
             foreach (var product in products)
             {
-                list.Add(CreateProduct(product));
+                list.Add(CreateProduct(product, withItems));
             }
 
             return list;
         }
 
-        private ProductModel CreateProduct(Product product)
+        private ProductModel CreateProduct(Product product, bool withItems = true)
         {
             var items = new List<ProductItemModel>();
-            foreach (var item in product.Items)
+
+            if (withItems)
             {
-                items.Add(new ProductItemModel
+                foreach (var item in product.Items)
                 {
-                    Id = item.Item.Id,
-                    Name = item.Item.Name,
-                    Count = item.Count
-                });
+                    items.Add(new ProductItemModel
+                    {
+                        Id = item.Item.Id,
+                        Name = item.Item.Name,
+                        Count = item.Count
+                    });
+                }
             }
 
             return new ProductModel

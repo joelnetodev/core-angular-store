@@ -21,7 +21,7 @@ export class ProductEditComponent implements OnInit {
 
     ngOnInit() {
 
-        this.httpServ.httpGet('items/active').subscribe(
+        this.httpServ.httpGet('items/actives').subscribe(
             (x) => {
                 this.items = x.valueOf() as Item[];
 

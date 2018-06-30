@@ -13,5 +13,7 @@ namespace StoreApp.Domain.Repository.Interfaces
         List<Client> FindAllWithContacts();
 
         Client GetByIdWithContacts(int id);
+
+        List<Client> FindAllActives();
     }
 }

@@ -13,7 +13,6 @@ using System.Threading;
 
 namespace StoreApp.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class ItemsController : Controller
     {
@@ -34,6 +33,7 @@ namespace StoreApp.Web.Controllers
             return Ok(models);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
@@ -47,8 +47,8 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateItemModel(item));
         }
 
-        [HttpGet("Active")]
-        public IActionResult GetActive()
+        [HttpGet("Actives")]
+        public IActionResult GetActives()
         {
             var items = _itemRepository.FindAllActives();
 
@@ -57,6 +57,7 @@ namespace StoreApp.Web.Controllers
             return Ok(models);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Save([FromBody]ItemModel model)
         {
@@ -86,6 +87,7 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -106,6 +108,8 @@ namespace StoreApp.Web.Controllers
             }
         }
 
+
+        #region helper
         private ItemModel CreateItemModel(Item item)
         {
             var model = new ItemModel();
@@ -126,5 +130,6 @@ namespace StoreApp.Web.Controllers
 
             return item;
         }
+        #endregion
     }
 }

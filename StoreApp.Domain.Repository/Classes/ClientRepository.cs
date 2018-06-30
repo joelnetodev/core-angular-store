@@ -24,6 +24,11 @@ namespace StoreApp.Domain.Repository.Classes
                 .FetchMany(x => x.Contacts).ToList();
         }
 
+        public List<Client> FindAllActives()
+        {
+            return Entity.Where(x => x.IsActive).ToList();
+        }
+
         public Client GetByIdWithContacts(int id)
         {
             return Entity.Where(x => x.Id == id)

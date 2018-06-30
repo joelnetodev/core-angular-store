@@ -25,6 +25,11 @@ namespace StoreApp.Domain.Repository.Classes
                 .ThenFetch(x => x.Item).ToList();
         }
 
+        public List<Product> FindAllActives()
+        {
+            return Entity.Where(x => x.IsActive).ToList();
+        }
+
         public Product GetByIdWithItems(int id)
         {
             return Entity.Where(x => x.Id == id)

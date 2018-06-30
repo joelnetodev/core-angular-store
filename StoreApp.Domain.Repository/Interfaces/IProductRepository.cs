@@ -13,5 +13,7 @@ namespace StoreApp.Domain.Repository.Interfaces
         List<Product> FindAllWithItems();
 
         Product GetByIdWithItems(int id);
+
+        List<Product> FindAllActives();
     }
 }

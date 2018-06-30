@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StoreApp.Web.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class ClientsController : Controller
     {
@@ -23,6 +22,7 @@ namespace StoreApp.Web.Controllers
             _clientRepsitory = clientRespo;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -41,6 +41,15 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateClient(cli));
         }
 
+        [HttpGet("Actives")]
+        public IActionResult GetActives()
+        {
+            var clis = _clientRepsitory.FindAllActives();
+
+            return Ok(CreateClients(clis, false));
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Save([FromBody]ClientModel model)
         {
@@ -59,6 +68,7 @@ namespace StoreApp.Web.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -79,6 +89,8 @@ namespace StoreApp.Web.Controllers
             }
         }
 
+
+        #region helpers
         private Client CreateClient(ClientModel model)
         {
             Client client;
@@ -116,32 +128,33 @@ namespace StoreApp.Web.Controllers
             return client;
         }
 
-        #region helpers
-        private IList<ClientModel> CreateClients(IList<Client> clients)
+        private IList<ClientModel> CreateClients(IList<Client> clients, bool withContacts = true)
         {
             var list = new List<ClientModel>();
 
             foreach (var product in clients)
             {
-                list.Add(CreateClient(product));
+                list.Add(CreateClient(product, withContacts));
             }
 
             return list;
         }
 
-        private ClientModel CreateClient(Client client)
+        private ClientModel CreateClient(Client client, bool withContacts = true)
         {
             var contacts = new List<ClientContactModel>();
-
-            foreach (var item in client.Contacts)
+            if (withContacts)
             {
-                contacts.Add(new ClientContactModel
+                foreach (var item in client.Contacts)
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Email = item.Email,
-                    PhoneNumber = item.PhoneNumber
-                });
+                    contacts.Add(new ClientContactModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        Email = item.Email,
+                        PhoneNumber = item.PhoneNumber
+                    });
+                }
             }
 
             return new ClientModel
