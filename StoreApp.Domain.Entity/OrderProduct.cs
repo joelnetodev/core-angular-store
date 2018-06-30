@@ -11,7 +11,7 @@ namespace StoreApp.Domain.Entity
 
         public virtual Product Product { get; set; }
 
-        public decimal Amount {
+        public virtual decimal Amount {
             get {
                 return Price * Count;
             }

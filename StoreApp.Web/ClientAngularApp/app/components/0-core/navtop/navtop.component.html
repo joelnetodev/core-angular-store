@@ -16,7 +16,7 @@
                 <a class="nav-link" routerLink="/items">Items</a>
             </li>
             <li class="{{ chooseModuleCSS(menuModuleEnum.Orders) }}">
-                <a class="nav-link" routerLink="/order">Orders</a>
+                <a class="nav-link" routerLink="/orders">Orders</a>
             </li>
             
 
@@ -35,8 +35,10 @@
     </div>
 </nav>
 
+<comp-alert></comp-alert>
+
 <div class="card-header">
     <h4> {{title}}</h4>
 </div>
 
-<comp-alert></comp-alert>
+

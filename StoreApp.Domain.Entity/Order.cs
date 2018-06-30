@@ -6,6 +6,8 @@ namespace StoreApp.Domain.Entity
 {
     public class Order : Infra.Entity.Active.Entity
     {
+        public virtual Client Client {get;set;}
+
         public virtual string Description { get; set; }
 
         public virtual decimal Discount { get; set; }
@@ -14,7 +16,7 @@ namespace StoreApp.Domain.Entity
 
         public virtual ICollection<OrderProduct> Products { get; set; }
 
-        public decimal Amount
+        public virtual decimal Amount
         {
             get
             {
@@ -22,7 +24,7 @@ namespace StoreApp.Domain.Entity
             }
         }
 
-        public decimal FinalTotal
+        public virtual decimal FinalTotal
         {
             get
             {
