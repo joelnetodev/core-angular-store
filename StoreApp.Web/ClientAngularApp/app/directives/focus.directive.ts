@@ -1,7 +1,4 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
-import { promise } from 'selenium-webdriver';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 
 //Class used to focus the element
 @Directive({

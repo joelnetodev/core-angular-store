@@ -11,7 +11,7 @@ import { Item } from '../../../../models/item';
     selector: 'comp-order-edit',
     templateUrl: './order.edit.component.html'
 })
-export class ProductEditComponent implements OnInit {
+export class OrderEditComponent implements OnInit {
 
     model: ProductModel = new ProductModel();
     items: Item[] = new Array<Item>();

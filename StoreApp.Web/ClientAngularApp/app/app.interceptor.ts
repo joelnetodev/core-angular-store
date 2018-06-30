@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/finally';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 
 import { CoreUserService } from './services/0-core/core.user.service';
 import { CoreAlertService } from './services/0-core/core.alert.service';
 import { CoreErrorService } from './services/0-core/core.error.service';
 import { CoreLoadService } from './services/0-core/core.load.service';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
@@ -27,28 +27,25 @@ export class AppInterceptor implements HttpInterceptor {
         //and the router will navigate to login page
 
         return next.handle(request)
-            .catch((response) => {
+            .pipe(catchError(response => {
+                console.log(response);
 
-                if (response instanceof HttpErrorResponse) {
-                    console.log(response);
+                //997 Info
+                //998 Error
+                //999 Critical
 
-                    //997 Info
-                    //998 Error
-                    //999 Critical
-
-                    switch (response.status) {
-                        case 401: this.userServ.removeUser(); this.router.navigate(['/login']); break;
-                        case 403: this.router.navigate(['/permission']); break;
-                        case 997: this.alertServ.createInfo(response.error); break;
-                        case 998: this.alertServ.createError(response.error); break;
-                        default: this.errorServ.setError(response); this.router.navigate(['/error']); break;
-                        //default: console.log(response); break;
-                    }
+                switch (response.status) {
+                    case 401: this.userServ.removeUser(); this.router.navigate(['/login']); break;
+                    case 403: this.router.navigate(['/permission']); break;
+                    case 997: this.alertServ.createInfo(response.error); break;
+                    case 998: this.alertServ.createError(response.error); break;
+                    default: this.errorServ.setError(response); this.router.navigate(['/error']); break;
+                    //default: console.log(response); break;
                 }
 
-                return Observable.throw(response);
-            })
-            .finally(() => { this.loadServ.hide(); });
+                return throwError(response);
+            }),
+            finalize(() => { this.loadServ.hide(); }));
     }
 
     /*Seems to be more apropriated to let CoreBaseService responsible for httpRequests
