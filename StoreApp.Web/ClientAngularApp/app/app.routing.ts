@@ -1,6 +1,6 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-
+import { UserEditComponent } from './components/project/user/user.edit.component';
 import { HomeComponent } from './components/project/home/home.component';
 import { LoginComponent } from './components/project/login/login.component';
 import { RegisterComponent } from './components/project/register/register.component';
@@ -30,6 +30,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'permission', component: PermissionComponent, data: { title: 'Access denied'} },
     { path: 'error', component: ErrorComponent },
+    { path: 'user', component: UserEditComponent, data: { title: 'User Edit', module: MenuModuleEnum.Users } },
 
     { path: 'products', component: ProductsComponent, data: { title: 'Products', module: MenuModuleEnum.Products } },
     { path: 'products/edit', component: ProductEditComponent, data: { title: 'Product Add', module: MenuModuleEnum.Products } },

@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
 
     createUser() {
 
-        this.httpServ.httpPost('login/create', this.user).subscribe(x => {
+        this.httpServ.httpPost('user/create', this.user).subscribe(x => {
             this.alertServ.createSuccess('User created.');
             this.user = new UserRegister(); 
         });

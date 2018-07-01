@@ -9,18 +9,22 @@ using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 using System.Threading;
 using StoreApp.Domain.Entity.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StoreApp.Web.Controllers
 {
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class UserController : Controller
     {
+        private const string EncrypedForDisplay = "encryped for display";
+
         IUserRepository _userRepository;
-        public LoginController(IUserRepository userRepo)
+        public UserController(IUserRepository userRepo)
         {
             _userRepository = userRepo;
         }
-        [HttpPost]
+
+        [HttpPost("login")]
         public IActionResult Access([FromBody]LoginModel loginModel)
         {
             //verifica se usuário existe, se sim gera o token
@@ -39,20 +43,10 @@ namespace StoreApp.Web.Controllers
                 }
 
                 string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
-                return Ok(CreateLogin(userFromDb, token));
+                return Ok(CreateUserLogged(userFromDb, token));
             }
             else
                 throw new ErrorException("Model is not valid.");
-        }
-
-        private UserModel CreateLogin(User user, string token)
-        {
-            return new UserModel
-            {
-                Username = user.Username,
-                Role = user.Role,
-                Token = token
-            };
         }
 
         [HttpPost("create")]
@@ -86,6 +80,65 @@ namespace StoreApp.Web.Controllers
                 else
                     throw new ErrorException("Model is not valid.");
             }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Update([FromBody]UserRegisterModel userRegister)
+        {
+            if (string.IsNullOrEmpty(userRegister.Password) || string.IsNullOrEmpty(userRegister.Name))
+                throw new ErrorException("User has missing fields.");
+
+            string username = HttpContext.User.Identity.Name;
+            var user = _userRepository.GetByUsername(username);
+
+            if (user == null)
+                throw new ErrorException(string.Format("User {0} not found.", username));
+
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
+            {
+                user.Name = userRegister.Name;
+                if (userRegister.Password != EncrypedForDisplay)
+                {
+                    user.Password = PasswordEncryptator.Encrypit(userRegister.Password);
+                }
+            }
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Get()
+        {
+            string username = HttpContext.User.Identity.Name;
+            var user = _userRepository.GetByUsername(username);
+
+            if (user == null)
+                throw new ErrorException(string.Format("User {0} not found.", username));
+
+            return Ok(CreateUserRegister(user));
+        }
+
+        private UserLoggedModel CreateUserLogged(User user, string token)
+        {
+            return new UserLoggedModel
+            {
+                Username = user.Username,
+                Role = user.Role,
+                Token = token
+            };
+        }
+
+        private UserRegisterModel CreateUserRegister(User user)
+        {
+            return new UserRegisterModel
+            {
+                Username = user.Username,
+                Role = user.Role,
+                Name = user.Name,
+                Password = EncrypedForDisplay
+            };
         }
     }
 }

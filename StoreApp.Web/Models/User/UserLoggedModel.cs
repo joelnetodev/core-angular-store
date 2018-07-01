@@ -3,7 +3,7 @@ using System;
 
 namespace StoreApp.Web.Models
 {
-    public class UserModel
+    public class UserLoggedModel
     {
         public string Username { get; set; }
 

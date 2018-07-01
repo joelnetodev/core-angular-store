@@ -1,0 +1,36 @@
+
+<comp-navtop></comp-navtop>
+<div class="panel card-body">
+    <comp-load></comp-load>
+
+    <div class="row">
+        <div class="col-6">
+            <label for="name">Username</label>
+            <br />
+            {{user.username}}
+        </div>
+
+        <div class="col-6">
+            <label for="name">Role</label>
+            <br />
+            {{roleEnum[user.role]}}
+        </div>
+
+        <div class="col-6">
+            <label for="description">Name</label>
+            <input id="description" type="text" class="form-control" name="name" [(ngModel)]="user.name" required />
+        </div>
+
+        <div class="col-6">
+            <label for="password">Password</label>
+            <input id="password" type="password" class="form-control" name="password" [(ngModel)]="user.password" required />
+        </div>
+
+    </div>
+
+
+    <div class="float-sm-right">
+        <button class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+
+</div>

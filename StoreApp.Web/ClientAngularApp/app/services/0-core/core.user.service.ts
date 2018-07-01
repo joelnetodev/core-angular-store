@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { CoreAlertService, AlertTypeEnum } from './core.alert.service';
 
-import { User } from '../../models/user/user';
+import { UserLogged } from '../../models/user/userLogged';
 
 @Injectable()
 export class CoreUserService {
@@ -14,7 +14,7 @@ export class CoreUserService {
     constructor(){
     }
 
-    public storeUser(user: User) {
+    public storeUser(user: UserLogged) {
         localStorage.setItem(this.keyUser, JSON.stringify(user));
     }
 
@@ -30,9 +30,9 @@ export class CoreUserService {
         return false;
     }
 
-    public getUser(): User {
+    public getUser(): UserLogged {
         if (this.isUserStored()) {
-            return JSON.parse(localStorage.getItem(this.keyUser)) as User;
+            return JSON.parse(localStorage.getItem(this.keyUser)) as UserLogged;
         }
         return null;
     }

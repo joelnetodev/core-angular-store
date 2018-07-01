@@ -23,6 +23,7 @@ import { HomeComponent } from './components/project/home/home.component';
 import { LoginComponent } from './components/project/login/login.component';
 import { RegisterComponent } from './components/project/register/register.component';
 
+import { UserEditComponent } from './components/project/user/user.edit.component';
 import { ProductsComponent } from './components/project/products/products.component';
 import { ProductEditComponent } from './components/project/products/edit/product.edit.component';
 import { ItemsComponent } from './components/project/items/items.component';
@@ -45,6 +46,7 @@ import { AppComponent } from './components/0-core/app/app.component';
         HomeComponent,
         LoginComponent,
         RegisterComponent,
+        UserEditComponent,
 
         ProductsComponent,
         ProductEditComponent,
