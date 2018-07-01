@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CoreUserService } from '../../../services/0-core/core.user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MenuModuleEnum, MenuItemEnum } from '../../../models/Enums/menuEnum';
-import { RoleEnum } from '../../../models/Enums/roleEnum';
+import { MenuModuleEnum, MenuItemEnum } from '../../../models/enums/menuEnum';
+import { RoleEnum } from '../../../models/enums/roleEnum';
 
 @Component({
     selector: 'comp-navtop',
@@ -40,14 +40,7 @@ export class NavTopComponent implements OnInit {
     title: string;
 
     getIsUserAdmin(): boolean {
-        console.log(this.userRole.toString());
-        console.log(RoleEnum.Admin.toString());
-
-        var result = this.userRole.toString() == RoleEnum.Admin.toString();
-
-        console.log(result);
-
-        return result;
+        return this.userRole.toString() == RoleEnum.Admin.toString();
     }
     
     chooseModuleCSS(module: MenuModuleEnum): string {

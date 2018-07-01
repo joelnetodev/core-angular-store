@@ -38,12 +38,10 @@ namespace StoreApp.Web.Controllers
         public IActionResult Get(int id)
         {
             var prod = _prodRepository.GetById(id);
-            //var prod = new Product { Name = "Teste", Items = new List<ProductItem>
-            //{
-            //    new ProductItem {
-            //        Item = new Item{ Name = "item" }
-            //    }
-            //}  };
+            if (prod == null)
+            {
+                throw new ErrorException(string.Format("Product {0} not found.", id));
+            }
             return Ok(CreateProduct(prod));
         }
 

@@ -19,7 +19,7 @@ import { ClientEditComponent } from './components/project/clients/edit/client.ed
 import { OrdersComponent } from './components/project/orders/orders.component';
 import { OrderEditComponent } from './components/project/orders/edit/order.edit.component';
 
-import { MenuModuleEnum } from './models/Enums/menuEnum';
+import { MenuModuleEnum } from './models/enums/menuEnum';
 
 //RouterModule for override the path to components.
 //This allows to create routerLink on HTML to render components

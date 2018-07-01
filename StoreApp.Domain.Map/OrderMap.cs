@@ -18,6 +18,8 @@ namespace StoreApp.Domain.Map
             Map(x => x.Discount).Column("discount");
             Map(x => x.Date).Column("date");
 
+            References(x => x.Client).Column("client_id").Cascade.None();
+
             HasMany(x => x.Products).Table("orders_products").KeyColumn("order_id").Not.KeyNullable().Not.KeyUpdate().Cascade.AllDeleteOrphan();
         }
     }

@@ -39,9 +39,9 @@ namespace StoreApp.Web.Controllers
         {
             var item = _itemRepository.GetById(id);
 
-            if(item == null)
+            if (item == null)
             {
-                throw new ErrorException("No item found.");
+                throw new ErrorException(string.Format("Item {0} not found.", id));
             }
 
             return Ok(CreateItemModel(item));

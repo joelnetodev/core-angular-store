@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { CoreUserService } from './core.user.service';
 import { CoreLoadService } from './core.load.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Injectable()
@@ -25,11 +26,26 @@ export class CoreHttpService {
         return this.http.post(url, body, { headers: this.createHeader() })
     }
 
-    public httpGet(pathUrl: string, httpParams?: HttpParams) {
+    public httpGet(pathUrl: string, httpParams?: ParamDictionary[]) {
 
         let url = this.urlApi + pathUrl;
 
-        return this.http.get(url, { headers: this.createHeader(), params: httpParams })
+        if (httpParams) {
+            return this.http.get(url, { headers: this.createHeader(), params: this.createParams(httpParams) });
+        }
+        else {
+            return this.http.get(url, { headers: this.createHeader() });
+        }  
+    }
+
+    private createParams(paramDict: ParamDictionary[]): HttpParams {
+        let httpParam = new HttpParams();
+
+        for (let itemDict of paramDict) {
+            httpParam.append(itemDict.key, itemDict.value);
+        }
+
+        return httpParam;
     }
 
     private createHeader(): HttpHeaders
@@ -43,5 +59,8 @@ export class CoreHttpService {
 
         return headers;
     }
-  
+}
+export class ParamDictionary {
+    key: string;
+    value: string;
 }

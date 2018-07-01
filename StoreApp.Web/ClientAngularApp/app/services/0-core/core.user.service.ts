@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { CoreAlertService, AlertTypeEnum } from './core.alert.service';
 
-import { User } from '../../models/user';
+import { User } from '../../models/user/user';
 
 @Injectable()
 export class CoreUserService {

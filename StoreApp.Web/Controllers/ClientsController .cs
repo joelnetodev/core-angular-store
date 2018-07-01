@@ -36,7 +36,7 @@ namespace StoreApp.Web.Controllers
             var cli = _clientRepsitory.GetById(id);
 
             if (cli == null)
-                throw new ErrorException(string.Format("Client {0} was not found.", id));
+                throw new ErrorException(string.Format("Client {0} not found.", id));
 
             return Ok(CreateClient(cli));
         }

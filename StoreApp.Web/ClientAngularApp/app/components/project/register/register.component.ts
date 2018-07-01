@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { CoreAlertService } from '../../../services/0-core/core.alert.service';
 import { CoreHttpService } from '../../../services/0-core/core.http.service';
-import { UserRegister } from '../../../models/userRegister';
-import { RoleEnum } from '../../../models/Enums/roleEnum';
+import { UserRegister } from '../../../models/user/userRegister';
+import { RoleEnum } from '../../../models/enums/roleEnum';
 
 @Component({
     selector: 'comp-register',

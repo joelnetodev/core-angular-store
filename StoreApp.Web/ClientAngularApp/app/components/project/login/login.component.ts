@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { CoreUserService } from '../../../services/0-core/core.user.service';
 import { CoreHttpService } from '../../../services/0-core/core.http.service';
-import { User } from '../../../models/user';
+import { User } from '../../../models/user/user';
 
 @Component({
     selector: 'comp-login',
