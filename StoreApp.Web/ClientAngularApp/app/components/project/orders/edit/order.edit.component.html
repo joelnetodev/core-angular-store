@@ -1,9 +1,9 @@
 
 <comp-navtop></comp-navtop>
-<div class="panel card-body">
+<div class="card card-body">
     <comp-load></comp-load>
 
-  <div class="row">
+    <div class="row">
         <div class="col-6">
             <label for="name">Name</label>
             <input id="name" type="text" class="form-control" [(ngModel)]="model.product.name" required />
@@ -29,61 +29,61 @@
         </div>
     </div>
 
-  <div class="row">
-      <h5>
-          Items of product
-      </h5>
+    <div class="row">
+        <h5>
+            Items of product
+        </h5>
 
-      <a class="btn btn-light btn-sm" (click)="add()" title="add">
-          <span class="oi oi-plus" title="add" aria-hidden="true"></span>
-      </a>
+        <a class="btn btn-light btn-sm" (click)="add()" title="add">
+            <span class="oi oi-plus" title="add" aria-hidden="true"></span>
+        </a>
 
-      <table class="table table-bordered">
-          <thead>
-              <tr>
-                  <th>
-                      Name
-                  </th>
-                  <th>
-                      Count
-                  </th>
-                  <th>
-                      Actions
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let itemModel of model.items">
-                  <td (click)="onClickItem(itemModel)">
-                      <p *ngIf="!itemModel.isEditingItem">{{itemModel.item.name}}</p>
-                      <select *ngIf="itemModel.isEditingItem" di-focus class="form-control" [(ngModel)]="itemModel.item.id" (focusout)="onFocusOutItem(itemModel)">
-                          <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
-                      </select>
-                  </td>
-                  <td (click)="onClickCount(itemModel)">
-                      <p *ngIf="!itemModel.isEditingCount">{{itemModel.item.count}}</p>
-                      <input *ngIf="itemModel.isEditingCount" di-focus type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
-                  </td>
-                  <td>
-                      <a class="btn btn-light btn-sm" (click)="remove(itemModel)" title="remove">
-                          <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
-                      </a>
-                  </td>
-              </tr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Count
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let itemModel of model.items">
+                    <td (click)="onClickItem(itemModel)">
+                        <p *ngIf="!itemModel.isEditingItem">{{itemModel.item.name}}</p>
+                        <select *ngIf="itemModel.isEditingItem" di-focus class="form-control" [(ngModel)]="itemModel.item.id" (focusout)="onFocusOutItem(itemModel)">
+                            <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
+                        </select>
+                    </td>
+                    <td (click)="onClickCount(itemModel)">
+                        <p *ngIf="!itemModel.isEditingCount">{{itemModel.item.count}}</p>
+                        <input *ngIf="itemModel.isEditingCount" di-focus type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
+                    </td>
+                    <td>
+                        <a class="btn btn-light btn-sm" (click)="remove(itemModel)" title="remove">
+                            <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
 
-              <tr *ngIf="model.items.length == 0">
-                  <td colspan="3" style="text-align: center;">
-                      No items.
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-
-  </div>
-
-        <div class="float-sm-right">
-            <a class="btn btn-secondary" routerLink="/products">Cancel</a>
-            <button class="btn btn-primary" (click)="save()">Save</button>
-        </div>
+                <tr *ngIf="model.items.length == 0">
+                    <td colspan="3" style="text-align: center;">
+                        No items.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
+
+    <div class="float-sm-right">
+        <a class="btn btn-secondary" routerLink="/products">Cancel</a>
+        <button class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+
+</div>

@@ -3,17 +3,17 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreSharedModule } from './core.shared.module';
 
 import { FocusDirective } from '../../directives/focus.directive';
-
+import { DatePickerDirective } from '../../directives/date.picker.directive';
 
 @NgModule({
     imports: [
         CoreSharedModule
     ],
     declarations: [
-        FocusDirective
+        FocusDirective, DatePickerDirective
     ],
     exports: [
-        FocusDirective
+        FocusDirective, DatePickerDirective
     ]
 })
 export class CoreDirectiveModule {

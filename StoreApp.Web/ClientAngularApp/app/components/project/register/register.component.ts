@@ -14,8 +14,8 @@ import { RoleEnum } from '../../../models/enums/roleEnum';
 export class RegisterComponent implements OnInit {
 
     //Create string array of EnumItems
-    roleEnum = RoleEnum;
-    roles = Object.keys(this.roleEnum).filter(k => isNaN(Number(k)));
+    enumRole = RoleEnum;
+    roles = Object.keys(this.enumRole).filter(k => isNaN(Number(k)));
     
     user: UserRegister = new UserRegister();
 

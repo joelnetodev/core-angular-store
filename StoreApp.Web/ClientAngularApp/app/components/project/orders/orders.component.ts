@@ -1,4 +1,4 @@
-declare var $: any;
+
 
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -26,9 +26,6 @@ export class OrdersComponent implements OnInit {
     ngOnInit() {
         this.fillClients();
         this.fillOrders();
-
-        $("#startDate").datepicker();
-        $("#endDate").datepicker();
     }
 
     fillClients() {
@@ -49,6 +46,22 @@ export class OrdersComponent implements OnInit {
         params += '&endDate=' + this.endDate;
         
         return params;
+    }
+
+    onStarDateBlur(event: any) {
+        if (this.startDate == event.target.value)
+            return;
+
+        this.startDate = event.target.value;
+        this.fillOrders();
+    }
+
+    onEndDateBlur(event: any) {
+        if (this.endDate == event.target.value)
+            return;
+
+        this.endDate = event.target.value;
+        this.fillOrders();
     }
 
     remove(order: Order) {

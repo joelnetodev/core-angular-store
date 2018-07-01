@@ -16,12 +16,12 @@
     <div class="row">
         <div class="col-6">
             <label for="startDate">Start Date</label>
-            <input id="startDate" type="text" class="form-control" [(ngModel)]="startDate" (change)="fillOrders()" />
+            <input id="startDate" di-datepicker type="text" class="form-control" (blur)="onStarDateBlur($event)">
         </div>
 
         <div class="col-6">
             <label for="endDate">End Date</label>
-            <input id="endDate" type="text" class="form-control" [(ngModel)]="endDate" (change)="fillOrders()" />
+            <input id="endDate" di-datepicker type="text" class="form-control" (blur)="onEndDateBlur($event)">
         </div>
     </div>
 

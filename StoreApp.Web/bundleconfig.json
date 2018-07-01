@@ -3,5 +3,20 @@
     "inputFiles": [ "assets/css/bootstrap.css" ],
     "outputFileName": "ClientAngularApp/assets/css/bootstrap.min.css",
     "minify": { "enabled": true }
+  },
+  {
+    "inputFiles": [ "assets/css/jquery-ui.1.12.1.css" ],
+    "outputFileName": "ClientAngularApp/assets/css/jquery-ui.1.12.1.min.css",
+    "minify": { "enabled": true }
+  },
+  {
+    "inputFiles": [ "assets/js/jquery-ui.1.12.1.js" ],
+    "outputFileName": "ClientAngularApp/assets/js/jquery-ui.1.12.1.min.js",
+    "minify": { "enabled": true }
+  },
+  {
+    "inputFiles": [ "assets/js/jquery.1.12.1.js" ],
+    "outputFileName": "ClientAngularApp/assets/js/jquery.1.12.1.min.js",
+    "minify": { "enabled": true }
   }
 ]

@@ -102,6 +102,8 @@ namespace StoreApp.Web.Controllers
                 {
                     user.Password = PasswordEncryptator.Encrypit(userRegister.Password);
                 }
+
+                unit.Commit();
             }
 
             return Ok();
