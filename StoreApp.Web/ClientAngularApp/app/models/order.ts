@@ -10,15 +10,15 @@ export class Order {
     id: number;
     description: string;
     date: Date;
-    client: Client;
-    discount: number;
+    client: Client = new Client();
+    discount: number = 0;
     isActive: boolean;
     products: ProductOrder[] = new Array<ProductOrder>();
 }
 
 export class ProductOrder {
     id: number;
-    count: number;
-    price: number;
-    product: Product;
+    count: number = 0;
+    price: number = 0;
+    product: Product = new Product();
 }

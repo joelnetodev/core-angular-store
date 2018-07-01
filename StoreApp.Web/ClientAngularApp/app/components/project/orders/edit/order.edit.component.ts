@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Product, ProductItem } from '../../../../models/product';
+import { Product } from '../../../../models/product';
 import { CoreHttpService } from '../../../../services/0-core/core.http.service';
 import { CoreAlertService } from '../../../../services/0-core/core.alert.service';
 import { Router } from '@angular/router';
-import { Item } from '../../../../models/item';
+import { Client } from '../../../../models/client';
+import { Order, ProductOrder } from '../../../../models/order';
 
 @Component({
     selector: 'comp-order-edit',
@@ -13,91 +14,112 @@ import { Item } from '../../../../models/item';
 })
 export class OrderEditComponent implements OnInit {
 
-    model: ProductModel = new ProductModel();
-    items: Item[] = new Array<Item>();
+    model: OrderModel = new OrderModel();
+    clients: Client[] = new Array<Client>();
+    products: Product[] = new Array<Product>();
 
     constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
 
     ngOnInit() {
 
-        this.httpServ.httpGet('items/active').subscribe(
+        this.httpServ.httpGet('clients/actives').subscribe(
             (x) => {
-                this.items = x.valueOf() as Item[];
+                this.clients = x.valueOf() as Client[];
 
-                if (this.route.snapshot.paramMap.has('id')) {
+                this.httpServ.httpGet('products/actives').subscribe(
+                    (x) => {
+                        this.products = x.valueOf() as Product[];
 
-                    let id = this.route.snapshot.paramMap.get('id');
+                        if (this.route.snapshot.paramMap.has('id')) {
+                            let id = this.route.snapshot.paramMap.get('id');
+                            this.populateOrder(id);
+                        }
+                    });
+            });
+    }
 
-                    this.populateProduct(id);
+    populateOrder(id) {
+       
+        this.httpServ.httpGet('orders/' + id).subscribe(
+            (x) => {
+                this.model.order = x.valueOf() as Order;
+
+                for (var i = 0; i < this.model.order.products.length; i++) {
+
+                    let prodModel = new ProductModel();
+                    prodModel.product = this.model.order.products[i];
+                    this.model.products.push(prodModel);
                 }
             });
     }
 
-    populateProduct(id) {
-       
-        this.httpServ.httpGet('products/' + id).subscribe(
-            (x) => {
-                this.model.product = x.valueOf() as Product;
+    getTotal(): number {
+        let count: number = 0;
+        let price: number = 0;
 
-                for (var i = 0; i < this.model.product.items.length; i++) {
+        for (var i = 0; i < this.model.order.products.length; i++) {
+            count += this.model.order.products[i].count;
+            price += this.model.order.products[i].price;
+        }
 
-                    let itemModel = new ItemModel();
-                    itemModel.item = this.model.product.items[i];
-                    this.model.items.push(itemModel);
-                }
-            });
+        return (count * price) - this.model.order.discount;
+    }
+
+    onDateChange(value: string) {
+        this.model.order.date = new Date(value);
     }
 
     save() {
 
-        this.httpServ.httpPost('products', this.model.product).subscribe(
+        this.httpServ.httpPost('orders', this.model.order).subscribe(
             (x) => {
-                this.alertServ.createSuccess('Product saved.', true);
-                this.router.navigate(["products"]);
+                this.alertServ.createSuccess('Order saved.', true);
+                this.router.navigate(["orders"]);
             });
     }
 
-    remove(itemModel: ItemModel) {
-        this.model.items = this.model.items.filter(x => x != itemModel);
-        this.model.product.items = this.model.product.items.filter(x => x != itemModel.item);
+    remove(prodModel: ProductModel) {
+        this.model.order.products = this.model.order.products.filter(x => x != prodModel.product);
+        this.model.products = this.model.products.filter(x => x != prodModel);
     }
 
     add() {
-        let itemModel = new ItemModel();
-        itemModel.isEditingItem = true;
+        let prodModel = new ProductModel();
+        prodModel.isEditingProduct = true;
 
-        this.model.product.items.push(itemModel.item);
-        this.model.items.push(itemModel);
+        this.model.order.products.push(prodModel.product);
+        this.model.products.push(prodModel);
     }
 
-    onFocusOutCount(itemModel: ItemModel) {
-        itemModel.isEditingCount = false;
-    }
+    //onFocusOutCount(itemModel: ItemModel) {
+    //    itemModel.isEditingCount = false;
+    //}
 
-    onClickCount(itemModel: ItemModel) {
-        itemModel.isEditingCount = true;
-    }
+    //onClickCount(itemModel: ItemModel) {
+    //    itemModel.isEditingCount = true;
+    //}
 
-    onFocusOutItem(itemModel: ItemModel) {
-        let itemFound = this.items.find(x => x.id == itemModel.item.id);
-        if (itemFound) {
-            itemModel.item.name = itemFound.name;
-        }
-        itemModel.isEditingItem = false;
-    }
+    //onFocusOutItem(itemModel: ItemModel) {
+    //    let itemFound = this.items.find(x => x.id == itemModel.item.id);
+    //    if (itemFound) {
+    //        itemModel.item.name = itemFound.name;
+    //    }
+    //    itemModel.isEditingItem = false;
+    //}
 
-    onClickItem(itemModel: ItemModel) {
-        itemModel.isEditingItem = true;
-    }
+    //onClickItem(itemModel: ItemModel) {
+    //    itemModel.isEditingItem = true;
+    //}
 }
 
+export class OrderModel {
+    public order: Order = new Order();
+    public products: ProductModel[] = new Array<ProductModel>();
+}
 export class ProductModel {
-    public product: Product = new Product();
-    public items: ItemModel[] = new Array<ItemModel>();
-}
-export class ItemModel {
-    public item: ProductItem = new ProductItem();
+    public product: ProductOrder = new ProductOrder();
+    public isEditingProduct: boolean;
     public isEditingCount: boolean;
-    public isEditingItem: boolean;
+    public isEditingPrice: boolean;
 }

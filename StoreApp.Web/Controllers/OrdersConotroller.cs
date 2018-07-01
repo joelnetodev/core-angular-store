@@ -17,12 +17,14 @@ namespace StoreApp.Web.Controllers
     public class OrdersController : Controller
     {
         private IProductRepository _prodRepository;
+        private IClientRepository _clientRepository;
         private IOrderRepository _orderRepository;
 
-        public OrdersController(IProductRepository prodRepo, IOrderRepository orderRepository)
+        public OrdersController(IProductRepository prodRepo, IClientRepository clientRepository, IOrderRepository orderRepository)
         {
             _prodRepository = prodRepo;
             _orderRepository = orderRepository;
+            _clientRepository = clientRepository;
         }
 
         [HttpGet()]
@@ -46,83 +48,81 @@ namespace StoreApp.Web.Controllers
             return Ok(CreateOrder(order));
         }
 
-        //[HttpPost]
-        //public IActionResult Save([FromBody]ProductModel model)
-        //{
-        //    if (!ModelState.IsValid || string.IsNullOrEmpty(model.Name) || model.Price == 0)
-        //    {
-        //        throw new ErrorException("Product has missing fields.");
-        //    }
+        [HttpPost]
+        public IActionResult Save([FromBody]OrderModel model)
+        {
+            if (model.Date == null || model.Client == null)
+            {
+                throw new ErrorException("Order has missing fields.");
+            }
 
-        //    if (model.Items.Any(x => x.Id == 0))
-        //    {
-        //        throw new ErrorException("Product has unselected items.");
-        //    }
+            if (model.Products.Any(x => x.Product.Id == 0))
+            {
+                throw new ErrorException("Order has unselected products.");
+            }
 
-        //    if (model.Items.GroupBy(x => x.Id).Any(v => v.Count() > 1))
-        //    {
-        //        throw new ErrorException("Product can not have the same item more than once.");
-        //    }
+            if (model.Products.GroupBy(x => x.Product.Id).Any(v => v.Count() > 1))
+            {
+                throw new ErrorException("Order can not have the same product more than once.");
+            }
 
-        //    using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-        //    {
-        //        var prod = CreateProduct(model);
-        //        _prodRepository.SaveOrUpdate(prod);
-        //        unit.Commit();
-        //    }
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
+            {
+                var order = CreateOrder(model);
+                _orderRepository.SaveOrUpdate(order);
+                unit.Commit();
+            }
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpPost("Delete/{id}")]
-        //public IActionResult Delete(int id)
-        //{
-        //    using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-        //    {
-        //        var prod = _prodRepository.GetById(id);
-        //        if (prod != null)
-        //        {
-        //            _prodRepository.Delete(prod);
-        //            unit.Commit();
-        //        }
-        //        else
-        //        {
-        //            throw new ErrorException("Product not found.");
-        //        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
+            {
+                var order = _orderRepository.GetById(id);
+                if (order != null)
+                {
+                    _orderRepository.Delete(order);
+                    unit.Commit();
+                }
+                else
+                {
+                    throw new ErrorException("Order not found.");
+                }
 
-        //        return Ok();
-        //    }
-        //}
+                return Ok();
+            }
+        }
 
 
         #region helpers
-        private Product CreateProduct(ProductModel model)
+        private Order CreateOrder(OrderModel model)
         {
-            if (model.Items.GroupBy(x => x.Id).Any(x => x.Count() > 1))
-            {
-                throw new ErrorException("Product can not have the same item more than once.");
-            }
-
-            Product product;
+            Order order;
             if (model.Id != 0)
             {
-                product = _prodRepository.GetById(model.Id);
-                if (product == null)
+                order = _orderRepository.GetById(model.Id);
+                if (order == null)
                 {
-                    throw new ErrorException(string.Format("Product {0} not found.", model.Id));
+                    throw new ErrorException(string.Format("Order {0} not found.", model.Id));
                 }
             }
             else
             {
-                product = new Product();
+                order = new Order();
             }
 
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.IsActive = model.IsActive;
+            var client = _clientRepository.GetById(model.Client.Id);
+            if (client == null)
+                throw new ErrorException(string.Format("Client {0} not found.", model.Client.Id));
 
+            order.Client = client;
+            order.Description = model.Description;
+            order.Date = model.Date;
+            order.IsActive = model.IsActive;
 
             //var itemsToDelete = new List<ProductItem>(product.Items);
             //var itemsFromBd = model.Items.Any()
@@ -157,7 +157,7 @@ namespace StoreApp.Web.Controllers
             //    product.Items.Remove(itemToDelete);
             //}
 
-            return product;
+            return order;
         }
 
         private IList<OrderModel> CreateOrders(IList<Order> orders, bool withProducts = true)

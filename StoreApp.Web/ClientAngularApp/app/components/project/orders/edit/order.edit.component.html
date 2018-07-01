@@ -4,34 +4,45 @@
     <comp-load></comp-load>
 
     <div class="row">
+
         <div class="col-6">
-            <label for="name">Name</label>
-            <input id="name" type="text" class="form-control" [(ngModel)]="model.product.name" required />
+            <label for="date">Client</label>
+            <select di-focus class="form-control" [(ngModel)]="model.order.client.id">
+                <option *ngFor="let client of clients" [ngValue]="client.id">{{client.name}}</option>
+            </select>
+        </div>
+
+        <div class="col-6">
+            <label for="date">Date</label>
+            <input id="date" type="text" class="form-control" di-datepicker (onSelectDate)="onDateChange($event)" required />
         </div>
 
         <div class="col-6">
             <label for="description">Description</label>
-            <input id="description" type="text" class="form-control" [(ngModel)]="model.product.description" required />
+            <input id="description" type="text" class="form-control" [(ngModel)]="model.order.description" required />
         </div>
 
-
         <div class="col-6">
-            <label for="price">Price</label>
-            <input id="price" type="text" class="form-control" [(ngModel)]="model.product.price" required />
+            <label for="discount">Discount</label>
+            <input id="discount" type="text" class="form-control" [(ngModel)]="model.order.discount" required />
         </div>
 
         <div class="col-6">
             <br />
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="isActive" [(ngModel)]="model.product.isActive">
+                <input class="form-check-input" type="checkbox" id="isActive" [(ngModel)]="model.order.isActive">
                 <label class="form-check-label" for="isActive">Is Active</label>
             </div>
         </div>
     </div>
 
     <div class="row">
+        <h6>Total {{getTotal()}}</h6>
+    </div>
+
+    <div class="row">
         <h5>
-            Items of product
+            Products od order
         </h5>
 
         <a class="btn btn-light btn-sm" (click)="add()" title="add">
@@ -45,7 +56,13 @@
                         Name
                     </th>
                     <th>
+                        Price
+                    </th>
+                    <th>
                         Count
+                    </th>
+                    <th>
+                        Amount
                     </th>
                     <th>
                         Actions
@@ -53,27 +70,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let itemModel of model.items">
-                    <td (click)="onClickItem(itemModel)">
-                        <p *ngIf="!itemModel.isEditingItem">{{itemModel.item.name}}</p>
-                        <select *ngIf="itemModel.isEditingItem" di-focus class="form-control" [(ngModel)]="itemModel.item.id" (focusout)="onFocusOutItem(itemModel)">
-                            <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
+                <tr *ngFor="let prodModel of model.products">
+                    <td (click)="onClickProduct(prodModel)">
+                        <p *ngIf="!itemModel.isEditingProduct">{{prodModel.product.product.name}}</p>
+                        <select *ngIf="prodModel.isEditingProduct" di-focus class="form-control" [(ngModel)]="prodModel.product.product.id" (focusout)="onFocusOutItem(prodModel)">
+                            <option *ngFor="let product of products" [ngValue]="product.id">{{product.name}}</option>
                         </select>
                     </td>
-                    <td (click)="onClickCount(itemModel)">
-                        <p *ngIf="!itemModel.isEditingCount">{{itemModel.item.count}}</p>
-                        <input *ngIf="itemModel.isEditingCount" di-focus type="text" class="form-control" [(ngModel)]="itemModel.item.count" (focusout)="onFocusOutCount(itemModel)" />
+                    <td (click)="onClickPrice(prodModel)">
+                        <p *ngIf="!prodModel.isEditingPrice">{{prodModel.product.price}}</p>
+                        <input *ngIf="prodModel.isEditingPrice" di-focus type="text" class="form-control" [(ngModel)]="prodModel.product.price" (focusout)="onFocusOutPrice(prodModel)" />
+                    </td>
+                    <td (click)="onClickCount(prodModel)">
+                        <p *ngIf="!prodModel.isEditingCount">{{prodModel.product.count}}</p>
+                        <input *ngIf="prodModel.isEditingCount" di-focus type="text" class="form-control" [(ngModel)]="prodModel.product.count" (focusout)="onFocusOutCount(prodModel)" />
                     </td>
                     <td>
-                        <a class="btn btn-light btn-sm" (click)="remove(itemModel)" title="remove">
+                        <a class="btn btn-light btn-sm" (click)="remove(prodModel)" title="remove">
                             <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
                         </a>
                     </td>
                 </tr>
 
-                <tr *ngIf="model.items.length == 0">
+                <tr *ngIf="model.products.length == 0">
                     <td colspan="3" style="text-align: center;">
-                        No items.
+                        No products.
                     </td>
                 </tr>
             </tbody>
@@ -82,7 +103,7 @@
     </div>
 
     <div class="float-sm-right">
-        <a class="btn btn-secondary" routerLink="/products">Cancel</a>
+        <a class="btn btn-secondary" routerLink="/orders">Cancel</a>
         <button class="btn btn-primary" (click)="save()">Save</button>
     </div>
 
