@@ -48,19 +48,19 @@ export class OrdersComponent implements OnInit {
         return params;
     }
 
-    onStarDateBlur(event: any) {
-        if (this.startDate == event.target.value)
+    onStarDateChange(value: string) {
+        if (this.startDate == value)
             return;
 
-        this.startDate = event.target.value;
+        this.startDate = value;
         this.fillOrders();
     }
 
-    onEndDateBlur(event: any) {
-        if (this.endDate == event.target.value)
+    onEndDateChange(value: string) {
+        if (this.endDate == value)
             return;
 
-        this.endDate = event.target.value;
+        this.endDate = value;
         this.fillOrders();
     }
 

@@ -16,12 +16,12 @@
     <div class="row">
         <div class="col-6">
             <label for="startDate">Start Date</label>
-            <input id="startDate" di-datepicker type="text" class="form-control" (blur)="onStarDateBlur($event)">
+            <input id="startDate" di-datepicker (onSelectDate)="onStarDateChange($event)" type="text" class="form-control">
         </div>
 
         <div class="col-6">
             <label for="endDate">End Date</label>
-            <input id="endDate" di-datepicker type="text" class="form-control" (blur)="onEndDateBlur($event)">
+            <input id="endDate" di-datepicker (onSelectDate)="onEndDateChange($event)" type="text" class="form-control">
         </div>
     </div>
 

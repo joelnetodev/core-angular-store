@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 declare var $: any;
 
@@ -11,17 +11,20 @@ export class DatePickerDirective implements OnInit {
     constructor(private elementRef: ElementRef) {
     }
 
+    @Output()
+    onSelectDate = new EventEmitter<string>();
+
     ngOnInit() {
         
     }
 
     //Runs the code afterViewInit due to "Previous value: 'ng-untouched: true'. Current value: 'ng-untouched: false'" exception
     ngAfterViewInit() {  
-        var element = this.elementRef.nativeElement;
+        var onSelectDate = this.onSelectDate;
 
-        $(element).datepicker({
+        $(this.elementRef.nativeElement).datepicker({
             onSelect: function (txt) {
-                $(element).focus();
+                onSelectDate.emit(txt);
             }
         });
     }
