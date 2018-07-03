@@ -48,7 +48,7 @@ export class OrdersComponent implements OnInit {
         return params;
     }
 
-    onStarDateChange(value: string) {
+    onStartDateChange(value: string) {
         if (this.startDate == value)
             return;
 

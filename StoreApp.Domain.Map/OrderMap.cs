@@ -17,6 +17,7 @@ namespace StoreApp.Domain.Map
             Map(x => x.Description).Column("description");
             Map(x => x.Discount).Column("discount");
             Map(x => x.Date).Column("date");
+            Map(x => x.IsActive).Column("is_active");
 
             References(x => x.Client).Column("client_id").Cascade.None();
 

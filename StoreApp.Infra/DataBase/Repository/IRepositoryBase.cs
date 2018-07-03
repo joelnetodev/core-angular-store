@@ -17,5 +17,7 @@ namespace StoreApp.Infra.DataBase.Repository
         ICollection<T> FindAll();
 
         T GetById(int id);
+
+        ICollection<T> FindByIds(IList<int> ids);
     }
 }

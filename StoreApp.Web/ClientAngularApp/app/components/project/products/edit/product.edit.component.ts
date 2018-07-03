@@ -13,8 +13,10 @@ import { Item } from '../../../../models/item';
 })
 export class ProductEditComponent implements OnInit {
 
-    model: ProductModel = new ProductModel();
+    product: Product = new Product();
     items: Item[] = new Array<Item>();
+    currentItem: ProductItem = new ProductItem();
+    modalTitle: string = "Add";
 
     constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
@@ -38,66 +40,53 @@ export class ProductEditComponent implements OnInit {
        
         this.httpServ.httpGet('products/' + id).subscribe(
             (x) => {
-                this.model.product = x.valueOf() as Product;
+                this.product = x.valueOf() as Product;
 
-                for (var i = 0; i < this.model.product.items.length; i++) {
-
-                    let itemModel = new ItemModel();
-                    itemModel.item = this.model.product.items[i];
-                    this.model.items.push(itemModel);
+                for (let item of this.product.items) {
+                    if (!this.items.some(x => x.id == item.id)) {
+                        let itemToAdd = new Item();
+                        itemToAdd.id = item.id;
+                        itemToAdd.name = item.name;
+                        this.items.push(itemToAdd);
+                    }
                 }
             });
     }
 
     save() {
 
-        this.httpServ.httpPost('products', this.model.product).subscribe(
+        this.httpServ.httpPost('products', this.product).subscribe(
             (x) => {
                 this.alertServ.createSuccess('Product saved.', true);
                 this.router.navigate(["products"]);
             });
     }
 
-    remove(itemModel: ItemModel) {
-        this.model.items = this.model.items.filter(x => x != itemModel);
-        this.model.product.items = this.model.product.items.filter(x => x != itemModel.item);
+    remove(item: ProductItem) {
+        this.product.items = this.product.items.filter(x => x != item);
+    }
+
+    edit(item: ProductItem) {
+        this.currentItem = item;
+        this.modalTitle = "Edit";
     }
 
     add() {
-        let itemModel = new ItemModel();
-        itemModel.isEditingItem = true;
-
-        this.model.product.items.push(itemModel.item);
-        this.model.items.push(itemModel);
+        this.currentItem = new ProductItem();
+        this.modalTitle = "Add";
     }
 
-    onFocusOutCount(itemModel: ItemModel) {
-        itemModel.isEditingCount = false;
-    }
-
-    onClickCount(itemModel: ItemModel) {
-        itemModel.isEditingCount = true;
-    }
-
-    onFocusOutItem(itemModel: ItemModel) {
-        let itemFound = this.items.find(x => x.id == itemModel.item.id);
-        if (itemFound) {
-            itemModel.item.name = itemFound.name;
+    saveItem() {
+        if (this.modalTitle == "Add") {
+            this.product.items.push(this.currentItem);
         }
-        itemModel.isEditingItem = false;
     }
 
-    onClickItem(itemModel: ItemModel) {
-        itemModel.isEditingItem = true;
+    onItemSelect() {
+        this.currentItem.name = this.items.find(x => x.id == this.currentItem.id).name;
     }
-}
 
-export class ProductModel {
-    public product: Product = new Product();
-    public items: ItemModel[] = new Array<ItemModel>();
-}
-export class ItemModel {
-    public item: ProductItem = new ProductItem();
-    public isEditingCount: boolean;
-    public isEditingItem: boolean;
+    getIsEditingMode(): boolean {
+        return this.modalTitle == "Edit";
+    }
 }

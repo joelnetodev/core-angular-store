@@ -77,5 +77,10 @@ namespace StoreApp.Infra.DataBase.Repository
         {
             return Entity.FirstOrDefault(x => x.Id == id);
         }
+
+        public ICollection<T> FindByIds(IList<int> ids)
+        {
+            return Entity.Where(x => ids.Contains(x.Id)).ToList();
+        }
     }
 }

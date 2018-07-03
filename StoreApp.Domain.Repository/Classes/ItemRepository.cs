@@ -17,11 +17,6 @@ namespace StoreApp.Domain.Repository.Classes
         {
         }
 
-        public ICollection<Item> FindByIds(IList<int> idsItems)
-        {
-            return Entity.Where(x => idsItems.Contains(x.Id)).ToList();
-        }
-
         public ICollection<Item> FindAllActives()
         {
             return Entity.Where(x => x.IsActive).ToList();

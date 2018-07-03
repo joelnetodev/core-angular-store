@@ -14,9 +14,11 @@ import { Order, ProductOrder } from '../../../../models/order';
 })
 export class OrderEditComponent implements OnInit {
 
-    model: OrderModel = new OrderModel();
+    order: Order = new Order();
     clients: Client[] = new Array<Client>();
     products: Product[] = new Array<Product>();
+    currentProduct: ProductOrder = new ProductOrder();
+    modalTitle: string = "Add";
 
     constructor(private route: ActivatedRoute, private router: Router, private httpServ: CoreHttpService, private alertServ: CoreAlertService) {
     }
@@ -43,13 +45,16 @@ export class OrderEditComponent implements OnInit {
        
         this.httpServ.httpGet('orders/' + id).subscribe(
             (x) => {
-                this.model.order = x.valueOf() as Order;
+                this.order = x.valueOf() as Order;
 
-                for (var i = 0; i < this.model.order.products.length; i++) {
-
-                    let prodModel = new ProductModel();
-                    prodModel.product = this.model.order.products[i];
-                    this.model.products.push(prodModel);
+                for (let item of this.order.products) {
+                    if (!this.products.some(x => x.id == item.id)) {
+                        let itemToAdd = new Product();
+                        itemToAdd.id = item.id;
+                        itemToAdd.name = item.name;
+                        itemToAdd.price = item.price;
+                        this.products.push(itemToAdd);
+                    }
                 }
             });
     }
@@ -58,68 +63,54 @@ export class OrderEditComponent implements OnInit {
         let count: number = 0;
         let price: number = 0;
 
-        for (var i = 0; i < this.model.order.products.length; i++) {
-            count += this.model.order.products[i].count;
-            price += this.model.order.products[i].price;
+        for (var i = 0; i < this.order.products.length; i++) {
+            count += this.order.products[i].count;
+            price += this.order.products[i].price;
         }
 
-        return (count * price) - this.model.order.discount;
+        return (count * price) - this.order.discount;
     }
 
     onDateChange(value: string) {
-        this.model.order.date = new Date(value);
+        this.order.date = new Date(value);
     }
 
     save() {
 
-        this.httpServ.httpPost('orders', this.model.order).subscribe(
+        this.httpServ.httpPost('orders', this.order).subscribe(
             (x) => {
                 this.alertServ.createSuccess('Order saved.', true);
                 this.router.navigate(["orders"]);
             });
     }
 
-    remove(prodModel: ProductModel) {
-        this.model.order.products = this.model.order.products.filter(x => x != prodModel.product);
-        this.model.products = this.model.products.filter(x => x != prodModel);
+    remove(item: ProductOrder) {
+        this.order.products = this.order.products.filter(x => x != item);
+    }
+
+    edit(item: ProductOrder) {
+        this.currentProduct = item;
+        this.modalTitle = "Edit";
     }
 
     add() {
-        let prodModel = new ProductModel();
-        prodModel.isEditingProduct = true;
-
-        this.model.order.products.push(prodModel.product);
-        this.model.products.push(prodModel);
+        this.currentProduct = new ProductOrder();
+        this.modalTitle = "Add";
     }
 
-    //onFocusOutCount(itemModel: ItemModel) {
-    //    itemModel.isEditingCount = false;
-    //}
+    saveProduct() {
+        if (this.modalTitle == "Add") {
+            this.order.products.push(this.currentProduct);
+        }
+    }
 
-    //onClickCount(itemModel: ItemModel) {
-    //    itemModel.isEditingCount = true;
-    //}
+    onProductSelect() {
+        let product = this.products.find(x => x.id == this.currentProduct.id);
+        this.currentProduct.name = product.name;
+        this.currentProduct.price = product.price;
+    }
 
-    //onFocusOutItem(itemModel: ItemModel) {
-    //    let itemFound = this.items.find(x => x.id == itemModel.item.id);
-    //    if (itemFound) {
-    //        itemModel.item.name = itemFound.name;
-    //    }
-    //    itemModel.isEditingItem = false;
-    //}
-
-    //onClickItem(itemModel: ItemModel) {
-    //    itemModel.isEditingItem = true;
-    //}
-}
-
-export class OrderModel {
-    public order: Order = new Order();
-    public products: ProductModel[] = new Array<ProductModel>();
-}
-export class ProductModel {
-    public product: ProductOrder = new ProductOrder();
-    public isEditingProduct: boolean;
-    public isEditingCount: boolean;
-    public isEditingPrice: boolean;
+    getIsEditingMode(): boolean {
+        return this.modalTitle == "Edit";
+    }
 }

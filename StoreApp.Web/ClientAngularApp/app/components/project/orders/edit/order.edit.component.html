@@ -6,31 +6,31 @@
     <div class="row">
 
         <div class="col-6">
-            <label for="date">Client</label>
-            <select di-focus class="form-control" [(ngModel)]="model.order.client.id">
+            <label for="client">Client</label>
+            <select class="form-control" id="client" [(ngModel)]="order.clientId">
                 <option *ngFor="let client of clients" [ngValue]="client.id">{{client.name}}</option>
             </select>
         </div>
 
         <div class="col-6">
             <label for="date">Date</label>
-            <input id="date" type="text" class="form-control" di-datepicker (onSelectDate)="onDateChange($event)" required />
+            <input id="startDate" type="text" class="form-control" di-datepicker (onSelectDate)="onDateChange($event)" (change)="onDateChange($event.target.value)">
         </div>
 
         <div class="col-6">
             <label for="description">Description</label>
-            <input id="description" type="text" class="form-control" [(ngModel)]="model.order.description" required />
+            <input id="description" type="text" class="form-control" [(ngModel)]="order.description" required />
         </div>
 
         <div class="col-6">
             <label for="discount">Discount</label>
-            <input id="discount" type="text" class="form-control" [(ngModel)]="model.order.discount" required />
+            <input id="discount" type="text" class="form-control" [(ngModel)]="order.discount" required />
         </div>
 
         <div class="col-6">
             <br />
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="isActive" [(ngModel)]="model.order.isActive">
+                <input class="form-check-input" type="checkbox" id="isActive" [(ngModel)]="order.isActive">
                 <label class="form-check-label" for="isActive">Is Active</label>
             </div>
         </div>
@@ -42,10 +42,10 @@
 
     <div class="row">
         <h5>
-            Products od order
+            Products of order
         </h5>
 
-        <a class="btn btn-light btn-sm" (click)="add()" title="add">
+        <a class="btn btn-light btn-sm" (click)="add()" title="add" data-toggle="modal" data-target="#modalProduct">
             <span class="oi oi-plus" title="add" aria-hidden="true"></span>
         </a>
 
@@ -70,29 +70,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let prodModel of model.products">
-                    <td (click)="onClickProduct(prodModel)">
-                        <p *ngIf="!itemModel.isEditingProduct">{{prodModel.product.product.name}}</p>
-                        <select *ngIf="prodModel.isEditingProduct" di-focus class="form-control" [(ngModel)]="prodModel.product.product.id" (focusout)="onFocusOutItem(prodModel)">
-                            <option *ngFor="let product of products" [ngValue]="product.id">{{product.name}}</option>
-                        </select>
-                    </td>
-                    <td (click)="onClickPrice(prodModel)">
-                        <p *ngIf="!prodModel.isEditingPrice">{{prodModel.product.price}}</p>
-                        <input *ngIf="prodModel.isEditingPrice" di-focus type="text" class="form-control" [(ngModel)]="prodModel.product.price" (focusout)="onFocusOutPrice(prodModel)" />
-                    </td>
-                    <td (click)="onClickCount(prodModel)">
-                        <p *ngIf="!prodModel.isEditingCount">{{prodModel.product.count}}</p>
-                        <input *ngIf="prodModel.isEditingCount" di-focus type="text" class="form-control" [(ngModel)]="prodModel.product.count" (focusout)="onFocusOutCount(prodModel)" />
+                <tr *ngFor="let product of order.products">
+                    <td>
+                        {{product.name}}
                     </td>
                     <td>
-                        <a class="btn btn-light btn-sm" (click)="remove(prodModel)" title="remove">
+                        {{product.price}}
+                    </td>
+                    <td (click)="onClickCount(prodModel)">
+                        {{product.count}}
+                    </td>
+                    <td>
+                        <a class="btn btn-light btn-sm" (click)="edit(product)" title="edit" data-toggle="modal" data-target="#modalProduct">
+                            <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
+                        </a>
+                        <a class="btn btn-light btn-sm" (click)="remove(product)" title="remove">
                             <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
                         </a>
                     </td>
                 </tr>
 
-                <tr *ngIf="model.products.length == 0">
+                <tr *ngIf="order.products.length == 0">
                     <td colspan="3" style="text-align: center;">
                         No products.
                     </td>
@@ -107,4 +105,42 @@
         <button class="btn btn-primary" (click)="save()">Save</button>
     </div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="modalProduct" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{modalTitle}} Product</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="price">Item</label>
+                    <select class="form-control" [(ngModel)]="currentProduct.id" (change)="onProductSelect()">
+                        <option *ngFor="let item of products" [ngValue]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="count">Count</label>
+                    <input type="text" class="form-control" [(ngModel)]="currentProduct.price" />
+                </div>
+
+                <div class="form-group">
+                    <label for="count">Count</label>
+                    <input type="text" class="form-control" [(ngModel)]="currentProduct.count" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button *ngIf="!getIsEditingMode()" type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveProduct()">Add</button>
+            </div>
+        </div>
+    </div>
 </div>

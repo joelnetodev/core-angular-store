@@ -11,7 +11,9 @@ namespace StoreApp.Web.Models
 
         public DateTime Date { get; set; }
 
-        public ClientModel Client { get; set; }
+        public int ClientId { get; set; }
+
+        public string ClientName { get; set; }
 
         public decimal Discount { get; set; }
 
@@ -29,7 +31,7 @@ namespace StoreApp.Web.Models
     {
         public int Id { get; set; }
 
-        public ProductModel Product{ get; set; }
+        public string Name{ get; set; }
 
         public decimal Price { get; set; }
 

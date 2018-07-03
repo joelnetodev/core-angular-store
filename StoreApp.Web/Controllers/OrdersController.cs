@@ -51,17 +51,17 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Save([FromBody]OrderModel model)
         {
-            if (model.Date == null || model.Client == null)
+            if (model.Date == null || model.ClientId == 0 || string.IsNullOrEmpty(model.Description))
             {
                 throw new ErrorException("Order has missing fields.");
             }
 
-            if (model.Products.Any(x => x.Product.Id == 0))
+            if (model.Products.Any(x => x.Id == 0))
             {
                 throw new ErrorException("Order has unselected products.");
             }
 
-            if (model.Products.GroupBy(x => x.Product.Id).Any(v => v.Count() > 1))
+            if (model.Products.GroupBy(x => x.Id).Any(v => v.Count() > 1))
             {
                 throw new ErrorException("Order can not have the same product more than once.");
             }
@@ -115,47 +115,48 @@ namespace StoreApp.Web.Controllers
                 order = new Order();
             }
 
-            var client = _clientRepository.GetById(model.Client.Id);
+            var client = _clientRepository.GetById(model.ClientId);
             if (client == null)
-                throw new ErrorException(string.Format("Client {0} not found.", model.Client.Id));
+                throw new ErrorException(string.Format("Client {0} not found.", model.ClientId));
 
             order.Client = client;
             order.Description = model.Description;
             order.Date = model.Date;
             order.IsActive = model.IsActive;
 
-            //var itemsToDelete = new List<ProductItem>(product.Items);
-            //var itemsFromBd = model.Items.Any()
-            //    ? _itemRepo.FindByIds(model.Items.Select(x => x.Id).ToList())
-            //    : null;
+            var prodsToDelete = new List<OrderProduct>(order.Products);
+            var prodsFromBd = model.Products.Any()
+                ? _prodRepository.FindByIds(model.Products.Select(x => x.Id).ToList())
+                : null;
 
-            //foreach (var itemModel in model.Items)
-            //{
-            //    var item = itemsFromBd.FirstOrDefault(x => x.Id == itemModel.Id);
-            //    if (item == null)
-            //    {
-            //        throw new ErrorException(string.Format("It was not possible to find item {0}.", itemModel.Id));
-            //    }
+            foreach (var itemModel in model.Products)
+            {
+                var prod = prodsFromBd.FirstOrDefault(x => x.Id == itemModel.Id);
+                if (prod == null)
+                {
+                    throw new ErrorException(string.Format("It was not possible to find item {0}.", itemModel.Id));
+                }
 
-            //    ProductItem prodItem = product.Items.FirstOrDefault(x => x.Item.Id == item.Id);
-            //    if (prodItem == null)
-            //    {
-            //        prodItem = new ProductItem();
-            //        prodItem.Item = item;
-            //        prodItem.Count = itemModel.Count;
-            //        product.Items.Add(prodItem);
-            //    }
-            //    else
-            //    {
-            //        prodItem.Count = itemModel.Count;
-            //        itemsToDelete.Remove(prodItem);
-            //    }
-            //}
+                OrderProduct prodOrder = order.Products.FirstOrDefault(x => x.Product.Id == prod.Id);
+                if (prodOrder == null)
+                {
+                    prodOrder = new OrderProduct();
+                    prodOrder.Product = prod;
+                    prodOrder.Count = itemModel.Count;
+                    prodOrder.Price = itemModel.Price;
+                    order.Products.Add(prodOrder);
+                }
+                else
+                {
+                    prodOrder.Count = itemModel.Count;
+                    prodsToDelete.Remove(prodOrder);
+                }
+            }
 
-            //foreach (var itemToDelete in itemsToDelete)
-            //{
-            //    product.Items.Remove(itemToDelete);
-            //}
+            foreach (var itemToDelete in prodsToDelete)
+            {
+                order.Products.Remove(itemToDelete);
+            }
 
             return order;
         }
@@ -182,8 +183,8 @@ namespace StoreApp.Web.Controllers
                 {
                     prods.Add(new ProductOrderModel
                     {
-                        Id = prod.Id,
-                        Product = new ProductModel { Id = prod.Product.Id, Name = prod.Product.Name },
+                        Id = prod.Product.Id,
+                        Name = prod.Product.Name,
                         Price = prod.Price,
                         Count = prod.Count
                     });
@@ -195,7 +196,8 @@ namespace StoreApp.Web.Controllers
                 Id = order.Id,
                 Date = order.Date,
                 Description = order.Description,
-                Client = new ClientModel { Id = order.Client.Id, Name = order.Client.Name },
+                ClientId = order.Client.Id,
+                ClientName = order.Client.Name,
                 IsActive = order.IsActive,
                 Products = prods
             };

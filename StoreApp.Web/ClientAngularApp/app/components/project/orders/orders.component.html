@@ -8,6 +8,7 @@
         <div class="col-6">
             <label for="client">Client</label>
             <select id="client" class="form-control" [(ngModel)]="clientId" (change)="fillOrders()">
+                <option value="">All</option>
                 <option *ngFor="let client of clients" [ngValue]="client.id">{{client.name}}</option>
             </select>
         </div>
@@ -16,12 +17,12 @@
     <div class="row">
         <div class="col-6">
             <label for="startDate">Start Date</label>
-            <input id="startDate" di-datepicker (onSelectDate)="onStarDateChange($event)" type="text" class="form-control">
+            <input id="startDate" type="text" class="form-control" di-datepicker (onSelectDate)="onStartDateChange($event)" (change)="onStartDateChange($event.target.value)" >
         </div>
 
         <div class="col-6">
             <label for="endDate">End Date</label>
-            <input id="endDate" di-datepicker (onSelectDate)="onEndDateChange($event)" type="text" class="form-control">
+            <input id="endDate" type="text" class="form-control" di-datepicker (onSelectDate)="onEndDateChange($event)" (change)="onEndDateChange($event.target.value)" >
         </div>
     </div>
 
@@ -52,10 +53,10 @@
         <tbody>
             <tr *ngFor="let order of orders">
                 <td>
-                    {{order.date}}
+                    {{order.date | date:'MM/dd/yyyy'}}
                 </td>
                 <td>
-                    {{order.client.name}}
+                    {{order.clientName}}
                 </td>
                 <td>
                     {{order.description}}
