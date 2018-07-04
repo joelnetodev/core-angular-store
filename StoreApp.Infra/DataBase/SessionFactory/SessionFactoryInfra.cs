@@ -25,7 +25,7 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 
             //Fliently configuration using Postgre Connector and "StoreApp.Domain.Repository.dll" mapped assembly
             //Quary and Cache setted to false due to problems making quaries constantly
-            _sessionFactory = Fluently.Configure()
+            var fConfiguration = Fluently.Configure()
                 .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(c => c
                             .Host("localhost")
                             .Port(5432)
@@ -33,11 +33,16 @@ namespace StoreApp.Infra.DataBase.SessionFactory
                             .Username("postgres")
                             .Password("admin")))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assemblyWithMaps))
-                .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)                                            
+                .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)
                                                  .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
                                                  .SetProperty(NHibernate.Cfg.Environment.UseQueryCache, Boolean.FalseString))
-                .BuildSessionFactory();
+                                                 .BuildConfiguration();
 
+            //To create schema (database must exist)
+            //var exporter = new SchemaExport(fConfiguration);
+            //exporter.Execute(true, true, false);
+
+            _sessionFactory = fConfiguration.BuildSessionFactory();
             _session = _sessionFactory.OpenSession();
         }
 

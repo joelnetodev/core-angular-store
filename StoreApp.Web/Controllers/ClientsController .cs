@@ -53,6 +53,7 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Save([FromBody]ClientModel model)
         {
+
             if (!ModelState.IsValid || string.IsNullOrEmpty(model.Name))
             {
                 throw new ErrorException("Client has missing fields.");
