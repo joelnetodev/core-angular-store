@@ -26,11 +26,12 @@ namespace StoreApp.Infra.Http
             {
                 //999 Code was creted to angular projects intecept and perform the error response.
                 //Take a look at angular app.intecept module
-                context.Response.StatusCode = (ex is InfoException) ? 997 : (ex is ErrorException) ? 998 : (int)HttpStatusCode.BadRequest;
+                bool isModelException = (ex is ModelException);
+                context.Response.StatusCode = isModelException ? 997 : (ex is ErrorException) ? 998 : (int)HttpStatusCode.BadRequest;
                 context.Response.ContentType = "text/html";
 
                 await context.Response.WriteAsync(context.Response.StatusCode == (int)HttpStatusCode.BadRequest
-                    ? ex.Message + " | " + ex.StackTrace
+                    ? ex.Message + " Stack Trace: " + ex.StackTrace
                     : ex.Message);
             }
             finally

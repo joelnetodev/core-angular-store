@@ -3,18 +3,18 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 import { CoreUserService } from './services/0-core/core.user.service';
 import { CoreAlertService } from './services/0-core/core.alert.service';
 import { CoreErrorService } from './services/0-core/core.error.service';
 import { CoreLoadService } from './services/0-core/core.load.service';
-import { finalize } from 'rxjs/internal/operators/finalize';
+import { CoreModelValidatorService, ModelError } from './services/0-core/core.model.validator.service';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private userServ: CoreUserService, private alertServ: CoreAlertService, private errorServ: CoreErrorService, private loadServ: CoreLoadService) { }
+    constructor(private router: Router, private userServ: CoreUserService, private alertServ: CoreAlertService, private errorServ: CoreErrorService, private loadServ: CoreLoadService, private validServ: CoreModelValidatorService) { }
 
     //intercept is a overrided method to intercept requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,14 +30,14 @@ export class AppInterceptor implements HttpInterceptor {
             .pipe(catchError(response => {
                 console.log(response);
 
-                //997 Info
+                //997 Model
                 //998 Error
                 //999 Critical
 
                 switch (response.status) {
                     case 401: this.userServ.removeUser(); this.router.navigate(['/login']); break;
                     case 403: this.router.navigate(['/permission']); break;
-                    case 997: this.alertServ.createInfo(response.error); break;
+                    case 997: this.alertServ.createError('Invalid model.'); this.validServ.setModelErrors(response.error as ModelError[]); break;
                     case 998: this.alertServ.createError(response.error); break;
                     default: this.errorServ.setError(response); this.router.navigate(['/error']); break;
                     //default: console.log(response); break;

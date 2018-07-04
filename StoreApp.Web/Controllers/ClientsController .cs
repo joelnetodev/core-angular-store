@@ -54,9 +54,9 @@ namespace StoreApp.Web.Controllers
         public IActionResult Save([FromBody]ClientModel model)
         {
 
-            if (!ModelState.IsValid || string.IsNullOrEmpty(model.Name))
+            if (!ModelState.IsValid)
             {
-                throw new ErrorException("Client has missing fields.");
+                throw new ModelException(ModelState);
             }
 
             using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))

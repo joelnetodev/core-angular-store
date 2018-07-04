@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreApp.Infra", "StoreApp.Infra\StoreApp.Infra.csproj", "{D618C65C-74D2-496E-8456-5765857896A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreApp.Domain.Map", "StoreApp.Domain.Map\StoreApp.Domain.Map.csproj", "{3994006A-1D6F-412F-AC67-84219A97AD4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreApp.Domain.Map", "StoreApp.Domain.Map\StoreApp.Domain.Map.csproj", "{3994006A-1D6F-412F-AC67-84219A97AD4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

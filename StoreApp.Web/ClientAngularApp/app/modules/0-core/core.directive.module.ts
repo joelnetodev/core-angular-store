@@ -4,16 +4,17 @@ import { CoreSharedModule } from './core.shared.module';
 
 import { FocusDirective } from '../../directives/focus.directive';
 import { DatePickerDirective } from '../../directives/date.picker.directive';
+import { ModelValidatorDirective } from '../../directives/model.validatior.directive';
 
 @NgModule({
     imports: [
         CoreSharedModule
     ],
     declarations: [
-        FocusDirective, DatePickerDirective
+        FocusDirective, DatePickerDirective, ModelValidatorDirective
     ],
     exports: [
-        FocusDirective, DatePickerDirective
+        FocusDirective, DatePickerDirective, ModelValidatorDirective
     ]
 })
 export class CoreDirectiveModule {
