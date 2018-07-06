@@ -35,13 +35,15 @@ export class ModelValidatorDirective implements OnInit {
                 if (itemError.key == this.key) {
 
                     //if model has no P element, it means there is no error
-                    if (elementP.length == 0) {
-                        let errorEl = document.createElement('p');
-                        errorEl.innerHTML = itemError.value;
-                        errorEl.style.color = "#cc0000 ";
-                        thisElement.parentNode.insertBefore(errorEl, thisElement.nextSibling);
-                        return;
-                    }                    
+                    if (elementP.length != 0) {
+                        elementP.remove();
+                    }
+
+                    let errorEl = document.createElement('p');
+                    errorEl.innerHTML = itemError.value;
+                    errorEl.style.color = "#cc0000 ";
+                    thisElement.parentNode.insertBefore(errorEl, thisElement.nextSibling);
+                    return;
                 }
             }
 
