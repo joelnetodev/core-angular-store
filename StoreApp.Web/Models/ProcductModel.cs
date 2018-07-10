@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreApp.Web.Models
 {
@@ -9,8 +10,10 @@ namespace StoreApp.Web.Models
 
         public string Description { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public decimal Price { get; set; }
 
         public bool IsActive { get; set; }

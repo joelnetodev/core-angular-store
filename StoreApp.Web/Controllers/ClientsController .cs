@@ -53,7 +53,6 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Save([FromBody]ClientModel model)
         {
-
             if (!ModelState.IsValid)
             {
                 throw new ModelException(ModelState);

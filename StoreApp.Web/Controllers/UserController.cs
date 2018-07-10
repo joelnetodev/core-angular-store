@@ -28,57 +28,45 @@ namespace StoreApp.Web.Controllers
         public IActionResult Access([FromBody]LoginModel loginModel)
         {
             //verifica se usuário existe, se sim gera o token
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password))
-                {
-                    throw new ErrorException("Missing fields.");
-                }
-
-                var userFromDb = _userRepository.GetByUsername(loginModel.Username);
-                var password = PasswordEncryptator.Encrypit(loginModel.Password);
-                if (userFromDb == null || userFromDb.Password != password)
-                {
-                    throw new ErrorException("Username or Password incorrect.");
-                }
-
-                string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
-                return Ok(CreateUserLogged(userFromDb, token));
+                throw new ModelException(ModelState);
             }
-            else
-                throw new ErrorException("Model is not valid.");
+
+            var userFromDb = _userRepository.GetByUsername(loginModel.Username);
+            var password = PasswordEncryptator.Encrypit(loginModel.Password);
+            if (userFromDb == null || userFromDb.Password != password)
+            {
+                throw new ErrorException("Username or Password incorrect.");
+            }
+
+            string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
+            return Ok(CreateUserLogged(userFromDb, token));
         }
 
         [HttpPost("create")]
         public IActionResult Create([FromBody]UserRegisterModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelException(ModelState);
+            }
+
             using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
             {
-                //verifica se usuário existe, se sim gera o token
-                if (ModelState.IsValid)
-                {
-                    if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.Name))
-                    {
-                        throw new ErrorException("Missing fields.");
-                    }
+                if (_userRepository.VerifyUsernameExists(model.Username))
+                    throw new ErrorException("Username already exists.");
 
+                var user = new User();
+                user.Name = model.Name;
+                user.Username = model.Username;
+                user.Role = model.Role;
+                user.Password = PasswordEncryptator.Encrypit(model.Password);
+                _userRepository.SaveOrUpdate(user);
 
-                    if (_userRepository.VerifyUsernameExists(model.Username))
-                        throw new ErrorException("Username already exists.");
+                unit.Commit();
 
-                    var user = new User();
-                    user.Name = model.Name;
-                    user.Username = model.Username;
-                    user.Role = model.Role;
-                    user.Password = PasswordEncryptator.Encrypit(model.Password);
-                    _userRepository.SaveOrUpdate(user);
-
-                    unit.Commit();
-
-                    return Ok();
-                }
-                else
-                    throw new ErrorException("Model is not valid.");
+                return Ok();
             }
         }
 
@@ -86,8 +74,10 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Update([FromBody]UserRegisterModel userRegister)
         {
-            if (string.IsNullOrEmpty(userRegister.Password) || string.IsNullOrEmpty(userRegister.Name))
-                throw new ErrorException("User has missing fields.");
+            if (!ModelState.IsValid)
+            {
+                throw new ModelException(ModelState);
+            }
 
             string username = HttpContext.User.Identity.Name;
             var user = _userRepository.GetByUsername(username);

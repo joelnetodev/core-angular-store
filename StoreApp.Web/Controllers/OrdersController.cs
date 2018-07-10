@@ -51,9 +51,9 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Save([FromBody]OrderModel model)
         {
-            if (model.Date == null || model.ClientId == 0 || string.IsNullOrEmpty(model.Description))
+            if (!ModelState.IsValid)
             {
-                throw new ErrorException("Order has missing fields.");
+                throw new ModelException(ModelState);
             }
 
             if (model.Products.Any(x => x.Id == 0))
@@ -122,6 +122,7 @@ namespace StoreApp.Web.Controllers
             order.Client = client;
             order.Description = model.Description;
             order.Date = model.Date;
+            order.Discount = model.Discount;
             order.IsActive = model.IsActive;
 
             var prodsToDelete = new List<OrderProduct>(order.Products);
@@ -198,6 +199,7 @@ namespace StoreApp.Web.Controllers
                 Description = order.Description,
                 ClientId = order.Client.Id,
                 ClientName = order.Client.Name,
+                Discount = order.Client.Discount,
                 IsActive = order.IsActive,
                 Products = prods
             };

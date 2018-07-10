@@ -57,9 +57,9 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Save([FromBody]ProductModel model)
         {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(model.Name) || model.Price == 0)
+            if (!ModelState.IsValid)
             {
-                throw new ErrorException("Product has missing fields.");
+                throw new ModelException(ModelState);
             }
 
             if (model.Items.Any(x => x.Id == 0))

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreApp.Web.Models
 {
@@ -7,10 +8,14 @@ namespace StoreApp.Web.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public DateTime Date { get; set; }
 
+        [Display(Name = "Client")]
+        [Required]
         public int ClientId { get; set; }
 
         public string ClientName { get; set; }

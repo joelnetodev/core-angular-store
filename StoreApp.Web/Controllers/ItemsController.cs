@@ -61,9 +61,9 @@ namespace StoreApp.Web.Controllers
         [HttpPost]
         public IActionResult Save([FromBody]ItemModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                throw new ErrorException("Model invalid.");
+                throw new ModelException(ModelState);
             }
 
             var item = CreateItem(model);

@@ -19,10 +19,16 @@ namespace StoreApp.Infra.Exceptions
                 if (itemState.Value.Errors.Count == 0)
                     continue;
 
+                string key = itemState.Key.First().ToString().ToUpper() + itemState.Key.Substring(1);
+                string error = !string.IsNullOrEmpty(itemState.Value.Errors[0].ErrorMessage)
+                    ? itemState.Value.Errors[0].ErrorMessage 
+                    : "The field " + key + " is invalid.";
+
                 modelErrorList.Add(new ErrorModel
                 {
-                    key = itemState.Key,
-                    value = itemState.Value.Errors[0].ErrorMessage
+                    key = key,
+                    value = error
+
                 });
             }
 

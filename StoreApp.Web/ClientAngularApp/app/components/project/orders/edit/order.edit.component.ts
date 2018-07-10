@@ -60,15 +60,13 @@ export class OrderEditComponent implements OnInit {
     }
 
     getTotal(): number {
-        let count: number = 0;
-        let price: number = 0;
+        let total: number = 0;
 
         for (var i = 0; i < this.order.products.length; i++) {
-            count += this.order.products[i].count;
-            price += this.order.products[i].price;
+            total += (this.order.products[i].count * this.order.products[i].price);
         }
 
-        return (count * price) - this.order.discount;
+        return total - this.order.discount;
     }
 
     onDateChange(value: string) {

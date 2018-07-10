@@ -7,24 +7,25 @@
 
         <div class="col-6">
             <label for="client">Client</label>
-            <select class="form-control" id="client" [(ngModel)]="order.clientId">
+            <select class="form-control" id="client" [(ngModel)]="order.clientId" di-model-validator [key]="'ClientId'">
                 <option *ngFor="let client of clients" [ngValue]="client.id">{{client.name}}</option>
             </select>
         </div>
 
+        <!-- This is the only way to angular work with date types (and date picker) -->
         <div class="col-6">
             <label for="date">Date</label>
-            <input id="startDate" type="text" class="form-control" di-datepicker (onSelectDate)="onDateChange($event)" (change)="onDateChange($event.target.value)">
+            <input id="date" type="text" class="form-control" di-datepicker (onSelectDate)="onDateChange($event)" [ngModel]="order.date | date:'MM/dd/yyyy'" (ngModelChange)="order.date = $event" di-model-validator [key]="'Date'">
         </div>
 
         <div class="col-6">
             <label for="description">Description</label>
-            <input id="description" type="text" class="form-control" [(ngModel)]="order.description" required />
+            <input id="description" type="text" class="form-control" [(ngModel)]="order.description" di-model-validator [key]="'Description'" />
         </div>
 
         <div class="col-6">
             <label for="discount">Discount</label>
-            <input id="discount" type="text" class="form-control" [(ngModel)]="order.discount" required />
+            <input id="discount" type="text" class="form-control" [(ngModel)]="order.discount" />
         </div>
 
         <div class="col-6">
