@@ -13,7 +13,6 @@ import { CoreModelValidatorService, ModelError } from './services/0-core/core.mo
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
-
     constructor(private router: Router, private userServ: CoreUserService, private alertServ: CoreAlertService, private errorServ: CoreErrorService, private loadServ: CoreLoadService, private validServ: CoreModelValidatorService) { }
 
     //intercept is a overrided method to intercept requests
@@ -25,11 +24,8 @@ export class AppInterceptor implements HttpInterceptor {
     private handleResponse(request: HttpRequest<any>, next: HttpHandler) {
         //To redirect pages when login is not authorized, a handle will get the response
         //and the router will navigate to login page
-
         return next.handle(request)
             .pipe(catchError(response => {
-                console.log(response);
-
                 //997 Model
                 //998 Error
                 //999 Critical
@@ -42,7 +38,6 @@ export class AppInterceptor implements HttpInterceptor {
                     default: this.errorServ.setError(response); this.router.navigate(['/error']); break;
                     //default: console.log(response); break;
                 }
-
                 return throwError(response);
             }),
             finalize(() => { this.loadServ.hide(); }));

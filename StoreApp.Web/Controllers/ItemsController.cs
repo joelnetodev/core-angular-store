@@ -17,7 +17,6 @@ namespace StoreApp.Web.Controllers
     public class ItemsController : Controller
     {
         IItemRepository _itemRepository;
-
         public ItemsController(IItemRepository itemRepo)
         {
             _itemRepository = itemRepo;
