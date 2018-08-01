@@ -19,9 +19,9 @@ namespace StoreApp.Infra.Extension
     {
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
         //Shold stay above AddMVC
-        public static void AddProjectDependenciesInfra(this IServiceCollection services)
+        public static void AddProjectDependenciesInfra(this IServiceCollection services, string connString)
         {
-            services.AddScoped<ISessionFactoryInfra, SessionFactoryInfra>();
+            services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString));
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.BuildServiceProvider().GetRequiredService
             AddRepositoriesAndServices(services);

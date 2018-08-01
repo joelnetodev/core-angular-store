@@ -199,7 +199,7 @@ namespace StoreApp.Web.Controllers
                 Description = order.Description,
                 ClientId = order.Client.Id,
                 ClientName = order.Client.Name,
-                Discount = order.Client.Discount,
+                Discount = order.Discount,
                 IsActive = order.IsActive,
                 Products = prods
             };
