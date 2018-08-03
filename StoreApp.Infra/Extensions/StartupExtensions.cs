@@ -23,8 +23,8 @@ namespace StoreApp.Infra.Extension
         const string ConnStringKey = "ConnectionString";
         const string AssemblyNamesSection = "AssemblyNames";
         const string MapKey = "Mapping";
-        const string DependenciesKey = "Dependencies";
-  
+        const string RepositoryKey = "Repository";
+        const string ServiceKey = "Service";
 
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
         //Shold stay above AddMVC
@@ -39,8 +39,12 @@ namespace StoreApp.Infra.Extension
             //SessionFactory is Scoped per WebRequest
             services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString, mapAssemblyName));
 
-            var assembliesToSearch = configuration.GetSection($"{AssemblyNamesSection}:{DependenciesKey}").Get<string[]>();         
-            AddRepositoriesAndServices(services, assembliesToSearch);
+            //var assembliesToSearch = configuration.GetSection($"{AssemblyNamesSection}:{DependenciesKey}").Get<string[]>();       
+
+            string repositoryAssemblyName = configuration.GetSection(AssemblyNamesSection).GetValue<string>(RepositoryKey);
+            string serviceAssemblyName = configuration.GetSection(AssemblyNamesSection).GetValue<string>(ServiceKey);
+
+            AddRepositoriesAndServices(services, new [] { repositoryAssemblyName, serviceAssemblyName });
         }
 
         //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context.
@@ -56,7 +60,7 @@ namespace StoreApp.Infra.Extension
 
         private static void AddRepositoriesAndServices(IServiceCollection services, string[] assembliesToSearch)
         {
-            var assemblies = assembliesToSearch.Select(x => AssemblyLocator.GetByName(x));
+            var assemblies = assembliesToSearch.Where(x => !string.IsNullOrEmpty(x)).Select(x => AssemblyLocator.GetByName(x));
 
             var typeRepositoryBase = typeof(IRepositoryBase<>);
             var typeServiceBase = typeof(IServiceBase);
