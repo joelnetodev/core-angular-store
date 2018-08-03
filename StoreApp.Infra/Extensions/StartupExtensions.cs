@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoreApp.Infra.DataBase;
 using StoreApp.Infra.DataBase.Repository;
@@ -18,22 +20,44 @@ namespace StoreApp.Infra.Extension
     //I hope the solution comes soon
     public static class StartupExtensions
     {
+        const string ConnStringKey = "ConnectionString";
+        const string AssemblyNamesSection = "AssemblyNames";
+        const string MapKey = "Mapping";
+        const string DependenciesKey = "Dependencies";
+  
+
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
         //Shold stay above AddMVC
-        public static void AddProjectDependenciesInfra(this IServiceCollection services, string connString)
+        public static void ConfigureProjectDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             //Add HttpContextAccessor as singleton instance and .NET Core is in charge to recover the current Context
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            string connString = configuration.GetConnectionString(ConnStringKey);
+            string mapAssemblyName = configuration.GetSection(AssemblyNamesSection).GetValue<string>(MapKey);
+           
             //SessionFactory is Scoped per WebRequest
-            services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString));
+            services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString, mapAssemblyName));
 
-            AddRepositoriesAndServices(services);
+            var assembliesToSearch = configuration.GetSection($"{AssemblyNamesSection}:{DependenciesKey}").Get<string[]>();         
+            AddRepositoriesAndServices(services, assembliesToSearch);
         }
 
-        private static void AddRepositoriesAndServices(IServiceCollection services)
+        //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context.
+        //Should be the first configuration than any other
+        public static void ConfigureMiddlewareInfra(this IApplicationBuilder app)
         {
-            var assemblies = new[] { AssemblyLocator.GetByName("StoreApp.Domain.Repository.dll") };
+            //var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
+            //SharedHttpContext.Configure(httpContextAccessor);
+
+            app.UseMiddleware<RequestMiddlewareInfra>();
+        }
+
+
+        private static void AddRepositoriesAndServices(IServiceCollection services, string[] assembliesToSearch)
+        {
+            var assemblies = assembliesToSearch.Select(x => AssemblyLocator.GetByName(x));
+
             var typeRepositoryBase = typeof(IRepositoryBase<>);
             var typeServiceBase = typeof(IServiceBase);
 
@@ -61,16 +85,6 @@ namespace StoreApp.Infra.Extension
                     services.AddSingleton(itemInterface, classThatImplements);
                 }
             }
-        }
-
-        //Store the Context into SharedHttpContext to get access to the ServiceProvider through the context.
-        //Should be the first configuration than any other
-        public static void ConfigureMiddlewareInfra(this IApplicationBuilder app)
-        {
-            //var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
-            //SharedHttpContext.Configure(httpContextAccessor);
-
-            app.UseMiddleware<RequestMiddlewareInfra>();
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Web;
 namespace StoreApp.Infra.DataBase.Attribute
 {
     //An attribute to be placed on action in the controller in order do initiate and manage database transactions
-    public class TransactionRequiredAttribute : Attribute, IActionFilter
+    public class TransactionRequiredAttribute : System.Attribute, IActionFilter
     {
         //Before call action
         public void OnActionExecuting(ActionExecutingContext context)
