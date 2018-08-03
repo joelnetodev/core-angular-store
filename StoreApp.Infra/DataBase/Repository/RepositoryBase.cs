@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using Microsoft.AspNetCore.Http;
+using NHibernate;
 using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.Http;
 using System;
@@ -11,21 +12,22 @@ namespace StoreApp.Infra.DataBase.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.Entity
     {
-        private ISessionFactoryInfra _sessionFactoryInfra;
-        public RepositoryBase(ISessionFactoryInfra sessionFactoryInfra)
+        private IHttpContextAccessor _httpContextAccessor;
+        public RepositoryBase(IHttpContextAccessor httpContextAccessor)
         {
-            _sessionFactoryInfra = sessionFactoryInfra;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        protected ISession Session
+        protected NHibernate.ISession Session
         {
             get
             {
 
-                return _sessionFactoryInfra.GetCurrentSession();
-                    //SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
-                    //Get "SessionFactoryBase" from ServiceProvider and get the Session
-                    //return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
+                return ((ISessionFactoryInfra)_httpContextAccessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
+                //_sessionFactoryInfra.GetCurrentSession();
+                //SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
+                //Get "SessionFactoryBase" from ServiceProvider and get the Session
+                //return ((ISessionFactoryInfra)HttpContext.Current.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
             }
         }
 

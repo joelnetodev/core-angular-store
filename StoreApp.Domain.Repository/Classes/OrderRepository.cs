@@ -14,7 +14,7 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class OrderRepository : RepositoryBase<Order>, IOrderRepository
     {
-        public OrderRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
+        public OrderRepository(Microsoft.AspNetCore.Http.IHttpContextAccessor sessionFactoryInfra) : base(sessionFactoryInfra)
         {
         }
 

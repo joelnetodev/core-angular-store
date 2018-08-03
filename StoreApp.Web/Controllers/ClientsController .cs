@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.DataBase.SessionFactory;
-using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 using Microsoft.Extensions.DependencyInjection;
+using StoreApp.Infra.DataBase.Attribute;
 
 namespace StoreApp.Web.Controllers
 {
@@ -51,6 +51,7 @@ namespace StoreApp.Web.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [TransactionRequired]
         public IActionResult Save([FromBody]ClientModel model)
         {
             if (!ModelState.IsValid)
@@ -58,27 +59,24 @@ namespace StoreApp.Web.Controllers
                 throw new ModelException(ModelState);
             }
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 var cli = CreateClient(model);
                 _clientRepsitory.SaveOrUpdate(cli);
-                unit.Commit();
-            }
+
 
             return Ok();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
+        [TransactionRequired]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 var cli = _clientRepsitory.GetById(id);
                 if (cli != null)
                 {
                     _clientRepsitory.Delete(cli);
-                    unit.Commit();
                 }
                 else
                 {
@@ -86,7 +84,6 @@ namespace StoreApp.Web.Controllers
                 }
 
                 return Ok();
-            }
         }
 
 

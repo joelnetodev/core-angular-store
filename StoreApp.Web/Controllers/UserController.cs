@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.Authentication;
 using StoreApp.Infra.DataBase.SessionFactory;
-using StoreApp.Infra.DataBase.UnitOfWork;
+using StoreApp.Infra.DataBase.Attribute;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 using System.Threading;
@@ -45,6 +45,7 @@ namespace StoreApp.Web.Controllers
         }
 
         [HttpPost("create")]
+        [TransactionRequired]
         public IActionResult Create([FromBody]UserRegisterModel model)
         {
             if (!ModelState.IsValid)
@@ -52,8 +53,7 @@ namespace StoreApp.Web.Controllers
                 throw new ModelException(ModelState);
             }
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 if (_userRepository.VerifyUsernameExists(model.Username))
                     throw new ErrorException("Username already exists.");
 
@@ -64,14 +64,12 @@ namespace StoreApp.Web.Controllers
                 user.Password = PasswordEncryptator.Encrypit(model.Password);
                 _userRepository.SaveOrUpdate(user);
 
-                unit.Commit();
-
                 return Ok();
-            }
         }
 
         [Authorize]
         [HttpPost]
+        [TransactionRequired]
         public IActionResult Update([FromBody]UserRegisterModel userRegister)
         {
             if (!ModelState.IsValid)
@@ -85,16 +83,12 @@ namespace StoreApp.Web.Controllers
             if (user == null)
                 throw new ErrorException(string.Format("User {0} not found.", username));
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 user.Name = userRegister.Name;
                 if (userRegister.Password != EncrypedForDisplay)
                 {
                     user.Password = PasswordEncryptator.Encrypit(userRegister.Password);
                 }
-
-                unit.Commit();
-            }
 
             return Ok();
         }

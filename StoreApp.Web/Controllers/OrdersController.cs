@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using StoreApp.Domain.Entity;
 using StoreApp.Domain.Repository.Interfaces;
 using StoreApp.Infra.DataBase.SessionFactory;
-using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Infra.Exceptions;
 using StoreApp.Web.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using StoreApp.Infra.DataBase.Attribute;
 
 namespace StoreApp.Web.Controllers
 {
@@ -49,6 +49,7 @@ namespace StoreApp.Web.Controllers
         }
 
         [HttpPost]
+        [TransactionRequired]
         public IActionResult Save([FromBody]OrderModel model)
         {
             if (!ModelState.IsValid)
@@ -66,27 +67,23 @@ namespace StoreApp.Web.Controllers
                 throw new ErrorException("Order can not have the same product more than once.");
             }
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 var order = CreateOrder(model);
                 _orderRepository.SaveOrUpdate(order);
-                unit.Commit();
-            }
 
             return Ok();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
+        [TransactionRequired]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 var order = _orderRepository.GetById(id);
                 if (order != null)
                 {
                     _orderRepository.Delete(order);
-                    unit.Commit();
                 }
                 else
                 {
@@ -94,7 +91,6 @@ namespace StoreApp.Web.Controllers
                 }
 
                 return Ok();
-            }
         }
 
 

@@ -6,10 +6,10 @@ using StoreApp.Domain.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using StoreApp.Infra.DataBase.SessionFactory;
 using StoreApp.Infra.Exceptions;
-using StoreApp.Infra.DataBase.UnitOfWork;
 using StoreApp.Web.Models;
 using StoreApp.Domain.Repository.Interfaces;
 using System.Threading;
+using StoreApp.Infra.DataBase.Attribute;
 
 namespace StoreApp.Web.Controllers
 {
@@ -58,6 +58,7 @@ namespace StoreApp.Web.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [TransactionRequired]
         public IActionResult Save([FromBody]ItemModel model)
         {
             if (!ModelState.IsValid)
@@ -67,8 +68,6 @@ namespace StoreApp.Web.Controllers
 
             var item = CreateItem(model);
 
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
 
                 if (model.Id != 0)
                 {
@@ -80,23 +79,22 @@ namespace StoreApp.Web.Controllers
 
                 _itemRepository.SaveOrUpdate(item);
 
-                unit.Commit();
-            }
+
 
             return Ok();
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost("Delete/{id}")]
+        [TransactionRequired]
         public IActionResult Delete(int id)
         {
-            using (var unit = UnitOfWork.Start(HttpContext.RequestServices.GetService<ISessionFactoryInfra>()))
-            {
+
                 var item = _itemRepository.GetById(id);
                 if (item != null)
                 {
                     _itemRepository.Delete(item);
-                    unit.Commit();
+
                 }
                 else
                 {
@@ -104,7 +102,6 @@ namespace StoreApp.Web.Controllers
                 }
 
                 return Ok();
-            }
         }
 
 

@@ -42,7 +42,6 @@ namespace StoreApp.Infra.Exceptions
         }
     }
 
-    
 
     public class ErrorException : Exception
     {

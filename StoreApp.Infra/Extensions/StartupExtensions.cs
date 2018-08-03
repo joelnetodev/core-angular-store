@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using StoreApp.Infra.DataBase;
 using StoreApp.Infra.DataBase.Repository;
@@ -15,15 +16,18 @@ namespace StoreApp.Infra.Extension
     //But I was having issues when tryied to get the Scoped Services by HttoContextAccessor
     //So I made every Repository and Service = Scoped
     //I hope the solution comes soon
-    public static class Extensions
+    public static class StartupExtensions
     {
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
         //Shold stay above AddMVC
         public static void AddProjectDependenciesInfra(this IServiceCollection services, string connString)
         {
+            //Add HttpContextAccessor as singleton instance and .NET Core is in charge to recover the current Context
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //SessionFactory is Scoped per WebRequest
             services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString));
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.BuildServiceProvider().GetRequiredService
+
             AddRepositoriesAndServices(services);
         }
 
@@ -52,7 +56,9 @@ namespace StoreApp.Infra.Extension
                     if (classThatImplements == null)
                         continue;
 
-                    services.AddScoped(itemInterface, classThatImplements);
+                    //The rest of the services and repositories are singleton in order to prevent more than one instance.
+                    //Stateless classes are needed, This is to say no properties can't be stored, unless they are constants or statics 
+                    services.AddSingleton(itemInterface, classThatImplements);
                 }
             }
         }
