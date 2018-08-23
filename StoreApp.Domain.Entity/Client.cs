@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StoreApp.Domain.Entity
 {
-    public class Client : Infra.Entity.Active.Entity
+    public class Client : Infra.Entity.EntityBase
     {
         public virtual string Name { get; set; }
 
@@ -18,6 +18,7 @@ namespace StoreApp.Domain.Entity
 
         public virtual ICollection<ClientContact> Contacts { get; set; }
 
+        public virtual bool IsActive { get; set; }
 
         public Client()
         {

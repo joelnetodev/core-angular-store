@@ -12,11 +12,11 @@ namespace StoreApp.Web.Models
         public string Description { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         [Display(Name = "Client")]
         [Required]
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
 
         public string ClientName { get; set; }
 

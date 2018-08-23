@@ -111,13 +111,13 @@ namespace StoreApp.Web.Controllers
                 order = new Order();
             }
 
-            var client = _clientRepository.GetById(model.ClientId);
+            var client = _clientRepository.GetById(model.ClientId.Value);
             if (client == null)
                 throw new ErrorException(string.Format("Client {0} not found.", model.ClientId));
 
             order.Client = client;
             order.Description = model.Description;
-            order.Date = model.Date;
+            order.Date = model.Date.Value;
             order.Discount = model.Discount;
             order.IsActive = model.IsActive;
 

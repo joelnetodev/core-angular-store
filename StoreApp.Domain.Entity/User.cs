@@ -3,7 +3,7 @@ using System;
 
 namespace StoreApp.Domain.Entity
 {
-    public class User : Infra.Entity.Active.Entity
+    public class User : Infra.Entity.EntityBase
     {
         public virtual string Name { get; set; }
 
@@ -12,5 +12,7 @@ namespace StoreApp.Domain.Entity
         public virtual string Password { get; set; }
 
         public virtual RoleEnum Role { get; set; }
+
+        public virtual bool IsActive { get; set; }
     }
 }

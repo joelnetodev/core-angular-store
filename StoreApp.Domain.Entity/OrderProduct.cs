@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StoreApp.Domain.Entity
 {
-    public class OrderProduct : Infra.Entity.Entity
+    public class OrderProduct : Infra.Entity.EntityBase
     {
         public virtual decimal Count { get; set; }
 

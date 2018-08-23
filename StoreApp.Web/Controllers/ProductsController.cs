@@ -127,9 +127,8 @@ namespace StoreApp.Web.Controllers
 
             product.Name = model.Name;
             product.Description = model.Description;
-            product.Price = model.Price;
+            product.Price = model.Price.Value;
             product.IsActive = model.IsActive;
-
 
             var itemsToDelete = new List<ProductItem>(product.Items);
             var itemsFromBd = model.Items.Any()

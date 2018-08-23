@@ -12,7 +12,7 @@ export class Order {
     date: Date;
     clientId: number;
     clientName: string;
-    discount: number = 0;
+    discount: number;
     isActive: boolean;
     products: ProductOrder[] = new Array<ProductOrder>();
 }
@@ -20,6 +20,6 @@ export class Order {
 export class ProductOrder {
     id: number;
     name: string;
-    count: number = 0;
-    price: number = 0;
+    count: number = 1;
+    price: number;
 }

@@ -13,9 +13,21 @@ namespace StoreApp.Web.Controllers
     [AllowAnonymous]
     public class StatusController : Controller
     {
-        public IActionResult Get()
+        //public IActionResult Get()
+        //{
+        //    return Ok(new { Status = "Ok" });
+        //}
+
+        public Teste Get()
         {
-            return Ok(new { Status = "Ok" });
+            return new Teste();
+        }
+
+        public class Teste
+        {
+            public string Status = "Ok";
         }
     }
+
+
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NHibernate;
 using StoreApp.Infra.DataBase.SessionFactory;
+using StoreApp.Infra.Entity;
 using StoreApp.Infra.Http;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web;
 
 namespace StoreApp.Infra.DataBase.Repository
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.Entity
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.EntityBase
     {
         private IHttpContextAccessor _httpContextAccessor;
         public RepositoryBase(IHttpContextAccessor httpContextAccessor)
@@ -22,7 +23,6 @@ namespace StoreApp.Infra.DataBase.Repository
         {
             get
             {
-
                 return ((ISessionFactoryInfra)_httpContextAccessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
                 //_sessionFactoryInfra.GetCurrentSession();
                 //SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
@@ -39,9 +39,22 @@ namespace StoreApp.Infra.DataBase.Repository
             }
         }
 
-        protected IQueryable<T2> SetEntity<T2>() where T2:class
+        protected IQueryOver<T, T> EntityOver
+        {
+            get
+            {
+                return Session.QueryOver<T>();
+            }
+        }
+
+        protected IQueryable<T2> SetEntity<T2>() where T2: EntityBase
         {
             return Session.Query<T2>();
+        }
+
+        protected IQueryOver<T2, T2> SetEntityOver<T2>() where T2 : EntityBase
+        {
+            return Session.QueryOver<T2>();
         }
 
         public void Delete(T entity)

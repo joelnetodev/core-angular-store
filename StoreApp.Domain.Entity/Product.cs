@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StoreApp.Domain.Entity
 {
-    public class Product : Infra.Entity.Active.Entity
+    public class Product : Infra.Entity.EntityBase
     {
         public virtual string Name { get; set; }
 
@@ -13,6 +13,8 @@ namespace StoreApp.Domain.Entity
         public virtual decimal Price { get; set; }
 
         public virtual ICollection<ProductItem> Items { get; set; }
+
+        public virtual bool IsActive { get; set; }
 
         //public void AddItem(ProductItem item)
         //{

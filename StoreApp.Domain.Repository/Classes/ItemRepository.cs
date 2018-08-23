@@ -7,7 +7,7 @@ using StoreApp.Infra.DataBase.SessionFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using NHibernate;
 
 namespace StoreApp.Domain.Repository.Classes
 {
@@ -21,5 +21,6 @@ namespace StoreApp.Domain.Repository.Classes
         {
             return Entity.Where(x => x.IsActive).ToList();
         }
+
     }
 }

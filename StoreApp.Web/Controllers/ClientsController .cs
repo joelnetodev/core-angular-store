@@ -59,10 +59,8 @@ namespace StoreApp.Web.Controllers
                 throw new ModelException(ModelState);
             }
 
-
-                var cli = CreateClient(model);
-                _clientRepsitory.SaveOrUpdate(cli);
-
+            var cli = CreateClient(model);
+            _clientRepsitory.SaveOrUpdate(cli);
 
             return Ok();
         }
@@ -72,18 +70,17 @@ namespace StoreApp.Web.Controllers
         [TransactionRequired]
         public IActionResult Delete(int id)
         {
+            var cli = _clientRepsitory.GetById(id);
+            if (cli != null)
+            {
+                _clientRepsitory.Delete(cli);
+            }
+            else
+            {
+                throw new ErrorException("Client not found.");
+            }
 
-                var cli = _clientRepsitory.GetById(id);
-                if (cli != null)
-                {
-                    _clientRepsitory.Delete(cli);
-                }
-                else
-                {
-                    throw new ErrorException("Client not found.");
-                }
-
-                return Ok();
+            return Ok();
         }
 
 

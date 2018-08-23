@@ -7,7 +7,7 @@
 
         <div class="col-6">
             <label for="client">Client</label>
-            <select class="form-control" id="client" [(ngModel)]="order.clientId" di-model-validator [key]="'ClientId'">
+            <select class="form-control" id="client" [(ngModel)]="order.clientId" di-model-validator [key]="'ClientId'" title="-- Select --">
                 <option *ngFor="let client of clients" [ngValue]="client.id">{{client.name}}</option>
             </select>
         </div>

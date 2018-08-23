@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StoreApp.Domain.Entity
 {
-    public class Order : Infra.Entity.Active.Entity
+    public class Order : Infra.Entity.EntityBase
     {
         public virtual Client Client {get;set;}
 
@@ -15,6 +15,8 @@ namespace StoreApp.Domain.Entity
         public virtual DateTime Date { get; set; }
 
         public virtual ICollection<OrderProduct> Products { get; set; }
+
+        public virtual bool IsActive { get; set; }
 
         public virtual decimal Amount
         {

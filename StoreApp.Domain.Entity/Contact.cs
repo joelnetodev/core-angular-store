@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StoreApp.Domain.Entity
 {
-    public class ClientContact : Infra.Entity.Entity
+    public class ClientContact : Infra.Entity.EntityBase
     {
         public virtual string Name { get; set; }
 
