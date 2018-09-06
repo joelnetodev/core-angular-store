@@ -20,12 +20,6 @@ namespace StoreApp.Infra.Extension
     //I hope the solution comes soon
     public static class StartupExtensions
     {
-        const string ConnStringKey = "ConnectionString";
-        const string AssemblyNamesSection = "AssemblyNames";
-        const string MapKey = "Mapping";
-        const string RepositoryKey = "Repository";
-        const string ServiceKey = "Service";
-
         //Register the "IHttpContextAccessor" and "SessionFactoryInfra" with others Dependencies of the Project.
         //Shold stay above AddMVC
         public static void ConfigureProjectDependencies(this IServiceCollection services, IConfiguration configuration)
@@ -33,16 +27,16 @@ namespace StoreApp.Infra.Extension
             //Add HttpContextAccessor as singleton instance and .NET Core is in charge to recover the current Context
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            string connString = configuration.GetConnectionString(ConnStringKey);
-            string mapAssemblyName = configuration.GetSection(AssemblyNamesSection).GetValue<string>(MapKey);
+            string connString = configuration.GetConnectionString(ConfigProperties.ConnectionStringKey);
+            string mapAssemblyName = configuration.GetKeyValueFromSection(ConfigProperties.AssemblyNamesSection, ConfigProperties.MappingKey);
            
             //SessionFactory is Scoped per WebRequest
             services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString, mapAssemblyName));
 
             //var assembliesToSearch = configuration.GetSection($"{AssemblyNamesSection}:{DependenciesKey}").Get<string[]>();       
 
-            string repositoryAssemblyName = configuration.GetSection(AssemblyNamesSection).GetValue<string>(RepositoryKey);
-            string serviceAssemblyName = configuration.GetSection(AssemblyNamesSection).GetValue<string>(ServiceKey);
+            string repositoryAssemblyName = configuration.GetKeyValueFromSection(ConfigProperties.AssemblyNamesSection, ConfigProperties.RepositoryKey);
+            string serviceAssemblyName = configuration.GetKeyValueFromSection(ConfigProperties.AssemblyNamesSection, ConfigProperties.ServiceKey);
 
             AddRepositoriesAndServices(services, new [] { repositoryAssemblyName, serviceAssemblyName });
         }
@@ -89,6 +83,11 @@ namespace StoreApp.Infra.Extension
                     services.AddSingleton(itemInterface, classThatImplements);
                 }
             }
+        }
+
+        public static string GetKeyValueFromSection(this IConfiguration configuration, string section, string key)
+        {
+            return configuration.GetSection(section).GetValue<string>(key);
         }
     }
 }
