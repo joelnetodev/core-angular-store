@@ -1,5 +1,8 @@
+using Newtonsoft.Json;
+using StoreApp.Domain.Entity;
 using StoreApp.UnitTest.Base;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,11 +15,13 @@ namespace StoreApp.UnitTest
         [Fact]
         public async Task GetItems()
         {
-            var result = await Client.GetAsync("/api/items");
-            result.EnsureSuccessStatusCode();
+            var response = await Client.GetAsync("/api/items");
+            response.EnsureSuccessStatusCode();
 
-            var teste = await result.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync();
+            var items = JsonConvert.DeserializeObject<List<Item>>(result);
 
+            Assert.Equal(items.Count, 0);
         }
     }
 }
