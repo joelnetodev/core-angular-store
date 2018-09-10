@@ -11,11 +11,17 @@ namespace StoreApp.UnitTest
 {
     public class UserTest : IntegrationTestBase
     {
+        [Fact]
+        public async Task CreateUser()
+        {
+            var response = await Client.PostAsync("api/user/create", CreateContent(new UserRegisterModel { Username = "joel", Password = "123456", Role = Domain.Entity.Enums.RoleEnum.Admin }));
+            response.EnsureSuccessStatusCode();
+        }
 
         [Fact]
         public async Task Login()
         {
-            var response = await Client.PostAsync("/api/user/login", CreateContent(new LoginModel { Username = "joel", Password = "123456" }));
+            var response = await Client.PostAsync("api/user/login", CreateContent( new LoginModel { Username = "joel", Password = "123456" }));
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadAsStringAsync();

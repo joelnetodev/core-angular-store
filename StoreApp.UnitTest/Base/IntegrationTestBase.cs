@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -18,6 +20,7 @@ namespace StoreApp.UnitTest.Base
     public abstract class IntegrationTestBase : IDisposable
     {
         private string _authName = "Authorization";
+        private string _appJson = "application/json";
 
         protected HttpClient Client;
         protected TestServer Server;
@@ -26,11 +29,21 @@ namespace StoreApp.UnitTest.Base
         {
             Server = new TestServer(CreateWebHostBuilder());
             Client = Server.CreateClient();
+            Client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Accept.Clear();
+            SetMediaTypeHeader();
         }
 
-        protected HttpContent CreateContent(object obj)
+        private void SetMediaTypeHeader()
         {
-            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "applicaiton/json");
+            Client.DefaultRequestHeaders
+                .Accept
+                .Add(new MediaTypeWithQualityHeaderValue(_appJson));
+        }
+
+        protected StringContent CreateContent(object obj)
+        {
+            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, _appJson);
         }
 
         protected void SetTokenInClientDefaultHeader(string token)
