@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 using StoreApp.Domain.Entity;
-using StoreApp.UnitTest.Base;
+using StoreApp.UnitTest.Tests.Base;
 using System;
 using StoreApp.Web.Models;
 using System.Threading;
@@ -14,7 +14,7 @@ namespace StoreApp.UnitTest
         [Fact]
         public async Task CreateUser()
         {
-            var response = await Client.PostAsync("api/user/create", CreateContent(new UserRegisterModel { Username = "joel", Password = "123456", Role = Domain.Entity.Enums.RoleEnum.Admin }));
+            var response = await Client.PostAsync("api/user/create", CreateContent(new UserRegisterModel { Name = "joel", Username = "joel", Password = "123456", Role = Domain.Entity.Enums.RoleEnum.Admin }));
             response.EnsureSuccessStatusCode();
         }
 

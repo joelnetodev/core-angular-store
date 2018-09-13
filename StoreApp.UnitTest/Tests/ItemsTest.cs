@@ -1,17 +1,16 @@
 using Newtonsoft.Json;
 using StoreApp.Domain.Entity;
-using StoreApp.UnitTest.Base;
+using StoreApp.UnitTest.Tests.Base;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace StoreApp.UnitTest
+namespace StoreApp.UnitTest.Tests
 {
     public class ItemsTest : IntegrationTestBase
     {
-
         [Fact]
         public async Task GetItems()
         {

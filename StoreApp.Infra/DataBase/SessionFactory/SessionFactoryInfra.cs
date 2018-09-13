@@ -14,36 +14,28 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 {
     public class SessionFactoryInfra : ISessionFactoryInfra
     {
-        private string _connString;
-        private string _mapAssemblyName;
-
         private readonly ISessionFactory _sessionFactory;
         private readonly ISession _session;
 
         public SessionFactoryInfra(string connString, string mapAssemblyName)
         {
-            _connString = connString;
-            _mapAssemblyName = mapAssemblyName;
-
-            _sessionFactory = GetNHConfiguration().BuildSessionFactory();
+            _sessionFactory = GetNHConfiguration(connString, mapAssemblyName).BuildSessionFactory();
             _session = _sessionFactory.OpenSession();
         }
 
-        public void CreateSchema()
+        public static void CreateSchema(string connString, string mapAssemblyName)
         {
-            //To create schema (database must exist)
-            var exporter = new SchemaExport(GetNHConfiguration());
-            exporter.Execute(true, true, false);
+            new SchemaUpdate(GetNHConfiguration(connString, mapAssemblyName)).Execute(true, true);
         }
 
-        private Configuration GetNHConfiguration()
+        private static Configuration GetNHConfiguration(string connString, string mapAssemblyName)
         {
-            var assemblyWithMaps = AssemblyLocator.GetByName(_mapAssemblyName);
+            var assemblyWithMaps = AssemblyLocator.GetByName(mapAssemblyName);
 
             //Fluently configuration using Postgre Connector and "StoreApp.Domain.Repository.dll" mapped assembly
             //Quary and Cache setted to false due to problems making quaries constantly
             return Fluently.Configure()
-                .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(_connString))
+                .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(connString))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assemblyWithMaps))
                 .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)
                                                  .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
@@ -58,9 +50,6 @@ namespace StoreApp.Infra.DataBase.SessionFactory
 
         public void Dispose()
         {
-            _connString = null;
-            _mapAssemblyName = null;
-
             _sessionFactory.Close();
             _sessionFactory.Dispose();
         }

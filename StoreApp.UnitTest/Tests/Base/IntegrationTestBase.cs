@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using StoreApp.Infra;
+using StoreApp.Infra.DataBase.SessionFactory;
+using StoreApp.Infra.Extension;
 using StoreApp.Web;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace StoreApp.UnitTest.Base
+namespace StoreApp.UnitTest.Tests.Base
 {
     public abstract class IntegrationTestBase : IDisposable
     {
@@ -32,6 +35,8 @@ namespace StoreApp.UnitTest.Base
             Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Accept.Clear();
             SetMediaTypeHeader();
+
+            DbTestConfiguration.CreateDataBase(CreateConfiguration());
         }
 
         private void SetMediaTypeHeader()
@@ -59,10 +64,10 @@ namespace StoreApp.UnitTest.Base
         {
             return new WebHostBuilder()
                 .UseStartup<Startup>()
-                .UseConfiguration(GreateConfiguration());
+                .UseConfiguration(CreateConfiguration());
         }
 
-        private IConfiguration GreateConfiguration()
+        private IConfiguration CreateConfiguration()
         {
             return new ConfigurationBuilder()
                 .AddJsonFile("appsettings.test.json")
