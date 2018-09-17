@@ -26,7 +26,7 @@ namespace StoreApp.Web.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult Get()
         {
             var products = _prodRepository.FindAllWithItems();
             var items = _itemRepo.FindAll();
