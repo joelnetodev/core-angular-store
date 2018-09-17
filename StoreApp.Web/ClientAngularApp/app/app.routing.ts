@@ -21,7 +21,6 @@ import { OrderEditComponent } from './components/project/orders/edit/order.edit.
 
 import { MenuModuleEnum } from './models/enums/menuEnum';
 
-//Needs to change directory
 //RouterModule for override the path to components.
 //This allows to create routerLink on HTML to render components
 
