@@ -12,33 +12,35 @@ using System.Text;
 
 namespace StoreApp.Infra.DataBase.SessionFactory
 {
-    internal class SessionFactoryInfra : ISessionFactoryInfra
+    public class SessionFactoryInfra : ISessionFactoryInfra
     {
         private readonly ISessionFactory _sessionFactory;
         private readonly ISession _session;
 
         public SessionFactoryInfra(string connString, string mapAssemblyName)
         {
+            _sessionFactory = GetNHConfiguration(connString, mapAssemblyName).BuildSessionFactory();
+            _session = _sessionFactory.OpenSession();
+        }
+
+        public static void CreateSchema(string connString, string mapAssemblyName)
+        {
+            new SchemaUpdate(GetNHConfiguration(connString, mapAssemblyName)).Execute(true, true);
+        }
+
+        private static Configuration GetNHConfiguration(string connString, string mapAssemblyName)
+        {
             var assemblyWithMaps = AssemblyLocator.GetByName(mapAssemblyName);
 
-            //string connString = @"Server=127.0.0.1;Port=3306;Database=db_store;Uid=user_test;Pwd=password_test;SslMode=none";
-
-            //Fliently configuration using Postgre Connector and "StoreApp.Domain.Repository.dll" mapped assembly
+            //Fluently configuration using Postgre Connector and "StoreApp.Domain.Repository.dll" mapped assembly
             //Quary and Cache setted to false due to problems making quaries constantly
-            var fConfiguration = Fluently.Configure()
+            return Fluently.Configure()
                 .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(connString))
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assemblyWithMaps))
                 .ExposeConfiguration(c => c.SetProperty(NHibernate.Cfg.Environment.PropertyUseReflectionOptimizer, Boolean.TrueString)
                                                  .SetProperty(NHibernate.Cfg.Environment.UseSecondLevelCache, Boolean.FalseString)
                                                  .SetProperty(NHibernate.Cfg.Environment.UseQueryCache, Boolean.FalseString))
                                                  .BuildConfiguration();
-
-            //To create schema (database must exist)
-            //var exporter = new SchemaExport(fConfiguration);
-            //exporter.Execute(true, true, false);
-
-            _sessionFactory = fConfiguration.BuildSessionFactory();
-            _session = _sessionFactory.OpenSession();
         }
 
         public ISession GetCurrentSession()
