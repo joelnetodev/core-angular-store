@@ -264,3 +264,4 @@ __pycache__/
 *.pyc
 /StoreApp.Web/wwwroot
 /StoreApp.Web/Properties/PublishProfiles
+/StoreApp.Web/fluentnhibernateconfig.xml
