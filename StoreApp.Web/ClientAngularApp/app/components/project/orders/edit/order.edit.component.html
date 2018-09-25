@@ -121,14 +121,14 @@
             <div class="modal-body">
 
                 <div class="form-group">
-                    <label for="price">Item</label>
+                    <label for="price">Product</label>
                     <select class="form-control" [(ngModel)]="currentProduct.id" (change)="onProductSelect()">
                         <option *ngFor="let item of products" [ngValue]="item.id">{{item.name}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="count">Count</label>
+                    <label for="count">Price</label>
                     <input type="text" class="form-control" [(ngModel)]="currentProduct.price" />
                 </div>
 
