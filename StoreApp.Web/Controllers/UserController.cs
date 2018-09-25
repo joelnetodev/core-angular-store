@@ -53,18 +53,17 @@ namespace StoreApp.Web.Controllers
                 throw new ModelException(ModelState);
             }
 
+            if (_userRepository.VerifyUsernameExists(model.Username))
+                throw new ErrorException("Username already exists.");
 
-                if (_userRepository.VerifyUsernameExists(model.Username))
-                    throw new ErrorException("Username already exists.");
+            var user = new User();
+            user.Name = model.Name;
+            user.Username = model.Username;
+            user.Role = model.Role;
+            user.Password = PasswordEncryptator.Encrypit(model.Password);
+            _userRepository.SaveOrUpdate(user);
 
-                var user = new User();
-                user.Name = model.Name;
-                user.Username = model.Username;
-                user.Role = model.Role;
-                user.Password = PasswordEncryptator.Encrypit(model.Password);
-                _userRepository.SaveOrUpdate(user);
-
-                return Ok();
+            return Ok();
         }
 
         [Authorize]

@@ -27,16 +27,16 @@ namespace StoreApp.Infra.Extension
             //Add HttpContextAccessor as singleton instance and .NET Core is in charge to recover the current Context
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            string connString = configuration.GetConnectionString(ConfigProperties.ConnectionStringKey);
-            string mapAssemblyName = configuration.GetKeyValueFromSection(ConfigProperties.AssemblyNamesSection, ConfigProperties.MappingKey);
+            string connString = configuration.GetConnectionString(AppProperties.ConnectionStringKey);
+            string mapAssemblyName = configuration.GetKeyValueFromSection(AppProperties.AssemblyNamesSection, AppProperties.MappingKey);
            
             //SessionFactory is Scoped per WebRequest
             services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString, mapAssemblyName));
 
             //var assembliesToSearch = configuration.GetSection($"{AssemblyNamesSection}:{DependenciesKey}").Get<string[]>();       
 
-            string repositoryAssemblyName = configuration.GetKeyValueFromSection(ConfigProperties.AssemblyNamesSection, ConfigProperties.RepositoryKey);
-            string serviceAssemblyName = configuration.GetKeyValueFromSection(ConfigProperties.AssemblyNamesSection, ConfigProperties.ServiceKey);
+            string repositoryAssemblyName = configuration.GetKeyValueFromSection(AppProperties.AssemblyNamesSection, AppProperties.RepositoryKey);
+            string serviceAssemblyName = configuration.GetKeyValueFromSection(AppProperties.AssemblyNamesSection, AppProperties.ServiceKey);
 
             AddRepositoriesAndServices(services, new [] { repositoryAssemblyName, serviceAssemblyName });
         }

@@ -20,7 +20,7 @@ namespace StoreApp.UnitTest.Tests
             var result = await response.Content.ReadAsStringAsync();
             var items = JsonConvert.DeserializeObject<List<Item>>(result);
 
-            Assert.Equal(items.Count, 0);
+            Assert.NotEqual(items.Count, 1);
         }
     }
 }

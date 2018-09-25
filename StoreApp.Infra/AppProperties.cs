@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreApp.Infra
 {
-    public static class ConfigProperties
+    public static class AppProperties
     {
         public const string ConnectionStringKey = "ConnectionString";
         public const string AssemblyNamesSection = "AssemblyNames";

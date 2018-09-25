@@ -35,8 +35,6 @@ namespace StoreApp.UnitTest.Tests.Base
             Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Accept.Clear();
             SetMediaTypeHeader();
-
-            DbTestConfiguration.CreateDataBase(CreateConfiguration());
         }
 
         private void SetMediaTypeHeader()
