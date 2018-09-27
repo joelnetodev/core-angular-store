@@ -188,8 +188,8 @@ namespace StoreApp.Web.Controllers
                 {
                     items.Add(new ProductItemModel
                     {
-                        Id = item.Item != null ? item.Item.Id : 0,
-                        Name = item.Item != null ? item.Item.Name : string.Empty,
+                        Id = item.Item.Id,
+                        Name = item.Item.Name,
                         Count = item.Count
                     });
                 }

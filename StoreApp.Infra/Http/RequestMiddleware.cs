@@ -31,7 +31,7 @@ namespace StoreApp.Infra.Http
                 context.Response.ContentType = "text/html";
 
                 await context.Response.WriteAsync(context.Response.StatusCode == (int)HttpStatusCode.BadRequest
-                    ? ex.Message + " **STACK** " + ex.StackTrace
+                    ? ex.Message + " Stack Trace: " + ex.StackTrace
                     : ex.Message);
             }
             finally
