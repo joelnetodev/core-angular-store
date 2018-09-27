@@ -25,11 +25,11 @@ import { MenuModuleEnum } from './models/enums/menuEnum';
 //This allows to create routerLink on HTML to render components
 
 const routes: Routes = [
-    { path: '', component: HomeComponent, data: { title: 'Home', module: MenuModuleEnum.Home }},
+    { path: '', component: HomeComponent, data: { title: 'Home', module: MenuModuleEnum.Home } },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'permission', component: PermissionComponent, data: { title: 'Access denied'} },
-    { path: 'error', component: ErrorComponent, data: { title: 'Something got wrong!' } },
+    { path: 'permission', component: PermissionComponent, data: { title: 'Access denied' } },
+    { path: 'error', component: ErrorComponent, data: { title: 'Something got wrong!'} },
     { path: 'user', component: UserEditComponent, data: { title: 'User Edit', module: MenuModuleEnum.Users } },
 
     { path: 'products', component: ProductsComponent, data: { title: 'Products', module: MenuModuleEnum.Products } },

@@ -14,8 +14,7 @@ export class NavTopComponent implements OnInit {
     constructor(private userServ: CoreUserService, private router: Router, private activatedRoute: ActivatedRoute) { 
     }
 
-    ngOnInit()
-    { 
+    ngOnInit() { 
         this.module = this.activatedRoute.snapshot.data['module'];
         this.title = this.activatedRoute.snapshot.data['title'];
 
