@@ -29,7 +29,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'permission', component: PermissionComponent, data: { title: 'Access denied'} },
-    { path: 'error', component: ErrorComponent },
+    { path: 'error', component: ErrorComponent, data: { title: 'Something got wrong!' } },
     { path: 'user', component: UserEditComponent, data: { title: 'User Edit', module: MenuModuleEnum.Users } },
 
     { path: 'products', component: ProductsComponent, data: { title: 'Products', module: MenuModuleEnum.Products } },
