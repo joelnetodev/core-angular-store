@@ -40,6 +40,17 @@ namespace StoreApp.Web.Controllers
                 throw new ErrorException("Username or Password incorrect.");
             }
 
+            //This is just an example of how to SingIn using cookie atuh mode.
+            //var claims = new List<Claim>
+            //{
+            //    new Claim(ClaimTypes.Name, userFromDb.Username),
+            //    new Claim(ClaimTypes.GivenName, userFromDb.Name),
+            //    new Claim(ClaimTypes.Role, userFromDb.Role.ToDescription())
+            //};
+
+            //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            //HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
             string token = TokenGenerator.Generate(userFromDb.Username, userFromDb.Role.ToString());
             return Ok(CreateUserLogged(userFromDb, token));
         }
