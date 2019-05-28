@@ -38,9 +38,6 @@ namespace StoreApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //This is just an example of how to SingIn using cookie atuh mode.
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-
             //Adiciona JWT como autentica��o base
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         .AddJwtBearer(options =>
