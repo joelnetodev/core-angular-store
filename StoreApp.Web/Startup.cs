@@ -60,7 +60,6 @@ namespace StoreApp.Web
             //This is a extension method to configure interfaces and classes of the project
             //Should stay above AddMVC
             services.ConfigureProjectDependencies(Configuration);
-            DbConfiguration.ValidateOrCreateSchema(Configuration);
             services.AddMvc();
         }
 

@@ -37,7 +37,21 @@ namespace StoreApp.Infra.DataBase
             {
                 SchemaUpdate schema = new SchemaUpdate(configuration);
                 schema.Execute(true, true);
-            }  
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    SchemaUpdate schema = new SchemaUpdate(configuration);
+                    schema.Execute(true, true);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                
+                throw;
+            }
         }
 
         public static Configuration CreateConfiguration(string connString, string mapAssemblyName)
