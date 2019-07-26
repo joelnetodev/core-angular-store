@@ -77,13 +77,13 @@
                             {{product.name}}
                         </td>
                         <td>
-                            $ {{product.price}}
+                            ${{product.price}}
                         </td>
                         <td>
                             {{product.count}}
                         </td>
                         <td>
-                            $ {{getAmount(product.count, product.price)}}
+                            ${{getAmount(product.count, product.price)}}
                         </td>
                         <td>
                             <a class="btn btn-light btn-sm" (click)="edit(product)" title="edit" data-toggle="modal" data-target="#modalProduct">
@@ -96,7 +96,7 @@
                     </tr>
 
                     <tr *ngIf="order.products.length == 0">
-                        <td colspan="4" style="text-align: center;">
+                        <td colspan="5" style="text-align: center;">
                             No products.
                         </td>
                     </tr>
