@@ -50,63 +50,69 @@
             <span class="oi oi-plus" title="add" aria-hidden="true"></span>
         </a>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Price
-                    </th>
-                    <th>
-                        Count
-                    </th>
-                    <th>
-                        Amount
-                    </th>
-                    <th>
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of order.products">
-                    <td>
-                        {{product.name}}
-                    </td>
-                    <td>
-                        {{product.price}}
-                    </td>
-                    <td (click)="onClickCount(prodModel)">
-                        {{product.count}}
-                    </td>
-                    <td>
-                        <a class="btn btn-light btn-sm" (click)="edit(product)" title="edit" data-toggle="modal" data-target="#modalProduct">
-                            <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
-                        </a>
-                        <a class="btn btn-light btn-sm" (click)="remove(product)" title="remove">
-                            <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
-                        </a>
-                    </td>
-                </tr>
+        <div style="overflow: auto;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Count
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of order.products">
+                        <td>
+                            {{product.name}}
+                        </td>
+                        <td>
+                            $ {{product.price}}
+                        </td>
+                        <td>
+                            {{product.count}}
+                        </td>
+                        <td>
+                            $ {{getAmount(product.count, product.price)}}
+                        </td>
+                        <td>
+                            <a class="btn btn-light btn-sm" (click)="edit(product)" title="edit" data-toggle="modal" data-target="#modalProduct">
+                                <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
+                            </a>
+                            <a class="btn btn-light btn-sm" (click)="remove(product)" title="remove">
+                                <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
 
-                <tr *ngIf="order.products.length == 0">
-                    <td colspan="3" style="text-align: center;">
-                        No products.
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr *ngIf="order.products.length == 0">
+                        <td colspan="4" style="text-align: center;">
+                            No products.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+          
+
+        </div>
+
+        <div class="float-sm-right">
+            <a class="btn btn-secondary" routerLink="/orders">Cancel</a>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
 
     </div>
-
-    <div class="float-sm-right">
-        <a class="btn btn-secondary" routerLink="/orders">Cancel</a>
-        <button class="btn btn-primary" (click)="save()">Save</button>
-    </div>
-
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="modalProduct" aria-hidden="true">

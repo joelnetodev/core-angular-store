@@ -30,58 +30,61 @@
         <a class="btn btn-primary float-right" routerLink="/orders/edit">Add</a>
     </div>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Client
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Is Active
-                </th>
-                <th>
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let order of orders">
-                <td>
-                    {{order.date | date:'MM/dd/yyyy'}}
-                </td>
-                <td>
-                    {{order.clientName}}
-                </td>
-                <td>
-                    {{order.description}}
-                </td>
-                <td>
-                    {{order.isActive}}
-                </td>
+    <div style="overflow: auto;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Client
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Is Active
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>
+                        {{order.date | date:'MM/dd/yyyy'}}
+                    </td>
+                    <td>
+                        {{order.clientName}}
+                    </td>
+                    <td>
+                        {{order.description}}
+                    </td>
+                    <td>
+                        {{order.isActive}}
+                    </td>
 
-                <td>
-                    <a class="btn btn-light btn-sm" [routerLink]="['/orders/edit', order.id]" title="edit">
-                        <span class="oi oi-pencil" aria-hidden="true"></span>
-                    </a>
-                    <a class="btn btn-light btn-sm" (click)="remove(order)" title="remove">
-                        <span class="oi oi-trash" aria-hidden="true"></span>
-                    </a>
+                    <td>
+                        <a class="btn btn-light btn-sm" [routerLink]="['/orders/edit', order.id]" title="edit">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </a>
+                        <a class="btn btn-light btn-sm" (click)="remove(order)" title="remove">
+                            <span class="oi oi-trash" aria-hidden="true"></span>
+                        </a>
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
-            <tr *ngIf="orders.length == 0">
-                <td colspan="5" style="text-align: center;">
-                    No orders.
-                </td>
-            </tr>
+                <tr *ngIf="orders.length == 0">
+                    <td colspan="5" style="text-align: center;">
+                        No orders.
+                    </td>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+   
 </div>

@@ -96,6 +96,10 @@ export class OrderEditComponent implements OnInit {
         this.modalTitle = "Add";
     }
 
+    getAmount(count: number, price: number) {
+        return count * price;
+    }
+
     saveProduct() {
         if (this.modalTitle == "Add") {
             this.order.products.push(this.currentProduct);
