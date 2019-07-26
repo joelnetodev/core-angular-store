@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./wwwroot/out-tsc",
+    "outDir": "assets/js",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -16,5 +16,12 @@
       "es2017",
       "dom"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "ClientAngularApp"
+  ],
+  "include": [
+    "assets/ts/**/*"
+  ]
 }

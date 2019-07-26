@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="assets\ts\file.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
   </ItemGroup>
@@ -23,6 +27,10 @@
 
   <ItemGroup>
     <Folder Include="ClientAngularApp\assets\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="assets\ts\file.ts" />
   </ItemGroup>
 
   <Target Name="Build Angular" Condition="'$(Configuration)'=='Release'" BeforeTargets="Build">
