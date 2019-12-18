@@ -143,7 +143,7 @@ namespace StoreApp.Web.Controllers
                     throw new ErrorException(string.Format("It was not possible to find item {0}.", itemModel.Id));
                 }
 
-                ProductItem prodItem = product.Items.FirstOrDefault(x => x.Item.Id == item.Id);
+                ProductItem prodItem = product.Items.FirstOrDefault(x => x.Item != null && x.Item.Id == item.Id);
                 if (prodItem == null)
                 {
                     prodItem = new ProductItem();

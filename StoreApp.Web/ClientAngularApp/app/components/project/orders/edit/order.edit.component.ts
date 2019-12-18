@@ -66,7 +66,7 @@ export class OrderEditComponent implements OnInit {
             total += (this.order.products[i].count * this.order.products[i].price);
         }
 
-        return total - this.order.discount;
+        return total - (this.order.discount != null ? this.order.discount : 0);
     }
 
     onDateChange(value: string) {

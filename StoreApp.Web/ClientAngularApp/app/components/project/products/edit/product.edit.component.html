@@ -37,86 +37,90 @@
         <a class="btn btn-light btn-sm" (click)="add()" title="add" data-toggle="modal" data-target="#modalItem">
             <span class="oi oi-plus" title="add" aria-hidden="true"></span>
         </a>
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Count
-                    </th>
-                    <th>
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of product.items">
-                    <td>
-                        {{item.name}}
-                    </td>
-                    <td>
-                        {{item.count}}
-                    </td>
-                    <td>
-                        <a class="btn btn-light btn-sm" (click)="edit(item)" title="edit" data-toggle="modal" data-target="#modalItem">
-                            <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
-                        </a>
-                        <a class="btn btn-light btn-sm" (click)="remove(item)" title="remove">
-                            <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr *ngIf="product.items.length == 0">
-                    <td colspan="3" style="text-align: center;">
-                        No items.
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
     </div>
 
-    <div class="float-sm-right">
-        <a class="btn btn-secondary" routerLink="/products">Cancel</a>
-        <button class="btn btn-primary" (click)="save()">Save</button>
+    <div class="row">
+        <div style="overflow: auto; width: 100%;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Count
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of product.items">
+                        <td>
+                            {{item.name}}
+                        </td>
+                        <td>
+                            {{item.count}}
+                        </td>
+                        <td>
+                            <a class="btn btn-light btn-sm" (click)="edit(item)" title="edit" data-toggle="modal" data-target="#modalItem">
+                                <span class="oi oi-pencil" title="edit" aria-hidden="true"></span>
+                            </a>
+                            <a class="btn btn-light btn-sm" (click)="remove(item)" title="remove">
+                                <span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="product.items.length == 0">
+                        <td colspan="3" style="text-align: center;">
+                            No items.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-</div>
+    <div class="row">
+        <div class="float-sm-right">
+            <a class="btn btn-secondary" routerLink="/products">Cancel</a>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
+    </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="modalItem" tabindex="-1" role="dialog" aria-labelledby="modalItem" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">{{modalTitle}} Item</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="form-group">
-                    <label for="price">Item</label>
-                    <select class="form-control" [(ngModel)]="currentItem.id" (change)="onItemSelect()">
-                        <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
-                    </select>
+    <!-- Modal -->
+    <div class="modal fade" id="modalItem" tabindex="-1" role="dialog" aria-labelledby="modalItem" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">{{modalTitle}} Item</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
 
-                <div class="form-group">
-                    <label for="count">Count</label>
-                    <input type="text" class="form-control" [(ngModel)]="currentItem.count" />
+                    <div class="form-group">
+                        <label for="price">Item</label>
+                        <select class="form-control" [(ngModel)]="currentItem.id" (change)="onItemSelect()">
+                            <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="count">Count</label>
+                        <input type="text" class="form-control" [(ngModel)]="currentItem.count" />
+                    </div>
+
                 </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button *ngIf="!getIsEditingMode()" type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveItem()">Add</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button *ngIf="!getIsEditingMode()" type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveItem()">Add</button>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
