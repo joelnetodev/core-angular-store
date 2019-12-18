@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoreApp.Infra.DataBase.Repository
 {
-    public interface IRepositoryBase<T> where T : Entity.EntityBase
+    public interface IRepositoryBase<T> : IDisposable where T : Entity.EntityBase
     {
         void SaveOrUpdate(T entity);
 

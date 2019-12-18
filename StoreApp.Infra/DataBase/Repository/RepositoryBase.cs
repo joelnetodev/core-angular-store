@@ -97,5 +97,12 @@ namespace StoreApp.Infra.DataBase.Repository
         {
             return Entity.Where(x => ids.Contains(x.Id)).ToList();
         }
+
+        public void Dispose()
+        {
+            Session.Dispose();
+            _sessionFactoryInfra.Dispose();
+            _sessionFactoryInfra = null;
+        }
     }
 }

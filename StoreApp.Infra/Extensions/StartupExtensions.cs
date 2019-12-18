@@ -24,16 +24,11 @@ namespace StoreApp.Infra.Extension
         //Shold stay above AddMVC
         public static void ConfigureProjectDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            //Add HttpContextAccessor as singleton instance and .NET Core is in charge to recover the current Context
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             string connString = configuration.GetConnectionString(AppProperties.ConnectionStringKey);
             string mapAssemblyName = configuration.GetKeyValueFromSection(AppProperties.AssemblyNamesSection, AppProperties.MappingKey);
            
             //SessionFactory is Scoped per WebRequest
             services.AddScoped<ISessionFactoryInfra>(x => new SessionFactoryInfra(connString, mapAssemblyName));
-
-            //var assembliesToSearch = configuration.GetSection($"{AssemblyNamesSection}:{DependenciesKey}").Get<string[]>();       
 
             string repositoryAssemblyName = configuration.GetKeyValueFromSection(AppProperties.AssemblyNamesSection, AppProperties.RepositoryKey);
             string serviceAssemblyName = configuration.GetKeyValueFromSection(AppProperties.AssemblyNamesSection, AppProperties.ServiceKey);
@@ -45,9 +40,6 @@ namespace StoreApp.Infra.Extension
         //Should be the first configuration than any other
         public static void ConfigureMiddlewareInfra(this IApplicationBuilder app)
         {
-            //var httpContextAccessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
-            //SharedHttpContext.Configure(httpContextAccessor);
-
             app.UseMiddleware<RequestMiddlewareInfra>();
         }
 
@@ -78,9 +70,7 @@ namespace StoreApp.Infra.Extension
                     if (classThatImplements == null)
                         continue;
 
-                    //The rest of the services and repositories are singleton in order to prevent more than one instance.
-                    //Stateless classes are needed, This is to say no properties can't be stored, unless they are constants or statics 
-                    services.AddSingleton(itemInterface, classThatImplements);
+                    services.AddScoped(itemInterface, classThatImplements);
                 }
             }
         }
