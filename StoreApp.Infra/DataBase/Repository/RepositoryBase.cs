@@ -13,17 +13,17 @@ namespace StoreApp.Infra.DataBase.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: Entity.EntityBase
     {
-        private IHttpContextAccessor _httpContextAccessor;
-        public RepositoryBase(IHttpContextAccessor httpContextAccessor)
+        private ISessionFactoryInfra _sessionFactoryInfra;
+        public RepositoryBase(ISessionFactoryInfra sessionFactoryInfra)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _sessionFactoryInfra = sessionFactoryInfra;
         }
 
         protected NHibernate.ISession Session
         {
             get
             {
-                return ((ISessionFactoryInfra)_httpContextAccessor.HttpContext.RequestServices.GetService(typeof(ISessionFactoryInfra))).GetCurrentSession();
+                return _sessionFactoryInfra.GetCurrentSession();
                 //_sessionFactoryInfra.GetCurrentSession();
                 //SharedHttpContext.GetCurrentSessionFactoryInfra().GetCurrentSession();
                 //Get "SessionFactoryBase" from ServiceProvider and get the Session

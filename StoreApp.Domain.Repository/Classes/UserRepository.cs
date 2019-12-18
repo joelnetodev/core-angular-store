@@ -12,7 +12,7 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public UserRepository(Microsoft.AspNetCore.Http.IHttpContextAccessor sessionFactoryInfra) : base(sessionFactoryInfra)
+        public UserRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
         {
         }
 

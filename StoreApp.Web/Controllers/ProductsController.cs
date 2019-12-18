@@ -74,8 +74,8 @@ namespace StoreApp.Web.Controllers
             }
 
 
-                var prod = CreateProduct(model);
-                _prodRepository.SaveOrUpdate(prod);
+            var prod = CreateProduct(model);
+            _prodRepository.SaveOrUpdate(prod);
 
 
             return Ok();
@@ -87,18 +87,18 @@ namespace StoreApp.Web.Controllers
         public IActionResult Delete(int id)
         {
 
-                var prod = _prodRepository.GetById(id);
-                if (prod != null)
-                {
-                    _prodRepository.Delete(prod);
+            var prod = _prodRepository.GetById(id);
+            if (prod != null)
+            {
+                _prodRepository.Delete(prod);
 
-                }
-                else
-                {
-                    throw new ErrorException("Product not found.");
-                }
+            }
+            else
+            {
+                throw new ErrorException("Product not found.");
+            }
 
-                return Ok();
+            return Ok();
 
         }
 

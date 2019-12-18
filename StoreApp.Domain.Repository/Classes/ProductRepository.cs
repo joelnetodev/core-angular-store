@@ -14,7 +14,7 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
-        public ProductRepository(Microsoft.AspNetCore.Http.IHttpContextAccessor sessionFactoryInfra) : base(sessionFactoryInfra)
+        public ProductRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
         {
         }
 

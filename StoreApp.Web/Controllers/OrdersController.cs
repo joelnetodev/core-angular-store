@@ -68,8 +68,8 @@ namespace StoreApp.Web.Controllers
             }
 
 
-                var order = CreateOrder(model);
-                _orderRepository.SaveOrUpdate(order);
+            var order = CreateOrder(model);
+            _orderRepository.SaveOrUpdate(order);
 
             return Ok();
         }
@@ -80,17 +80,17 @@ namespace StoreApp.Web.Controllers
         public IActionResult Delete(int id)
         {
 
-                var order = _orderRepository.GetById(id);
-                if (order != null)
-                {
-                    _orderRepository.Delete(order);
-                }
-                else
-                {
-                    throw new ErrorException("Order not found.");
-                }
+            var order = _orderRepository.GetById(id);
+            if (order != null)
+            {
+                _orderRepository.Delete(order);
+            }
+            else
+            {
+                throw new ErrorException("Order not found.");
+            }
 
-                return Ok();
+            return Ok();
         }
 
 

@@ -13,7 +13,7 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class ItemRepository : RepositoryBase<Item>, IItemRepository
     {
-        public ItemRepository(Microsoft.AspNetCore.Http.IHttpContextAccessor sessionFactoryInfra) : base(sessionFactoryInfra)
+        public ItemRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
         {
         }
 

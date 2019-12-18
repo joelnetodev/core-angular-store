@@ -94,11 +94,11 @@ namespace StoreApp.Web.Controllers
                 throw new ErrorException(string.Format("User {0} not found.", username));
 
 
-                user.Name = userRegister.Name;
-                if (userRegister.Password != EncrypedForDisplay)
-                {
-                    user.Password = PasswordEncryptator.Encrypit(userRegister.Password);
-                }
+            user.Name = userRegister.Name;
+            if (userRegister.Password != EncrypedForDisplay)
+            {
+                user.Password = PasswordEncryptator.Encrypit(userRegister.Password);
+            }
 
             return Ok();
         }

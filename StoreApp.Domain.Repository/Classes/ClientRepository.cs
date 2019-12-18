@@ -14,7 +14,7 @@ namespace StoreApp.Domain.Repository.Classes
 {
     public class ClientRepository : RepositoryBase<Client>, IClientRepository
     {
-        public ClientRepository(Microsoft.AspNetCore.Http.IHttpContextAccessor sessionFactoryInfra) : base(sessionFactoryInfra)
+        public ClientRepository(ISessionFactoryInfra sessionFactoryInfra) : base(sessionFactoryInfra)
         {
         }
 

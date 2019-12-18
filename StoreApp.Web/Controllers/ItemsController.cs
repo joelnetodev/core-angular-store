@@ -69,15 +69,15 @@ namespace StoreApp.Web.Controllers
             var item = CreateItem(model);
 
 
-                if (model.Id != 0)
-                {
-                    item = _itemRepository.GetById(model.Id);
-                    item.Name = model.Name;
-                    item.Description = model.Description;
-                    item.IsActive = model.IsActive;
-                }
+            if (model.Id != 0)
+            {
+                item = _itemRepository.GetById(model.Id);
+                item.Name = model.Name;
+                item.Description = model.Description;
+                item.IsActive = model.IsActive;
+            }
 
-                _itemRepository.SaveOrUpdate(item);
+            _itemRepository.SaveOrUpdate(item);
 
 
 
@@ -90,18 +90,18 @@ namespace StoreApp.Web.Controllers
         public IActionResult Delete(int id)
         {
 
-                var item = _itemRepository.GetById(id);
-                if (item != null)
-                {
-                    _itemRepository.Delete(item);
+            var item = _itemRepository.GetById(id);
+            if (item != null)
+            {
+                _itemRepository.Delete(item);
 
-                }
-                else
-                {
-                    throw new ErrorException("Item not found.");
-                }
+            }
+            else
+            {
+                throw new ErrorException("Item not found.");
+            }
 
-                return Ok();
+            return Ok();
         }
 
 
